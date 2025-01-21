@@ -12,13 +12,6 @@ import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const oneDayInSeconds = 24 * 60 * 60;
-
-const options = {
-  secure: true,
-  sameSite: "Strict",
-  maxAge: oneDayInSeconds,
-};
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -30,6 +23,14 @@ const AuthContext = createContext();
  * @returns {React.ReactElement} The rendered component.
  */
 export const AuthProvider = ({ children }) => {
+  const oneDayInSeconds = 24 * 60 * 60;
+
+  const options = {
+    secure: true,
+    sameSite: "Strict",
+    maxAge: oneDayInSeconds,
+  };
+
   const router = useRouter();
   const cookies = useCookies();
   const [user, setUser] = useState(null);
