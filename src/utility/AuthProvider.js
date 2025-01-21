@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     const refreshToken = cookies.get("refreshToken");
 
     if (storedUser && accessToken && refreshToken) {
-      setUser(JSON.parse(storedUser), accessToken, refreshToken);
+      setUser(JSON.parse(storedUser));
     }
     setIsLoading(false);
   }, [cookies]);
