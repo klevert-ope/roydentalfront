@@ -50,8 +50,8 @@ export const AuthProvider = ({ children }) => {
 
       // Set user info and tokens in cookies
       cookies.set("user", JSON.stringify(userInfo), { expires: 7, secure: true, sameSite: 'Strict' });
-      cookies.set("accessToken", accessToken, { expires: 1, secure: true, sameSite: 'Strict', httpOnly: true });
-      cookies.set("refreshToken", refreshToken, { expires: 1, secure: true, sameSite: 'Strict', httpOnly: true });
+      cookies.set("accessToken", accessToken, { expires: 1, secure: true, sameSite: 'Strict' });
+      cookies.set("refreshToken", refreshToken, { expires: 1, secure: true, sameSite: 'Strict' });
 
       setUser(userInfo);
       router.replace("/");
