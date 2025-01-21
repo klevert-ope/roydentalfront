@@ -2,20 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: rgb(17, 35, 88);
+    --foreground: rgb(200, 138, 2);
+    --card: rgba(9, 9, 11, 0.2);
+    --card-foreground: rgb(200, 138, 2);
+    --popover: rgb(17, 35, 88);
+    --popover-foreground: rgb(200, 138, 2);
+    --primary: rgb(200, 138, 2);
+    --primary-foreground: rgb(17, 35, 88);
+    --secondary: rgb(200, 138, 2);
+    --secondary-foreground: rgb(9, 9, 11);
+    --muted: rgb(9, 9, 11);
+    --muted-foreground: rgb(200, 138, 2);
+    --accent: rgb(200, 138, 2);
+    --accent-foreground: rgb(9 9 11);
+    --destructive: rgb(209, 29, 29);
+    --destructive-foreground: rgb(9, 9, 11);
+    --border: rgb(200, 138, 2);
+    --input: rgb(200, 138, 2);
+    --ring: rgb(200, 138, 2);
+    --chart-1: rgb(175, 87, 219);
+    --chart-2: rgb(38, 98, 217);
+    --chart-3: rgb(209, 29, 29);
+    --chart-4: rgb(40, 205, 99);
+    --chart-5: rgb(226, 54, 112);
+    --radius: 0.5rem;
+    --sidebar-background: rgb(17, 35, 88);
+    --sidebar-foreground: rgb(200, 138, 2);
+    --sidebar-primary: rgb(200, 138, 200);
+    --sidebar-primary-foreground: rgb(17, 35, 88);
+    --sidebar-accent: rgb(200 138 2);
+    --sidebar-accent-foreground: rgb(9, 9, 11);
+    --sidebar-border: rgb(200, 138, 2);
+    --sidebar-ring: rgb(200, 138, 2);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+button span {
+  color: white;
+}
+
+button:has(svg) {
+  color: white;
+}
+
+input {
+  color: white;
+}
+
+label {
+  color: var(--primary);
+}
+
+/* Remove native appearance for better customization */
+input[type="date"],
+input[type="datetime-local"]{
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 5px;
+  font-size: 16px; /* Adjust for readability */
+}
+
+/* Style for the calendar picker for date input */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  content: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c88ac8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-calendar-days'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 14h.01'/%3E%3Cpath d='M12 14h.01'/%3E%3Cpath d='M16 14h.01'/%3E%3Cpath d='M8 18h.01'/%3E%3Cpath d='M12 18h.01'/%3E%3Cpath d='M16 18h.01'/%3E%3C/svg%3E");
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* Style for the clock picker for time input */
+/* Style for the clock picker for datetime-local input */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  content: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c88ac8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-calendar-clock'%3E%3Cpath d='M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5'/%3E%3Cpath d='M16 2v4'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M3 10h5'/%3E%3Cpath d='M17.5 17.5 16 16.3V14'/%3E%3Ccircle cx='16' cy='16' r='6'/%3E%3C/svg%3E");
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* Add some padding for better input field visibility */
+input[type="date"],
+input[type="time"] {
+  padding-right: 2rem; /* Adjust for the size of the custom icon */
+}
+
+@layer utilities {
+  .popover-content-width-full {
+    width: var(--radix-popover-trigger-width);
+    max-height: var(--radix-popover-content-available-height);
+  }
+}
+
+.ProseMirror {
+  outline: none;
+  white-space: pre-wrap;
+  max-height: 250px;
+  cursor: text;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  overflow-wrap: anywhere;
+  overflow-y: auto;
 }
