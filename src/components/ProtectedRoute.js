@@ -34,13 +34,21 @@ const ProtectedRoute = ({ children, roles = [] }) => {
   useEffect(() => {
     if (isAuthLoading) return;
 
+    const accessToken = cookies.get("accessToken");
+    const refreshToken = cookies.get("refreshToken");
+
+    if (!accessToken || !refreshToken) {
+      router.replace("/login");
+      return;
+    }
+
     if (isAuthorized) {
       setAuthResolved(true);
     } else {
       const redirectPath = user ? "/unauthorized" : "/login";
       router.replace(redirectPath);
     }
-  }, [isAuthorized, isAuthLoading, router, user]);
+  }, [isAuthorized, isAuthLoading, router, user, cookies]);
 
   if (isAuthLoading || !authResolved) {
     return <LoadingPage />;
