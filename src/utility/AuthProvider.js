@@ -12,6 +12,14 @@ import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+const oneDayInSeconds = 24 * 60 * 60;
+
+const options = {
+  secure: true,
+  sameSite: "Strict",
+  maxAge: oneDayInSeconds,
+};
+
 // Create the AuthContext
 const AuthContext = createContext();
 
@@ -49,9 +57,9 @@ export const AuthProvider = ({ children }) => {
       const { accessToken, refreshToken, ...userInfo } = loggedInUser;
 
       // Set user info and tokens in cookies
-      cookies.set("user", JSON.stringify(userInfo));
-      cookies.set("accessToken", accessToken);
-      cookies.set("refreshToken", refreshToken);
+      cookies.set("user", JSON.stringify(userInfo), options);
+      cookies.set("accessToken", accessToken, options);
+      cookies.set("refreshToken", refreshToken, options);
 
       setUser(userInfo);
       router.replace("/");
