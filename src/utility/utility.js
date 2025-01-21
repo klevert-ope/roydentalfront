@@ -12,5 +12,4 @@ export const handleAxiosError = (error) => {
   } else {
     console.error("Error:", error.message);
   }
-  throw error;
 };
