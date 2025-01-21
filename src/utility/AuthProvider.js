@@ -12,7 +12,6 @@ import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-
 // Create the AuthContext
 const AuthContext = createContext();
 
@@ -23,14 +22,6 @@ const AuthContext = createContext();
  * @returns {React.ReactElement} The rendered component.
  */
 export const AuthProvider = ({ children }) => {
-  const oneDayInSeconds = 24 * 60 * 60;
-
-  const options = {
-    secure: true,
-    sameSite: "Strict",
-    maxAge: oneDayInSeconds,
-  };
-
   const router = useRouter();
   const cookies = useCookies();
   const [user, setUser] = useState(null);
@@ -58,14 +49,13 @@ export const AuthProvider = ({ children }) => {
       const { accessToken, refreshToken, ...userInfo } = loggedInUser;
 
       // Set user info and tokens in cookies
-      cookies.set("user", JSON.stringify(userInfo), options);
-      cookies.set("accessToken", accessToken, options);
-      cookies.set("refreshToken", refreshToken, options);
+      cookies.set("user", JSON.stringify(userInfo), { expires: 7, secure: true, sameSite: 'Strict' });
+      cookies.set("accessToken", accessToken,{ expires: 1, secure: true, sameSite: 'Strict' });
+      cookies.set("refreshToken", refreshToken,{ expires: 1, secure: true, sameSite: 'Strict' });
 
       setUser(userInfo);
       router.replace("/");
     } catch (error) {
-      console.error("Login error:", error);
       toast.error("Login failed. Please check your credentials.");
     }
   };
@@ -82,7 +72,6 @@ export const AuthProvider = ({ children }) => {
       cookies.remove("refreshToken");
       router.replace("/login");
     } catch (error) {
-      console.error("Logoff error:", error);
       toast.error("Failed to logoff");
     }
   };
