@@ -13,7 +13,6 @@ export const useFetchEmergencyContacts = () => {
   return useQuery({
     queryKey: ["emergencyContacts"],
     queryFn: () => fetchEmergencyContacts(),
-    throwOnError: true,
   });
 };
 
@@ -26,7 +25,6 @@ export const useCreateEmergencyContact = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["emergencyContacts"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -36,7 +34,6 @@ export const useGetEmergencyContactByID = (patient_id, id) => {
     queryKey: ["emergencyContact", patient_id, id],
     queryFn: () => getEmergencyContactByID(patient_id, id),
     enabled: !!patient_id && !!id,
-    throwOnError: true,
   });
 };
 
@@ -49,7 +46,6 @@ export const useUpdateEmergencyContact = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["emergencyContacts"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -61,6 +57,5 @@ export const useDeleteEmergencyContact = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["emergencyContacts"] });
     },
-    throwOnError: true,
   });
 };

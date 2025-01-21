@@ -13,7 +13,6 @@ export const useFetchExaminations = () => {
   return useQuery({
     queryKey: ["examinations"],
     queryFn: fetchExaminations,
-    throwOnError: true,
   });
 };
 
@@ -26,7 +25,6 @@ export const useCreateExamination = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["examinations"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -36,7 +34,6 @@ export const useGetExaminationByID = (patient_id, id) => {
     queryKey: ["examination", patient_id, id],
     queryFn: () => getExaminationByID(patient_id, id),
     enabled: !!patient_id && !!id,
-    throwOnError: true,
   });
 };
 
@@ -49,7 +46,6 @@ export const useUpdateExamination = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["examinations"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -61,6 +57,5 @@ export const useDeleteExamination = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["examinations"] });
     },
-    throwOnError: true,
   });
 };

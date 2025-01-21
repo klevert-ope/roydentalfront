@@ -20,7 +20,6 @@ export const useManageUsers = () => {
   return useQuery({
     queryKey: ["users"],
     queryFn: adminManageUsers,
-    throwOnError: true,
   });
 };
 
@@ -32,7 +31,6 @@ export const useCreateUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -44,6 +42,5 @@ export const useDeleteUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
-    throwOnError: true,
   });
 };

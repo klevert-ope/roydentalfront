@@ -13,7 +13,6 @@ export const useFetchInsuranceCompanies = () => {
   return useQuery({
     queryKey: ["insuranceCompanies"],
     queryFn: fetchInsuranceCompanies,
-    throwOnError: true,
   });
 };
 
@@ -26,7 +25,6 @@ export const useCreateInsuranceCompany = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["insuranceCompanies"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -36,7 +34,6 @@ export const useGetInsuranceCompanyByID = (id) => {
     queryKey: ["insuranceCompany", id],
     queryFn: () => getInsuranceCompanyByID(id),
     enabled: !!id,
-    throwOnError: true,
   });
 };
 
@@ -49,7 +46,6 @@ export const useUpdateInsuranceCompany = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["insuranceCompanies"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -61,6 +57,5 @@ export const useDeleteInsuranceCompany = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["insuranceCompanies"] });
     },
-    throwOnError: true,
   });
 };

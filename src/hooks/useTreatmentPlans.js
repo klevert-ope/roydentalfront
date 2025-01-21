@@ -13,7 +13,6 @@ export const useFetchTreatmentPlans = () => {
   return useQuery({
     queryKey: ["treatmentPlans"],
     queryFn: fetchTreatmentPlans,
-    throwOnError: true,
   });
 };
 
@@ -26,7 +25,6 @@ export const useCreateTreatmentPlan = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["treatmentPlans"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -36,7 +34,6 @@ export const useGetTreatmentPlanByID = (patient_id, id) => {
     queryKey: ["treatmentPlan", patient_id, id],
     queryFn: () => getTreatmentPlanByID(patient_id, id),
     enabled: !!patient_id && !!id,
-    throwOnError: true,
   });
 };
 
@@ -49,7 +46,6 @@ export const useUpdateTreatmentPlan = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["treatmentPlans"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -61,6 +57,5 @@ export const useDeleteTreatmentPlan = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["treatmentPlans"] });
     },
-    throwOnError: true,
   });
 };

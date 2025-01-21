@@ -13,7 +13,6 @@ export const useFetchDoctors = () => {
   return useQuery({
     queryKey: ["doctors"],
     queryFn: fetchDoctors,
-    throwOnError: true,
   });
 };
 
@@ -25,7 +24,6 @@ export const useCreateDoctor = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -35,7 +33,6 @@ export const useGetDoctorByID = (id) => {
     queryKey: ["doctor", id],
     queryFn: () => getDoctorByID(id),
     enabled: !!id,
-    throwOnError: true,
   });
 };
 
@@ -47,7 +44,6 @@ export const useUpdateDoctor = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -59,6 +55,5 @@ export const useDeleteDoctor = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["doctors"] });
     },
-    throwOnError: true,
   });
 };

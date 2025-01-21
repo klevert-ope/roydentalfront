@@ -14,7 +14,6 @@ export const useFetchPatients = () => {
   return useQuery({
     queryKey: ["patients"],
     queryFn: fetchPatients,
-    throwOnError: true,
   });
 };
 
@@ -26,7 +25,6 @@ export const useCreatePatient = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["patients"]);
     },
-    throwOnError: true,
   });
 };
 
@@ -36,7 +34,6 @@ export const useGetPatientByID = (patient_id) => {
     queryKey: ["patient", patient_id],
     queryFn: () => getPatientByID(patient_id),
     enabled: !!patient_id,
-    throwOnError: true,
   });
 };
 
@@ -49,7 +46,6 @@ export const useUpdatePatient = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["patients"]);
     },
-    throwOnError: true,
   });
 };
 
@@ -61,7 +57,6 @@ export const useDeletePatient = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["patients"]);
     },
-    throwOnError: true,
   });
 };
 
@@ -73,6 +68,5 @@ export const useDeleteAllPatientData = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["patients"]);
     },
-    throwOnError: true,
   });
 };

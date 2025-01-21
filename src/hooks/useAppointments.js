@@ -13,7 +13,6 @@ export const useFetchAppointments = () => {
   return useQuery({
     queryKey: ["appointments"],
     queryFn: fetchAppointments,
-    throwOnError: true,
   });
 };
 
@@ -26,7 +25,6 @@ export const useCreateAppointment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -36,7 +34,6 @@ export const useGetAppointmentByID = (patient_id, id) => {
     queryKey: ["appointment", patient_id, id],
     queryFn: () => getAppointmentByID(patient_id, id),
     enabled: !!patient_id && !!id,
-    throwOnError: true,
   });
 };
 
@@ -49,7 +46,6 @@ export const useUpdateAppointment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -61,6 +57,5 @@ export const useDeleteAppointment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
     },
-    throwOnError: true,
   });
 };

@@ -13,7 +13,6 @@ export const useFetchBillings = () => {
   return useQuery({
     queryKey: ["billings"],
     queryFn: fetchBillings,
-    throwOnError: true,
   });
 };
 
@@ -25,7 +24,6 @@ export const useCreateBilling = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billings"] });
     },
-    throwOnError: true,
   });
 };
 
@@ -35,7 +33,6 @@ export const useGetBillingByID = (id) => {
     queryKey: ["billing", id],
     queryFn: () => getBillingByID(id),
     enabled: !!id,
-    throwOnError: true,
   });
 };
 
@@ -50,7 +47,6 @@ export const useUpdateBilling = () => {
     onError: () => {
       console.log(billings);
     },
-    throwOnError: true,
   });
 };
 
@@ -62,6 +58,5 @@ export const useDeleteBilling = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billings"] });
     },
-    throwOnError: true,
   });
 };
