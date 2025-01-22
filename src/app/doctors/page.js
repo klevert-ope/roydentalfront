@@ -1,6 +1,7 @@
 "use client";
 
 import ProtectedRoute, {ROLES}  from "@/components/ProtectedRoute";
+import SideBarComponent from '@/components/SideBarComponent';
 import React from "react";
 import { LoadingPage } from "@/components/LoadingPage";
 import ErrorComponent from "@/components/ErrorComponent";
@@ -27,9 +28,11 @@ export default function Doctors() {
 
   return (
     <ProtectedRoute roles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
+      <SideBarComponent>
       <div className="container mx-auto px-2 w-full my-14">
         <DoctorsPage doctors={Doctors} />
       </div>
+      </SideBarComponent>
     </ProtectedRoute>
   );
 }

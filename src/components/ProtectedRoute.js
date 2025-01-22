@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/utility/AuthProvider";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect} from "react";
 import { LoadingPage } from "@/components/LoadingPage";
 
 /**
@@ -15,38 +15,27 @@ import { LoadingPage } from "@/components/LoadingPage";
 const ProtectedRoute = ({ children, roles = [] }) => {
   const { user, isLoading: isAuthLoading, accessToken, refreshToken } = useAuth();
   const router = useRouter();
-  const [authResolved, setAuthResolved] = useState(false);
-
-  // Validate tokens
-  const areTokensValid = useMemo(() => !!accessToken && !!refreshToken, [accessToken, refreshToken]);
 
   // Check if user is authorized
-  const isAuthorized = useMemo(() => {
-    if (isAuthLoading) return false;
-    if (!areTokensValid) return false;
-    if (!user) return false;
-
-    return roles.length === 0 || (user.role && roles.includes(user.role));
-  }, [user, roles, isAuthLoading, areTokensValid]);
+  const isAuthorized = !isAuthLoading && !!accessToken && !!refreshToken && user &&
+      (roles.length === 0 || (user.role && roles.includes(user.role)));
 
   // Handle redirection logic
   useEffect(() => {
     if (isAuthLoading) return;
 
-    if (!areTokensValid) {
+    if (!accessToken || !refreshToken) {
       router.replace("/login");
       return;
     }
 
-    if (isAuthorized) {
-      setAuthResolved(true);
-    } else {
+    if (!isAuthorized) {
       const redirectPath = user ? "/unauthorized" : "/login";
       router.replace(redirectPath);
     }
-  }, [isAuthorized, isAuthLoading, router, areTokensValid, user]);
+  }, [isAuthLoading, isAuthorized, router, user, accessToken, refreshToken]);
 
-  if (isAuthLoading || !authResolved) {
+  if (isAuthLoading || !isAuthorized) {
     return <LoadingPage />;
   }
 

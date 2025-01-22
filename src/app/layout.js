@@ -1,11 +1,10 @@
 import { AuthProvider } from "@/utility/AuthProvider";
-import ClientLayout from "@/features/ClientLayout";
 import ReactQueryProvider from "@/utility/QueryProvider";
 import { Inter } from "next/font/google";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { cookies } from "next/headers";
 import { CookiesProvider } from "next-client-cookies/server";
 import "./globals.css";
+import React from 'react';
+import {Toaster} from 'react-hot-toast';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -18,8 +17,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const cookieStore = await cookies();
-  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   return (
     <html lang="en">
       <head>
@@ -35,11 +32,10 @@ export default async function RootLayout({ children }) {
         <CookiesProvider>
           <AuthProvider>
             <ReactQueryProvider>
-              <SidebarProvider defaultOpen={defaultOpen}>
-                <ClientLayout>
-                  {children}
-                </ClientLayout>
-              </SidebarProvider>
+                  <main>
+                    {children}
+                  </main>
+                <Toaster />
             </ReactQueryProvider>
           </AuthProvider>
         </CookiesProvider>

@@ -39,9 +39,12 @@ export const AuthProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
       setAccessToken(storedAccessToken);
       setRefreshToken(storedRefreshToken);
+    } else {
+      // Redirect to log in if cookies are missing
+      router.replace("/login");
     }
-    setIsLoading(false);
-  }, [cookies]);
+    setIsLoading(false); // Set loading to false once cookie check is complete
+  }, [cookies, router]); // Run this effect when cookies or router change
 
   /**
    * Logs in the user and sets the authentication state.
@@ -104,18 +107,11 @@ export const AuthProvider = ({ children }) => {
     isLoading,
     accessToken,
     refreshToken,
-  }), [
-    user,
-    login,
-    logoff,
-    isLoading,
-    accessToken,
-    refreshToken,
-  ]);
+  }), [user, login, logoff, isLoading, accessToken, refreshToken]);
 
   return (
       <AuthContext.Provider value={value}>
-        {children}
+        {isLoading ? null : children}
       </AuthContext.Provider>
   );
 };
