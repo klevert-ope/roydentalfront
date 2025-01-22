@@ -64,7 +64,7 @@ label {
 
 /* Remove native appearance for better customization */
 input[type="date"],
-input[type="datetime-local"]{
+input[type="datetime-local"] {
   -webkit-appearance: none;
   appearance: none;
   padding: 5px;

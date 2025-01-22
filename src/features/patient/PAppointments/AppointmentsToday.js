@@ -28,14 +28,14 @@ const AppointmentCard = React.memo(({ appointment }) => {
           <p>{appointment.doctor_id}</p>
         </Label>
         <Label>
-          Patient ID
+          Patient
           <p>
             <Link
               href={`/patients/${appointment.patient_id}`}
               title="View Patient details"
               prefetch={true}
             >
-              {appointment.patient_id}
+              {appointment.patient.first_name} {appointment.patient.last_name}
             </Link>
           </p>
         </Label>
