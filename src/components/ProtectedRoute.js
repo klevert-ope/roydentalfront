@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/utility/AuthProvider";
 import React, { useEffect, useMemo, useState } from "react";
 import { LoadingPage } from "@/components/LoadingPage";
-import { useCookies } from "next-client-cookies";
 
 /**
  * ProtectedRoute component ensures that only authorized users can access certain routes.
@@ -14,30 +13,26 @@ import { useCookies } from "next-client-cookies";
  * @returns {React.ReactElement} The rendered component.
  */
 const ProtectedRoute = ({ children, roles = [] }) => {
-  const { user, isLoading: isAuthLoading } = useAuth();
+  const { user, isLoading: isAuthLoading, accessToken, refreshToken } = useAuth();
   const router = useRouter();
-  const cookies = useCookies();
   const [authResolved, setAuthResolved] = useState(false);
+
+  // Helper function to check if tokens are valid
+  const areTokensValid = () => {
+    return !!accessToken && !!refreshToken;
+  };
 
   // Determine if the user is authorized
   const isAuthorized = useMemo(() => {
-    if (isAuthLoading || !cookies) return false;
-
-    const accessToken = cookies.get("accessToken");
-    const refreshToken = cookies.get("refreshToken");
-
-    if (!accessToken || !refreshToken) return false;
-
-    return user && (!roles.length || roles.includes(user.role));
-  }, [user, roles, cookies, isAuthLoading]);
+    if (isAuthLoading) return false;
+    if (!areTokensValid()) return false;
+    return user && (!roles.length || (user.role && roles.includes(user.role)));
+  }, [user, roles, isAuthLoading, accessToken, refreshToken]);
 
   useEffect(() => {
     if (isAuthLoading) return;
 
-    const accessToken = cookies.get("accessToken");
-    const refreshToken = cookies.get("refreshToken");
-
-    if (!accessToken || !refreshToken) {
+    if (!areTokensValid()) {
       router.replace("/login");
       return;
     }
@@ -48,7 +43,7 @@ const ProtectedRoute = ({ children, roles = [] }) => {
       const redirectPath = user ? "/unauthorized" : "/login";
       router.replace(redirectPath);
     }
-  }, [isAuthorized, isAuthLoading, router, user, cookies]);
+  }, [isAuthorized, isAuthLoading, router, user, accessToken, refreshToken]);
 
   if (isAuthLoading || !authResolved) {
     return <LoadingPage />;

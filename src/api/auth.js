@@ -100,7 +100,7 @@ export const getUserProfile = async () => {
       },
     });
 
-    return response.data.user;
+    return response.data;
   } catch (error) {
     handleAxiosError(error);
   }

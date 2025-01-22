@@ -17,12 +17,12 @@ const UserProfile = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className={"text-center"}>{userProfile.role.name}</CardTitle>
+        <CardTitle className={"text-center"}>{userProfile.user.role.name}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className={"mb-4"}>
-          <p>{userProfile.username}</p>
-          <p>{userProfile.email}</p>
+          <p>{userProfile.user.username}</p>
+          <p>{userProfile.user.email}</p>
         </div>
         <Button variant={"destructive"} onClick={logoff} className={"w-full"}>
           Logoff

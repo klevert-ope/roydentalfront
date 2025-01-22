@@ -26,15 +26,19 @@ export const AuthProvider = ({ children }) => {
   const cookies = useCookies();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
 
   useEffect(() => {
     // Retrieve user and tokens from cookies
     const storedUser = cookies.get("user");
-    const accessToken = cookies.get("accessToken");
-    const refreshToken = cookies.get("refreshToken");
+    const storedAccessToken = cookies.get("accessToken");
+    const storedRefreshToken = cookies.get("refreshToken");
 
-    if (storedUser && accessToken && refreshToken) {
+    if (storedUser && storedAccessToken && storedRefreshToken) {
       setUser(JSON.parse(storedUser));
+      setAccessToken(storedAccessToken);
+      setRefreshToken(storedRefreshToken);
     }
     setIsLoading(false);
   }, [cookies]);
@@ -66,6 +70,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       setUser(userInfo);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
       router.replace("/");
     } catch (error) {
       toast.error("Login failed. Please check your credentials.");
@@ -78,6 +84,8 @@ export const AuthProvider = ({ children }) => {
   const logoff = async () => {
     try {
       setUser(null);
+      setAccessToken(null);
+      setRefreshToken(null);
       // Remove user and tokens from cookies
       cookies.remove("user");
       cookies.remove("accessToken");
@@ -89,17 +97,26 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Memoize the context value to avoid unnecessary re-renders
-  const value = useMemo(() => ({ user, login, logoff, isLoading }), [
+  const value = useMemo(() => ({
     user,
     login,
     logoff,
     isLoading,
+    accessToken,
+    refreshToken,
+  }), [
+    user,
+    login,
+    logoff,
+    isLoading,
+    accessToken,
+    refreshToken,
   ]);
 
   return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
+      <AuthContext.Provider value={value}>
+        {children}
+      </AuthContext.Provider>
   );
 };
 
