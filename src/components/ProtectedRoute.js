@@ -8,8 +8,8 @@ import { LoadingPage } from "@/components/LoadingPage";
 /**
  * ProtectedRoute component ensures that only authorized users can access certain routes.
  * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The children components to be rendered if authorized.
- * @param {string[]} [props.roles=[]] - The roles that are allowed to access the route.
+ * @param {React.ReactNode} props.children - The children components to render if authorized.
+ * @param {string[]} props.roles - The roles allowed accessing the route. Defaults to an empty array (no restrictions).
  * @returns {React.ReactElement} The rendered component.
  */
 const ProtectedRoute = ({ children, roles = [] }) => {
@@ -17,22 +17,23 @@ const ProtectedRoute = ({ children, roles = [] }) => {
   const router = useRouter();
   const [authResolved, setAuthResolved] = useState(false);
 
-  // Helper function to check if tokens are valid
-  const areTokensValid = () => {
-    return !!accessToken && !!refreshToken;
-  };
+  // Validate tokens
+  const areTokensValid = useMemo(() => !!accessToken && !!refreshToken, [accessToken, refreshToken]);
 
-  // Determine if the user is authorized
+  // Check if user is authorized
   const isAuthorized = useMemo(() => {
     if (isAuthLoading) return false;
-    if (!areTokensValid()) return false;
-    return user && (!roles.length || (user.role && roles.includes(user.role)));
-  }, [user, roles, isAuthLoading, accessToken, refreshToken]);
+    if (!areTokensValid) return false;
+    if (!user) return false;
 
+    return roles.length === 0 || (user.role && roles.includes(user.role));
+  }, [user, roles, isAuthLoading, areTokensValid]);
+
+  // Handle redirection logic
   useEffect(() => {
     if (isAuthLoading) return;
 
-    if (!areTokensValid()) {
+    if (!areTokensValid) {
       router.replace("/login");
       return;
     }
@@ -43,13 +44,19 @@ const ProtectedRoute = ({ children, roles = [] }) => {
       const redirectPath = user ? "/unauthorized" : "/login";
       router.replace(redirectPath);
     }
-  }, [isAuthorized, isAuthLoading, router, user, accessToken, refreshToken]);
+  }, [isAuthorized, isAuthLoading, router, areTokensValid, user]);
 
   if (isAuthLoading || !authResolved) {
     return <LoadingPage />;
   }
 
   return children;
+};
+
+export const ROLES = {
+  ADMIN: "Admin",
+  DOCTOR: "Doctor",
+  RECEPTIONIST: "Receptionist",
 };
 
 export default ProtectedRoute;

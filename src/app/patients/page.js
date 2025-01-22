@@ -2,7 +2,7 @@
 import ErrorComponent from "@/components/ErrorComponent";
 import React, { useMemo } from "react";
 import { LoadingPage } from "@/components/LoadingPage";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute, {ROLES} from "@/components/ProtectedRoute";
 import { useFetchPatients } from "@/hooks/usePatients";
 import dynamic from "next/dynamic";
 
@@ -30,7 +30,7 @@ export default function Patients() {
   }
 
   return (
-    <ProtectedRoute roles={["Admin", "Doctor", "Receptionist"]}>
+    <ProtectedRoute roles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
       <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
         <PatientsTable data={Patients} />
       </div>

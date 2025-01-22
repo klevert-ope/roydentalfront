@@ -1,6 +1,6 @@
 "use client";
 
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute, {ROLES} from "@/components/ProtectedRoute";
 import React from "react";
 import { LoadingPage } from "@/components/LoadingPage";
 import ErrorComponent from "@/components/ErrorComponent";
@@ -35,7 +35,7 @@ export default function Billings() {
   }
 
   return (
-    <ProtectedRoute roles={["Admin"]}>
+    <ProtectedRoute roles={[ROLES.ADMIN]}>
       <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
         <BillingsTable data={Billings} />
         <BillingCharts data={Billings} />
