@@ -408,7 +408,7 @@ const PatientUpForm = ({ onSubmit, defaultValues, onClose, isLoading }) => {
             Email
             <Input
               type="email"
-              {...register("email", { required: "This field is required" })}
+              {...register("email")}
             />
           </Label>
           {errors.email && (
