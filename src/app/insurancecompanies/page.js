@@ -1,7 +1,7 @@
 "use client";
 
-import ProtectedRoute , {ROLES} from "@/components/ProtectedRoute";
-import SideBarComponent from '@/components/SideBarComponent';
+import ProtectedRoute, { ROLES } from "@/components/ProtectedRoute";
+import SideBarComponent from "@/components/SideBarComponent";
 import React from "react";
 import { LoadingPage } from "@/components/LoadingPage";
 import ErrorComponent from "@/components/ErrorComponent";
@@ -35,9 +35,9 @@ export default function InsuranceCompanies() {
   return (
     <ProtectedRoute roles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
       <SideBarComponent>
-      <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
-        <InsuranceCompaniesPage insuranceCompanies={InsuranceCompanies} />
-      </div>
+        <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
+          <InsuranceCompaniesPage insuranceCompanies={InsuranceCompanies} />
+        </div>
       </SideBarComponent>
     </ProtectedRoute>
   );

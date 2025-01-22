@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/utility/AuthProvider";
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { LoadingPage } from "@/components/LoadingPage";
 
 /**
@@ -13,12 +13,14 @@ import { LoadingPage } from "@/components/LoadingPage";
  * @returns {React.ReactElement} The rendered component.
  */
 const ProtectedRoute = ({ children, roles = [] }) => {
-  const { user, isLoading: isAuthLoading, accessToken, refreshToken } = useAuth();
+  const { user, isLoading: isAuthLoading, accessToken, refreshToken } =
+    useAuth();
   const router = useRouter();
 
   // Check if user is authorized
-  const isAuthorized = !isAuthLoading && !!accessToken && !!refreshToken && user &&
-      (roles.length === 0 || (user.role && roles.includes(user.role)));
+  const isAuthorized = !isAuthLoading && !!accessToken && !!refreshToken &&
+    user &&
+    (roles.length === 0 || (user.role && roles.includes(user.role)));
 
   // Handle redirection logic
   useEffect(() => {

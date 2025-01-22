@@ -3,8 +3,8 @@ import ReactQueryProvider from "@/utility/QueryProvider";
 import { Inter } from "next/font/google";
 import { CookiesProvider } from "next-client-cookies/server";
 import "./globals.css";
-import React from 'react';
-import {Toaster} from 'react-hot-toast';
+import React from "react";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,10 +32,10 @@ export default async function RootLayout({ children }) {
         <CookiesProvider>
           <AuthProvider>
             <ReactQueryProvider>
-                  <main>
-                    {children}
-                  </main>
-                <Toaster />
+              <main>
+                {children}
+              </main>
+              <Toaster />
             </ReactQueryProvider>
           </AuthProvider>
         </CookiesProvider>

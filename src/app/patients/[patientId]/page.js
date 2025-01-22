@@ -1,6 +1,6 @@
 "use client";
-import ProtectedRoute, {ROLES} from "@/components/ProtectedRoute";
-import SideBarComponent from '@/components/SideBarComponent';
+import ProtectedRoute, { ROLES } from "@/components/ProtectedRoute";
+import SideBarComponent from "@/components/SideBarComponent";
 import React, { useMemo } from "react";
 import { useFetchEmergencyContacts } from "@/hooks/useEmergencyContacts";
 import { useGetPatientByID } from "@/hooks/usePatients";
@@ -121,25 +121,28 @@ export default function Patient() {
   return (
     <ProtectedRoute roles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
       <SideBarComponent>
-      <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
-        <h1 className="text-center mb-8">PATIENT INFORMATION</h1>
-        <PatientsAction editingPatient={Patient} />
-        <PatientDetails data={Patient} />
-        <EmergencyContactsSection
-          emergencyContacts={EmergencyContacts}
-          patientId={patientId}
-        />
-        <AppointmentsSection
-          appointments={Appointments}
-          patientId={patientId}
-        />
-        <ExaminationSection examinations={Examinations} patientId={patientId} />
-        <TreatmentPlanSection
-          treatmentPlans={TreatmentPlans}
-          patientId={patientId}
-        />
-        <BillingSection billings={Billings} patientId={patientId} />
-      </div>
+        <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
+          <h1 className="text-center mb-8">PATIENT INFORMATION</h1>
+          <PatientsAction editingPatient={Patient} />
+          <PatientDetails data={Patient} />
+          <EmergencyContactsSection
+            emergencyContacts={EmergencyContacts}
+            patientId={patientId}
+          />
+          <AppointmentsSection
+            appointments={Appointments}
+            patientId={patientId}
+          />
+          <ExaminationSection
+            examinations={Examinations}
+            patientId={patientId}
+          />
+          <TreatmentPlanSection
+            treatmentPlans={TreatmentPlans}
+            patientId={patientId}
+          />
+          <BillingSection billings={Billings} patientId={patientId} />
+        </div>
       </SideBarComponent>
     </ProtectedRoute>
   );

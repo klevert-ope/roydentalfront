@@ -110,9 +110,9 @@ export const AuthProvider = ({ children }) => {
   }), [user, login, logoff, isLoading, accessToken, refreshToken]);
 
   return (
-      <AuthContext.Provider value={value}>
-        {isLoading ? null : children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={value}>
+      {isLoading ? null : children}
+    </AuthContext.Provider>
   );
 };
 

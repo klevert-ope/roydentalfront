@@ -2,7 +2,7 @@
 import { axiosInstance } from "@/config/axiosInstance";
 import { handleAxiosError } from "@/utility/utility";
 import { cookies } from "next/headers";
-import {redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 // Auth routes (Public APIs, No token required)
 export const register = async (userData) => {
@@ -81,7 +81,7 @@ export const adminManageUsers = async () => {
     });
     return response.data || [];
   } catch (error) {
-    redirect("/login")
+    redirect("/login");
     handleAxiosError(error);
   }
 };
@@ -104,7 +104,7 @@ export const getUserProfile = async () => {
 
     return response.data;
   } catch (error) {
-    redirect("/login")
+    redirect("/login");
     handleAxiosError(error);
   }
 };
