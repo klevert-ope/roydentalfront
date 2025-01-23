@@ -131,7 +131,7 @@ const AppointmentForm = (
           <span className="text-red-700">{errors.status.message}</span>
         )}
       </div>
-      <Button type="submit" className="w-full">Submit</Button>
+      <Button type="submit" className="w-full mt-4">Submit</Button>
     </form>
   );
 };

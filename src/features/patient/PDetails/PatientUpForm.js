@@ -429,7 +429,7 @@ const PatientUpForm = ({ onSubmit, defaultValues, onClose, isLoading }) => {
         </div>
       </div>
       <div className={"w-full flex justify-end mt-4"}>
-        <Button type="submit" className={"max-w-56"}>Submit</Button>
+        <Button type="submit" className={"max-w-56 mt-4"}>Submit</Button>
       </div>
     </form>
   );

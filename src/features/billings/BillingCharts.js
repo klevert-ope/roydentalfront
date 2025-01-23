@@ -159,7 +159,7 @@ const BillingCharts = ({ data }) => {
 
   return (
     <div>
-      <h1 className="text-center">Billing Stats</h1>
+      <h1 className="text-center mb-4">Billing Stats</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ChartCard title="Total Billing Amount Over Time">
           <ChartContainer config={chartConfig}>

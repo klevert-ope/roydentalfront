@@ -44,23 +44,25 @@ body {
     --sidebar-ring: rgb(200, 138, 2);
   }
 }
-
 @layer base {
   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     @apply border-border;
-  }
+    }
   body {
     @apply bg-background text-foreground;
+    }
   }
-}
 
 input {
   color: white;
-}
+  }
 
 label {
   color: var(--primary);
-}
+  }
 
 /* Remove native appearance for better customization */
 input[type="date"],
@@ -69,36 +71,37 @@ input[type="datetime-local"] {
   appearance: none;
   padding: 5px;
   font-size: 16px; /* Adjust for readability */
-}
+  }
 
 /* Style for the calendar picker for date input */
 input[type="date"]::-webkit-calendar-picker-indicator {
   content: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c88ac8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-calendar-days'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 14h.01'/%3E%3Cpath d='M12 14h.01'/%3E%3Cpath d='M16 14h.01'/%3E%3Cpath d='M8 18h.01'/%3E%3Cpath d='M12 18h.01'/%3E%3Cpath d='M16 18h.01'/%3E%3C/svg%3E");
   background-size: contain;
   cursor: pointer;
-}
+  }
 
-/* Style for the clock picker for time input */
 /* Style for the clock picker for datetime-local input */
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   content: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c88ac8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-calendar-clock'%3E%3Cpath d='M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5'/%3E%3Cpath d='M16 2v4'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M3 10h5'/%3E%3Cpath d='M17.5 17.5 16 16.3V14'/%3E%3Ccircle cx='16' cy='16' r='6'/%3E%3C/svg%3E");
   background-size: contain;
   cursor: pointer;
-}
+  }
 
-/* Add some padding for better input field visibility */
+/* Add padding for better input field visibility */
 input[type="date"],
 input[type="time"] {
-  padding-right: 2rem; /* Adjust for the size of the custom icon */
-}
+  padding-right: calc(2rem + 0.5rem); /* Dynamic padding for custom icons */
+  }
 
+/* Custom Utility Classes */
 @layer utilities {
   .popover-content-width-full {
     width: var(--radix-popover-trigger-width);
     max-height: var(--radix-popover-content-available-height);
+    }
   }
-}
 
+/* ProseMirror Styling */
 .ProseMirror {
   outline: none;
   white-space: pre-wrap;
@@ -109,4 +112,4 @@ input[type="time"] {
   resize: none;
   overflow-wrap: anywhere;
   overflow-y: auto;
-}
+  }

@@ -88,7 +88,7 @@ const DoctorForm = ({ onSubmit, defaultValues, onClose, isLoading }) => {
           <span className="text-red-700">{errors.last_name.message}</span>
         )}
       </div>
-      <Button className={"w-full"} type="submit">Submit</Button>
+      <Button className={"w-full mt-4"} type="submit">Submit</Button>
     </form>
   );
 };

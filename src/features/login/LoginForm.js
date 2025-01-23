@@ -61,7 +61,7 @@ export default function LoginForm() {
               </span>
             )}
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full mt-4">
             Login
           </Button>
         </form>

@@ -148,7 +148,7 @@ export default function CreateUserForm({ onSubmit, defaultValues, onClose }) {
           </span>
         )}
       </div>
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="w-full mt-4">
         Create User
       </Button>
     </form>

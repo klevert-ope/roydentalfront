@@ -95,7 +95,7 @@ const EmergencyContactForm = (
         )}
       </div>
 
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="w-full mt-4">
         Submit
       </Button>
     </form>

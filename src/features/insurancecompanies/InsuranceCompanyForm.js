@@ -61,7 +61,7 @@ const InsuranceCompanyForm = (
           <span className="text-red-700">{errors.name.message}</span>
         )}
       </div>
-      <Button className={"w-full"} type="submit">Submit</Button>
+      <Button className={"w-full mt-4"} type="submit">Submit</Button>
     </form>
   );
 };

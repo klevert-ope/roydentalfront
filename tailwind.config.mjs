@@ -96,7 +96,7 @@ export default {
 					    marginTop: '0.5rem',
 					    marginBottom: '0.5rem',
 				    },
-				    "h3,h4,h5,h6,a,p, table,strong": {
+				    "h4,h5,h6,a,p, table,strong": {
 					    color: "white"
 				    },
 				    h1: {
@@ -112,6 +112,7 @@ export default {
 				    h3: {
 					    marginTop: '0.5rem',
 					    marginBottom: '0.5rem',
+					    color: "var(--foreground)"
 				    },
 			    },
 		    },

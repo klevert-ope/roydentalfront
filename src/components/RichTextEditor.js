@@ -29,9 +29,7 @@ const RichTextEditor = ({ name, defaultValue = "", setValue }) => {
     ],
     editorProps: {
       attributes: {
-        class: "prose text-wrap focus:outline-none" +
-          " prose-headings:text-[var(--foreground)] prose-p:text-white" +
-          " prose-a:text-white prose-strong:text-white",
+        class: "prose text-wrap focus:outline-none",
       },
     },
     content: defaultValue,
@@ -110,7 +108,7 @@ const RichTextEditor = ({ name, defaultValue = "", setValue }) => {
   return (
     <div className="w-full">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-2 p-2 border border-gray-200 rounded-md max-w-[625px]">
+      <div className="flex flex-wrap justify-center items-center gap-2 p-2 border border-gray-200 rounded-md w-full">
         {/* Text Styles */}
         <div className="flex gap-2">
           {toolbarButtons.map(({ action, icon: Icon, active }) => (
