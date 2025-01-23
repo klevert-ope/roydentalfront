@@ -79,9 +79,8 @@ export const adminManageUsers = async () => {
         accessToken: token,
       },
     });
-    return response.data || [];
+    return response.data;
   } catch (error) {
-    redirect("/login");
     handleAxiosError(error);
   }
 };

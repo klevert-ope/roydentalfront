@@ -6,20 +6,25 @@ import {
   getUserProfile,
   register,
 } from "@/api/auth";
+import { useAuth } from "@/utility/AuthProvider";
 
 // Fetch user
 export const useUserData = () => {
+  const { user } = useAuth();
   return useQuery({
     queryKey: ["user"],
     queryFn: getUserProfile,
+    enabled: !!user && !!user.role,
   });
 };
 
 // Fetch all users
 export const useManageUsers = () => {
+  const { user } = useAuth();
   return useQuery({
     queryKey: ["users"],
     queryFn: adminManageUsers,
+    enabled: user && user.role === "Admin",
   });
 };
 

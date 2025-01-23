@@ -1,10 +1,13 @@
+import ErrorBoundary from "@/components/ErrorComponent";
 import SideBarComponent from "@/components/SideBarComponent";
 import Unauthorized from "@/features/Unauthorized/Unauthorized";
 
 export default function UnauthorizedPage() {
   return (
-    <SideBarComponent>
-      <Unauthorized />
-    </SideBarComponent>
+    <ErrorBoundary>
+      <SideBarComponent>
+        <Unauthorized />
+      </SideBarComponent>
+    </ErrorBoundary>
   );
 }

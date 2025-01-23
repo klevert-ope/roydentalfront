@@ -1,10 +1,10 @@
 "use client";
 
+import ErrorBoundary from "@/components/ErrorComponent";
 import ProtectedRoute, { ROLES } from "@/components/ProtectedRoute";
 import SideBarComponent from "@/components/SideBarComponent";
 import React from "react";
 import { LoadingPage } from "@/components/LoadingPage";
-import ErrorComponent from "@/components/ErrorComponent";
 import { useFetchBillings } from "@/hooks/useBillings";
 import dynamic from "next/dynamic";
 
@@ -22,27 +22,23 @@ const BillingCharts = dynamic(
 );
 
 export default function Billings() {
-  const { data: Billings = [], isPending: isLoadingBillings, error } =
+  const { data: Billings = [], isPending: isLoadingBillings } =
     useFetchBillings();
 
   if (isLoadingBillings) {
     return <LoadingPage />;
   }
 
-  if (error) {
-    return (
-      <ErrorComponent message="Error loading billings. Please try again later." />
-    );
-  }
-
   return (
-    <ProtectedRoute roles={[ROLES.ADMIN]}>
-      <SideBarComponent>
-        <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
-          <BillingsTable data={Billings} />
-          <BillingCharts data={Billings} />
-        </div>
-      </SideBarComponent>
-    </ProtectedRoute>
+    <ErrorBoundary>
+      <ProtectedRoute roles={[ROLES.ADMIN]}>
+        <SideBarComponent>
+          <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
+            <BillingsTable data={Billings} />
+            <BillingCharts data={Billings} />
+          </div>
+        </SideBarComponent>
+      </ProtectedRoute>
+    </ErrorBoundary>
   );
 }

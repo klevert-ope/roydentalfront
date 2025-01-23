@@ -2,27 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/utility/AuthProvider";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { LoadingPage } from "@/components/LoadingPage";
 
-/**
- * ProtectedRoute component ensures that only authorized users can access certain routes.
- * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The children components to render if authorized.
- * @param {string[]} props.roles - The roles allowed accessing the route. Defaults to an empty array (no restrictions).
- * @returns {React.ReactElement} The rendered component.
- */
 const ProtectedRoute = ({ children, roles = [] }) => {
   const { user, isLoading: isAuthLoading, accessToken, refreshToken } =
     useAuth();
   const router = useRouter();
 
-  // Check if user is authorized
-  const isAuthorized = !isAuthLoading && !!accessToken && !!refreshToken &&
-    user &&
-    (roles.length === 0 || (user.role && roles.includes(user.role)));
+  // Determine if the user is authorized
+  const isAuthorized = useMemo(() => {
+    if (isAuthLoading || !accessToken || !refreshToken || !user) return false;
+    return roles.length === 0 || roles.includes(user.role);
+  }, [isAuthLoading, accessToken, refreshToken, user, roles]);
 
-  // Handle redirection logic
+  // Redirect logic
   useEffect(() => {
     if (isAuthLoading) return;
 
@@ -32,10 +26,16 @@ const ProtectedRoute = ({ children, roles = [] }) => {
     }
 
     if (!isAuthorized) {
-      const redirectPath = user ? "/unauthorized" : "/login";
-      router.replace(redirectPath);
+      router.replace(user ? "/unauthorized" : "/login");
     }
-  }, [isAuthLoading, isAuthorized, router, user, accessToken, refreshToken]);
+  }, [
+    isAuthLoading,
+    isAuthorized,
+    router,
+    accessToken,
+    refreshToken,
+    user?.role,
+  ]);
 
   if (isAuthLoading || !isAuthorized) {
     return <LoadingPage />;
@@ -48,6 +48,10 @@ export const ROLES = {
   ADMIN: "Admin",
   DOCTOR: "Doctor",
   RECEPTIONIST: "Receptionist",
+};
+
+ProtectedRoute.defaultProps = {
+  roles: [],
 };
 
 export default ProtectedRoute;
