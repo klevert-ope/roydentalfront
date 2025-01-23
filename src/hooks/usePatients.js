@@ -1,5 +1,4 @@
 "use client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createPatient,
   deleteAllPatientData,
@@ -8,12 +7,16 @@ import {
   getPatientByID,
   updatePatient,
 } from "@/api/patients";
+import {useAuth} from "@/utility/AuthProvider";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch all patients
 export const useFetchPatients = () => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["patients"],
     queryFn: fetchPatients,
+    enabled: !!user && !!user.role,
   });
 };
 
@@ -30,10 +33,11 @@ export const useCreatePatient = () => {
 
 // Get a patient by ID
 export const useGetPatientByID = (patient_id) => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["patient", patient_id],
     queryFn: () => getPatientByID(patient_id),
-    enabled: !!patient_id,
+    enabled: !!patient_id && !!user && !!user.role,
   });
 };
 

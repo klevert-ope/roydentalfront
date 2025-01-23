@@ -1,5 +1,8 @@
 "use client";
 
+import {login as apiLogin} from "@/api/auth";
+import {useCookies} from "next-client-cookies";
+import {useRouter} from "next/navigation";
 import React, {
   createContext,
   useContext,
@@ -7,9 +10,6 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { login as apiLogin } from "@/api/auth";
-import { useCookies } from "next-client-cookies";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 // Create the AuthContext
@@ -57,17 +57,15 @@ export const AuthProvider = ({ children }) => {
 
       // Set user info and tokens in cookies
       cookies.set("user", JSON.stringify(userInfo), {
-        expires: 7,
-        secure: true,
-        sameSite: "Strict",
-      });
-      cookies.set("accessToken", accessToken, {
         expires: 1,
         secure: true,
         sameSite: "Strict",
       });
+      cookies.set("accessToken", accessToken, {
+        secure: true,
+        sameSite: "Strict",
+      });
       cookies.set("refreshToken", refreshToken, {
-        expires: 7,
         secure: true,
         sameSite: "Strict",
       });

@@ -1,5 +1,4 @@
 "use client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createTreatmentPlan,
   deleteTreatmentPlan,
@@ -7,12 +6,16 @@ import {
   getTreatmentPlanByID,
   updateTreatmentPlan,
 } from "@/api/treatmentplans";
+import {useAuth} from "@/utility/AuthProvider";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch all treatment plans
 export const useFetchTreatmentPlans = () => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["treatmentPlans"],
     queryFn: fetchTreatmentPlans,
+    enabled: !!user && !!user.role,
   });
 };
 
@@ -30,10 +33,11 @@ export const useCreateTreatmentPlan = () => {
 
 // Get a treatment plan by patient ID and treatment plan ID
 export const useGetTreatmentPlanByID = (patient_id, id) => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["treatmentPlan", patient_id, id],
     queryFn: () => getTreatmentPlanByID(patient_id, id),
-    enabled: !!patient_id && !!id,
+    enabled: !!patient_id && !!id && !!user && !!user.role,
   });
 };
 

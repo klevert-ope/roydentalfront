@@ -1,3 +1,4 @@
+import {Button} from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,8 +7,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
-import React from "react";
 import {
   Table,
   TableBody,
@@ -17,7 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import {Ellipsis} from "lucide-react";
+import React from "react";
 
 const BillingsTable = ({ billings, onEdit, onDelete }) => {
   return (
@@ -38,7 +38,7 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
       </TableHeader>
       <TableBody>
         {billings.map((billing) => (
-          <TableRow key={billing.billing_id}>
+            <TableRow key={billing.billing_id} className="whitespace-nowrap">
             <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -70,7 +70,7 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
-            <TableCell className="font-medium whitespace-nowrap">
+              <TableCell className="font-medium">
               {billing.doctor_id}
             </TableCell>
             <TableCell>{billing.procedure}</TableCell>

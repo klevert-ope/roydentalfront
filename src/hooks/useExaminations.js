@@ -1,5 +1,4 @@
 "use client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createExamination,
   deleteExamination,
@@ -7,12 +6,16 @@ import {
   getExaminationByID,
   updateExamination,
 } from "@/api/examinations";
+import {useAuth} from "@/utility/AuthProvider";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch all examinations
 export const useFetchExaminations = () => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["examinations"],
     queryFn: fetchExaminations,
+    enabled: !!user && !!user.role,
   });
 };
 
@@ -30,10 +33,11 @@ export const useCreateExamination = () => {
 
 // Get an examination by patient ID and examination ID
 export const useGetExaminationByID = (patient_id, id) => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["examination", patient_id, id],
     queryFn: () => getExaminationByID(patient_id, id),
-    enabled: !!patient_id && !!id,
+    enabled: !!patient_id && !!id && !!user && !!user.role,
   });
 };
 

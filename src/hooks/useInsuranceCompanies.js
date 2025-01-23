@@ -1,5 +1,4 @@
 "use client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createInsuranceCompany,
   deleteInsuranceCompany,
@@ -7,12 +6,16 @@ import {
   getInsuranceCompanyByID,
   updateInsuranceCompany,
 } from "@/api/insurancecompanies";
+import {useAuth} from "@/utility/AuthProvider";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch all insurance companies
 export const useFetchInsuranceCompanies = () => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["insuranceCompanies"],
     queryFn: fetchInsuranceCompanies,
+    enabled: !!user && !!user.role,
   });
 };
 
@@ -30,10 +33,11 @@ export const useCreateInsuranceCompany = () => {
 
 // Get an insurance company by ID
 export const useGetInsuranceCompanyByID = (id) => {
+  const {user} = useAuth();
   return useQuery({
     queryKey: ["insuranceCompany", id],
     queryFn: () => getInsuranceCompanyByID(id),
-    enabled: !!id,
+    enabled: !!id && !!user && !!user.role,
   });
 };
 
