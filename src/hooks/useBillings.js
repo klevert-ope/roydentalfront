@@ -47,9 +47,6 @@ export const useUpdateBilling = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billings"] });
     },
-    onError: () => {
-      console.log(billings);
-    },
   });
 };
 
