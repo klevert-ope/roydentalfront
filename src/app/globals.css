@@ -9,14 +9,14 @@ body {
 
 @layer base {
   :root {
-    --background: rgb(17, 35, 88);
+    --background: rgb(17, 35, 75);
     --foreground: rgb(200, 138, 2);
     --card: rgba(9, 9, 11, 0.2);
     --card-foreground: rgb(200, 138, 2);
-    --popover: rgb(17, 35, 88);
+    --popover: rgb(17, 35, 75);
     --popover-foreground: rgb(200, 138, 2);
     --primary: rgb(200, 138, 2);
-    --primary-foreground: rgb(17, 35, 88);
+    --primary-foreground: rgb(17, 35, 75);
     --secondary: rgb(200, 138, 2);
     --secondary-foreground: rgb(9, 9, 11);
     --muted: rgb(9, 9, 11);
@@ -30,14 +30,14 @@ body {
     --ring: rgb(200, 138, 2);
     --chart-1: rgb(175, 87, 219);
     --chart-2: rgb(38, 98, 217);
-    --chart-3: rgb(209, 29, 29);
+    --chart-3: rgb(209, 99, 29);
     --chart-4: rgb(40, 205, 99);
     --chart-5: rgb(226, 54, 112);
     --radius: 0.5rem;
-    --sidebar-background: rgb(17, 35, 88);
+    --sidebar-background: rgb(17, 35, 75);
     --sidebar-foreground: rgb(200, 138, 2);
     --sidebar-primary: rgb(200, 138, 200);
-    --sidebar-primary-foreground: rgb(17, 35, 88);
+    --sidebar-primary-foreground: rgb(17, 35, 75);
     --sidebar-accent: rgb(200 138 2);
     --sidebar-accent-foreground: rgb(9, 9, 11);
     --sidebar-border: rgb(200, 138, 2);
@@ -59,6 +59,10 @@ body {
 input {
   color: white;
 }
+
+button:has(svg) {
+  color: var(--primary);
+  }
 
 label {
   color: var(--primary);

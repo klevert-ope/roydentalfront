@@ -1,12 +1,11 @@
-"use client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   adminManageUsers,
   deleteAccount,
   getUserProfile,
   register,
 } from "@/api/auth";
-import { useAuth } from "@/utility/AuthProvider";
+import {useAuth} from "@/utility/AuthProvider";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch user
 export const useUserData = () => {

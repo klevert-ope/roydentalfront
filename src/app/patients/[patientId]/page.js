@@ -1,60 +1,27 @@
 "use client";
 import ErrorBoundary from "@/components/ErrorComponent";
-import ProtectedRoute, { ROLES } from "@/components/ProtectedRoute";
+import {LoadingPage} from "@/components/LoadingPage";
+import ProtectedRoute, {ROLES} from "@/components/ProtectedRoute";
 import SideBarComponent from "@/components/SideBarComponent";
-import React, { useMemo } from "react";
-import { useFetchEmergencyContacts } from "@/hooks/useEmergencyContacts";
-import { useGetPatientByID } from "@/hooks/usePatients";
-import { useFetchAppointments } from "@/hooks/useAppointments";
-import { useFetchExaminations } from "@/hooks/useExaminations";
-import { useFetchTreatmentPlans } from "@/hooks/useTreatmentPlans";
-import { useFetchBillings } from "@/hooks/useBillings";
-import { useParams } from "next/navigation";
-import { LoadingPage } from "@/components/LoadingPage";
-import dynamic from "next/dynamic";
-
-const PatientsAction = dynamic(
-  () => import("@/features/patient/PDetails/PatientActions"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
-const PatientDetails = dynamic(
-  () => import("@/features/patient/PDetails/patientDetails"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
-const AppointmentsSection = dynamic(
-  () => import("@/features/patient/PAppointments/AppointmentSection"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
-const BillingSection = dynamic(
-  () => import("@/features/patient/PBillings/BillingSection"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
-const EmergencyContactsSection = dynamic(
-  () => import("@/features/patient/PEmergencyContacts/EmergencyContactSection"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
-const ExaminationSection = dynamic(
-  () => import("@/features/patient/PExaminations/ExaminationSection"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
-const TreatmentPlanSection = dynamic(
-  () => import("@/features/patient/PTreatmentPlans/TreatmentPlanSection"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
+import AppointmentsSection
+  from '@/features/patient/PAppointments/AppointmentSection';
+import BillingSection from '@/features/patient/PBillings/BillingSection';
+import PatientsAction from '@/features/patient/PDetails/PatientActions';
+import PatientDetails from '@/features/patient/PDetails/patientDetails';
+import EmergencyContactsSection
+  from '@/features/patient/PEmergencyContacts/EmergencyContactSection';
+import ExaminationSection
+  from '@/features/patient/PExaminations/ExaminationSection';
+import TreatmentPlanSection
+  from '@/features/patient/PTreatmentPlans/TreatmentPlanSection';
+import {useFetchAppointments} from "@/hooks/useAppointments";
+import {useFetchBillings} from "@/hooks/useBillings";
+import {useFetchEmergencyContacts} from "@/hooks/useEmergencyContacts";
+import {useFetchExaminations} from "@/hooks/useExaminations";
+import {useGetPatientByID} from "@/hooks/usePatients";
+import {useFetchTreatmentPlans} from "@/hooks/useTreatmentPlans";
+import {useParams} from "next/navigation";
+import React, {useMemo} from "react";
 
 export default function Patient() {
   const { patientId } = useParams();
@@ -92,35 +59,37 @@ export default function Patient() {
     isLoadingBillings,
   ]);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
   return (
     <ErrorBoundary>
       <ProtectedRoute roles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
         <SideBarComponent>
           <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
-            <h1 className="text-center mb-8">PATIENT INFORMATION</h1>
-            <PatientsAction editingPatient={Patient} />
-            <PatientDetails data={Patient} />
-            <EmergencyContactsSection
-              emergencyContacts={EmergencyContacts}
-              patientId={patientId}
-            />
-            <AppointmentsSection
-              appointments={Appointments}
-              patientId={patientId}
-            />
-            <ExaminationSection
-              examinations={Examinations}
-              patientId={patientId}
-            />
-            <TreatmentPlanSection
-              treatmentPlans={TreatmentPlans}
-              patientId={patientId}
-            />
-            <BillingSection billings={Billings} patientId={patientId} />
+            {isLoading ? (
+                <LoadingPage/>
+            ) : (
+                <>
+                  <h1 className="text-center mb-8">PATIENT INFORMATION</h1>
+                  <PatientsAction editingPatient={Patient}/>
+                  <PatientDetails data={Patient}/>
+                  <EmergencyContactsSection
+                      emergencyContacts={EmergencyContacts}
+                      patientId={patientId}
+                  />
+                  <AppointmentsSection
+                      appointments={Appointments}
+                      patientId={patientId}
+                  />
+                  <ExaminationSection
+                      examinations={Examinations}
+                      patientId={patientId}
+                  />
+                  <TreatmentPlanSection
+                      treatmentPlans={TreatmentPlans}
+                      patientId={patientId}
+                  />
+                  <BillingSection billings={Billings} patientId={patientId}/>
+                </>
+            )}
           </div>
         </SideBarComponent>
       </ProtectedRoute>

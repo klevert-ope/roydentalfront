@@ -1,19 +1,13 @@
 "use client";
 
 import ErrorBoundary from "@/components/ErrorComponent";
-import ProtectedRoute, { ROLES } from "@/components/ProtectedRoute";
+import {LoadingPage} from "@/components/LoadingPage";
+import ProtectedRoute, {ROLES} from "@/components/ProtectedRoute";
 import SideBarComponent from "@/components/SideBarComponent";
+import InsuranceCompaniesPage
+  from "@/features/insurancecompanies/insuranceCompaniesPage";
+import {useFetchInsuranceCompanies} from "@/hooks/useInsuranceCompanies";
 import React from "react";
-import { LoadingPage } from "@/components/LoadingPage";
-import { useFetchInsuranceCompanies } from "@/hooks/useInsuranceCompanies";
-import dynamic from "next/dynamic";
-
-const InsuranceCompaniesPage = dynamic(
-  () => import("@/features/insurancecompanies/insuranceCompaniesPage"),
-  {
-    loading: () => <LoadingPage />,
-  },
-);
 
 export default function InsuranceCompanies() {
   const {
@@ -21,16 +15,17 @@ export default function InsuranceCompanies() {
     isPending: isLoadingInsuranceCompanies,
   } = useFetchInsuranceCompanies();
 
-  if (isLoadingInsuranceCompanies) {
-    return <LoadingPage />;
-  }
-
   return (
     <ErrorBoundary>
       <ProtectedRoute roles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
         <SideBarComponent>
           <div className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
-            <InsuranceCompaniesPage insuranceCompanies={InsuranceCompanies} />
+            {isLoadingInsuranceCompanies ? (
+                <LoadingPage/>
+            ) : (
+                <InsuranceCompaniesPage
+                    insuranceCompanies={InsuranceCompanies}/>
+            )}
           </div>
         </SideBarComponent>
       </ProtectedRoute>

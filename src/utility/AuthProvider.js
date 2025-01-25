@@ -8,7 +8,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
 import toast from "react-hot-toast";
 
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       router.replace("/login");
     }
     setIsLoading(false); // Set loading to false once cookie check is complete
-  }, [cookies, router]); // Run this effect when cookies or router change
+  }, [cookies, router]);
 
   /**
    * Logs in the user and sets the authentication state.
@@ -105,12 +105,12 @@ export const AuthProvider = ({ children }) => {
     isLoading,
     accessToken,
     refreshToken,
-  }), [user, login, logoff, isLoading, accessToken, refreshToken]);
+  }), [user, isLoading, accessToken, refreshToken]);
 
   return (
-    <AuthContext.Provider value={value}>
-      {isLoading ? null : children}
-    </AuthContext.Provider>
+      <AuthContext.Provider value={value}>
+        {isLoading ? null : children}
+      </AuthContext.Provider>
   );
 };
 
@@ -118,4 +118,10 @@ export const AuthProvider = ({ children }) => {
  * Custom hook to use the AuthContext.
  * @returns {Object} The authentication context value.
  */
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
