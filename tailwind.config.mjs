@@ -97,7 +97,8 @@ export default {
 					    marginBottom: '0.5rem',
 				    },
 				    "h4,h5,h6,a,p, table,strong": {
-					    color: "white"
+					    color: "white",
+					    fontWeight: 300,
 				    },
 				    h1: {
 					    marginTop: '0.5rem',

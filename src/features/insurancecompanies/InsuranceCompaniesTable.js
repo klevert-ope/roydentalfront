@@ -1,23 +1,23 @@
+import {Button} from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
-import React from "react";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import {Ellipsis} from "lucide-react";
+import React from "react";
 
 const InsuranceCompaniesTable = ({ insuranceCompanies, onEdit, onDelete }) => {
   return (
@@ -32,7 +32,7 @@ const InsuranceCompaniesTable = ({ insuranceCompanies, onEdit, onDelete }) => {
       <TableBody>
         {insuranceCompanies.map((company) => (
           <TableRow key={company.id}>
-            <TableCell className="font-medium">{company.name}</TableCell>
+              <TableCell>{company.name}</TableCell>
             <TableCell className="text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

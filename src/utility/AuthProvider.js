@@ -62,10 +62,12 @@ export const AuthProvider = ({ children }) => {
         sameSite: "Strict",
       });
       cookies.set("accessToken", accessToken, {
+        expires: 1,
         secure: true,
         sameSite: "Strict",
       });
       cookies.set("refreshToken", refreshToken, {
+        expires: 7,
         secure: true,
         sameSite: "Strict",
       });

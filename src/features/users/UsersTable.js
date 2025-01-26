@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Ellipsis } from "lucide-react";
+import {Ellipsis} from "lucide-react";
 import React from "react";
 
 const AdminUsersTable = ({ users, onDelete }) => {
@@ -35,9 +35,9 @@ const AdminUsersTable = ({ users, onDelete }) => {
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id}>
-              <TableCell className="font-medium">{user.username}</TableCell>
-              <TableCell className="font-medium">{user.email}</TableCell>
-              <TableCell className="font-medium">{user.role.name}</TableCell>
+              <TableCell>{user.username}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role.name}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

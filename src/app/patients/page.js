@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import ErrorBoundary from "@/components/ErrorComponent";
 import {LoadingPage} from "@/components/LoadingPage";
 import ProtectedRoute, {ROLES} from "@/components/ProtectedRoute";

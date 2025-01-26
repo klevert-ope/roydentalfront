@@ -1,23 +1,23 @@
+import {Button} from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React from "react";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
+import {Ellipsis} from "lucide-react";
+import React from "react";
 
 const DoctorsTable = ({ doctors, onEdit, onDelete }) => {
   return (
@@ -25,16 +25,14 @@ const DoctorsTable = ({ doctors, onEdit, onDelete }) => {
       <TableCaption>A list of your doctors.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">First Name</TableHead>
-          <TableHead>Last Name</TableHead>
+            <TableHead className="w-[100px]">Name</TableHead>
           <TableHead className="text-right w-[50px]">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {doctors.map((doctor) => (
           <TableRow key={doctor.id}>
-            <TableCell className="font-medium">{doctor.first_name}</TableCell>
-            <TableCell>{doctor.last_name}</TableCell>
+              <TableCell>Dr. {doctor.first_name} {doctor.last_name}</TableCell>
             <TableCell className="text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
