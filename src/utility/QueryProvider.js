@@ -18,7 +18,7 @@ function createQueryClient() {
         // With SSR, we usually want to set some default staleTime
         // above 0 to avoid re-fetching immediately on the client
         staleTime: 1000 * 60 * 10, // 10 minutes
-        cacheTime: 1000 * 60 * 30, // 30 minutes
+        cacheTime: 1000 * 60 * 60, // 60 minutes
         retry: 1, // Retry failed queries 1 time
         retryDelay: (attemptIndex) =>
           Math.min(1000 * 2 ** (attemptIndex + 1), 60000), // Exponential backoff

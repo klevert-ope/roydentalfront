@@ -20,19 +20,25 @@ export const login = async (userData) => {
 
     const cookieStore = await cookies();
     cookieStore.set("user", JSON.stringify(userInfo), {
-      maxAge: 3600 * 24,
+      maxAge: 86400,
       secure: true,
       sameSite: "Strict",
+      httpOnly: true,
+      priority: "high"
     });
     cookieStore.set("accessToken", accessToken, {
-      maxAge: 3600 * 24,
+      maxAge: 86400,
       secure: true,
       sameSite: "Strict",
+      httpOnly: true,
+      priority: "high"
     });
     cookieStore.set("refreshToken", refreshToken, {
-      maxAge: 3600 * 24 * 7,
+      maxAge: 86400,
       secure: true,
       sameSite: "Strict",
+      httpOnly: true,
+      priority: "medium"
     });
 
     return {success: true, redirectUrl: "/"};
@@ -101,7 +107,7 @@ export const deleteAccount = async (id) => {
 // Admin routes (Require Authorization, Use authInstance)
 export const adminManageUsers = async () => {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const userAccess = cookieStore.get("accessToken");
     const token = typeof userAccess === "object" && userAccess !== null
       ? userAccess.value
@@ -119,7 +125,7 @@ export const adminManageUsers = async () => {
 // User routes (Require Authorization, Use authInstance)
 export const getUserProfile = async () => {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const userAccess = cookieStore.get("accessToken");
     const token = typeof userAccess === "object" && userAccess !== null
       ? userAccess.value

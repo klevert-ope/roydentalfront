@@ -3,6 +3,8 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {useUserData} from "@/hooks/useUserData";
 import {useRouter} from "next/navigation";
+import React from "react";
+
 
 const UserProfile = () => {
   const router = useRouter();
@@ -38,4 +40,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default React.memo(UserProfile);
