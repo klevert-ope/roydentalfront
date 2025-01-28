@@ -1,15 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import {login} from "@/api/auth";
+import {Button} from "@/components/ui/button";
+import {Card, CardHeader, CardTitle} from "@/components/ui/card";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {useRouter} from "next/navigation";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { useAuth } from "@/utility/AuthProvider";
-import { Label } from "@/components/ui/label";
+import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
-  const { login } = useAuth();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -18,8 +20,13 @@ export default function LoginForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await login(data);
+    const result = await login(data);
     reset();
+    if (result.success) {
+      router.push(result.redirectUrl);
+    } else {
+      toast.error("Login failed. Please check your credentials");
+    }
   };
 
   return (

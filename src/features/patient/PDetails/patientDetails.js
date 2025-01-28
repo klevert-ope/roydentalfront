@@ -1,15 +1,13 @@
+"use client";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Label} from "@/components/ui/label";
+import {useGetPatientByID} from "@/hooks/usePatients";
+import {useParams} from "next/navigation";
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 
-export default function PatientDetails({ data }) {
-  if (!data) {
-    return (
-      <div className="flex items-center justify-center my-32">
-        <div className="text-red-700 p-4">Patient details not found</div>
-      </div>
-    );
-  }
+export default function PatientDetails() {
+    const {patientId} = useParams();
+    const {data = []} = useGetPatientByID(patientId);
 
   return (
     <div>

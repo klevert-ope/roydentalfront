@@ -1,15 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import InsuranceCompaniesTable from "@/features/insurancecompanies/InsuranceCompaniesTable";
-import InsuranceCompanyForm from "@/features/insurancecompanies/InsuranceCompanyForm";
-import {
-  useCreateInsuranceCompany,
-  useDeleteInsuranceCompany,
-  useGetInsuranceCompanyByID,
-  useUpdateInsuranceCompany,
-} from "@/hooks/useInsuranceCompanies";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +8,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import InsuranceCompaniesTable
+  from "@/features/insurancecompanies/InsuranceCompaniesTable";
+import InsuranceCompanyForm
+  from "@/features/insurancecompanies/InsuranceCompanyForm";
+import {
+  useCreateInsuranceCompany,
+  useDeleteInsuranceCompany,
+  useFetchInsuranceCompanies,
+  useGetInsuranceCompanyByID,
+  useUpdateInsuranceCompany,
+} from "@/hooks/useInsuranceCompanies";
+import React, {useCallback, useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
-const InsuranceCompaniesPage = ({ insuranceCompanies }) => {
+const InsuranceCompaniesPage = () => {
+  const {data: insuranceCompanies = []} = useFetchInsuranceCompanies();
   const createInsuranceCompanyMutation = useCreateInsuranceCompany();
   const updateInsuranceCompanyMutation = useUpdateInsuranceCompany();
   const deleteInsuranceCompanyMutation = useDeleteInsuranceCompany();

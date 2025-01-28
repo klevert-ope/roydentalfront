@@ -1,7 +1,10 @@
-"use client";
 import ErrorBoundary from "@/components/ErrorComponent";
 import LoginForm from "@/features/login/LoginForm";
 import React from "react";
+
+export const metadata = {
+    title: "Login",
+};
 
 export default function Login() {
   return (

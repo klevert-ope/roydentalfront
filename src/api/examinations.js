@@ -1,6 +1,6 @@
 "use server";
-import { axiosInstance } from "@/config/axiosInstance";
-import { handleAxiosError } from "@/utility/utility";
+import {axiosInstance} from "@/config/axiosInstance";
+import {handleAxiosError} from "@/utility/handleError";
 
 // Fetch all examinations for a specific patient
 export const fetchExaminations = async (patient_id) => {

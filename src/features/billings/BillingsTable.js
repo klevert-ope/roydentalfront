@@ -1,3 +1,4 @@
+"use client";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -19,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {useFetchBillings} from "@/hooks/useBillings";
 import {
   createColumnHelper,
   flexRender,
@@ -31,7 +33,8 @@ import {
 import {SquareArrowDown, SquareArrowUp} from "lucide-react";
 import React, {useMemo, useState} from "react";
 
-const BillingsTable = ({ data }) => {
+const BillingsTable = () => {
+  const {data = []} = useFetchBillings();
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState("");
   const [sorting, setSorting] = useState([]);

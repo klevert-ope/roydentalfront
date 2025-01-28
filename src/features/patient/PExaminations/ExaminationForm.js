@@ -1,14 +1,13 @@
 "use client";
-import { LoadingForm } from "@/components/LoadingPage";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Controller, useForm } from "react-hook-form";
 import RichTextEditor from "@/components/RichTextEditor";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import React, {useCallback, useEffect, useMemo} from "react";
+import {Controller, useForm} from "react-hook-form";
 
 const ExaminationForm = (
-  { onSubmit, defaultValues, onClose, isLoading, patientId },
+    {onSubmit, defaultValues, onClose, patientId},
 ) => {
   const {
     register,
@@ -38,10 +37,6 @@ const ExaminationForm = (
     reset();
     onClose();
   }, [onSubmit, onClose, reset]);
-
-  if (isLoading) {
-    return <LoadingForm />;
-  }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">

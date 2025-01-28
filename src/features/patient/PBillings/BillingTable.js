@@ -38,7 +38,7 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
       </TableHeader>
       <TableBody>
         {billings.map((billing) => (
-            <TableRow key={billing.billing_id} className="whitespace-nowrap">
+	        <TableRow key={billing.billing_id} className="whitespace-nowrap">
             <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -52,7 +52,8 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
                   <DropdownMenuItem>
                     <Button
                       variant="ghost"
-                      onClick={() => onEdit(billing.billing_id)}
+                      onClick={() =>
+	                      onEdit(billing.billing_id)}
                       className={"w-full"}
                     >
                       Edit Bill
@@ -61,7 +62,8 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
                   <DropdownMenuItem>
                     <Button
                       variant="ghost"
-                      onClick={() => onDelete(billing.billing_id)}
+                      onClick={() =>
+	                      onDelete(billing.billing_id)}
                       className={"w-full"}
                     >
                       Delete Bill
@@ -70,7 +72,7 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
-              <TableCell className="font-medium">
+		        <TableCell className="font-medium">
               {billing.doctor_id}
             </TableCell>
             <TableCell>{billing.procedure}</TableCell>

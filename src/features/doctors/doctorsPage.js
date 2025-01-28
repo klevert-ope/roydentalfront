@@ -1,15 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import {
-  useCreateDoctor,
-  useDeleteDoctor,
-  useGetDoctorByID,
-  useUpdateDoctor,
-} from "@/hooks/useDoctors";
-import DoctorForm from "@/features/doctors/DoctorForm";
-import DoctorsTable from "@/features/doctors/DoctorsTable";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +8,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import DoctorForm from "@/features/doctors/DoctorForm";
+import DoctorsTable from "@/features/doctors/DoctorsTable";
+import {
+  useCreateDoctor,
+  useDeleteDoctor,
+  useFetchDoctors,
+  useGetDoctorByID,
+  useUpdateDoctor,
+} from "@/hooks/useDoctors";
+import React, {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
-const DoctorsPage = ({ doctors }) => {
+const DoctorsPage = () => {
+  const {data: doctors = []} = useFetchDoctors();
   const createDoctorMutation = useCreateDoctor();
   const updateDoctorMutation = useUpdateDoctor();
   const deleteDoctorMutation = useDeleteDoctor();

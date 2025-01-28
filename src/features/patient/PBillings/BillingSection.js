@@ -1,15 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  useCreateBilling,
-  useDeleteBilling,
-  useGetBillingByID,
-  useUpdateBilling,
-} from "@/hooks/useBillings";
-import BillingForm from "@/features/patient/PBillings/BillingForm";
-import BillingsTable from "@/features/patient/PBillings/BillingTable";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +8,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import BillingForm from "@/features/patient/PBillings/BillingForm";
+import BillingsTable from "@/features/patient/PBillings/BillingTable";
+import {
+  useCreateBilling,
+  useDeleteBilling,
+  useFetchBillings,
+  useGetBillingByID,
+  useUpdateBilling,
+} from "@/hooks/useBillings";
+import {useParams} from "next/navigation";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
-const BillingSection = ({ billings, patientId }) => {
+const BillingSection = () => {
+  const {patientId} = useParams();
+  const {data: billings = []} = useFetchBillings();
   const createBillingMutation = useCreateBilling();
   const updateBillingMutation = useUpdateBilling();
   const deleteBillingMutation = useDeleteBilling();

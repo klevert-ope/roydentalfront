@@ -3,7 +3,7 @@ import React from "react";
 
 export const LoadingPage = () => {
   return (
-      <div className="flex items-center justify-center my-32">
+	  <div className="flex items-center justify-center my-32">
       <Loader2 className="motion-safe:animate-spin" color={"var(--primary)"} />
       <span className={"ml-2 text-[var(--primary)]"}>Please wait</span>
     </div>

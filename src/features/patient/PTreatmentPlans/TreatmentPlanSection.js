@@ -1,15 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  useCreateTreatmentPlan,
-  useDeleteTreatmentPlan,
-  useGetTreatmentPlanByID,
-  useUpdateTreatmentPlan,
-} from "@/hooks/useTreatmentPlans";
-import TreatmentPlanForm from "@/features/patient/PTreatmentPlans/TreatmentPlanForm";
-import { TreatmentPlansAccord } from "@/features/patient/PTreatmentPlans/TreatmentPlansAccord";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +8,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import TreatmentPlanForm
+  from "@/features/patient/PTreatmentPlans/TreatmentPlanForm";
+import {
+  TreatmentPlansAccord,
+} from "@/features/patient/PTreatmentPlans/TreatmentPlansAccord";
+import {
+  useCreateTreatmentPlan,
+  useDeleteTreatmentPlan,
+  useFetchTreatmentPlans,
+  useGetTreatmentPlanByID,
+  useUpdateTreatmentPlan,
+} from "@/hooks/useTreatmentPlans";
+import {useParams} from "next/navigation";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
-const TreatmentPlanSection = ({ treatmentPlans, patientId }) => {
+const TreatmentPlanSection = () => {
+  const {patientId} = useParams();
+  const {data: treatmentPlans = []} = useFetchTreatmentPlans();
   const createTreatmentPlanMutation = useCreateTreatmentPlan();
   const updateTreatmentPlanMutation = useUpdateTreatmentPlan();
   const deleteTreatmentPlanMutation = useDeleteTreatmentPlan();

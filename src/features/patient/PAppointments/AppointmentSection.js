@@ -1,15 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  useCreateAppointment,
-  useDeleteAppointment,
-  useGetAppointmentByID,
-  useUpdateAppointment,
-} from "@/hooks/useAppointments";
-import AppointmentForm from "@/features/patient/PAppointments/AppointmentForm";
-import AppointmentsTable from "@/features/patient/PAppointments/AppointmentsTable";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +8,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import AppointmentForm from "@/features/patient/PAppointments/AppointmentForm";
+import AppointmentsTable
+  from "@/features/patient/PAppointments/AppointmentsTable";
+import {
+  useCreateAppointment,
+  useDeleteAppointment,
+  useFetchAppointments,
+  useGetAppointmentByID,
+  useUpdateAppointment,
+} from "@/hooks/useAppointments";
+import {useParams} from "next/navigation";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
-const AppointmentsSection = ({ appointments, patientId }) => {
+const AppointmentsSection = () => {
+  const {patientId} = useParams();
+  const {data: appointments = []} = useFetchAppointments();
   const createAppointmentMutation = useCreateAppointment();
   const updateAppointmentMutation = useUpdateAppointment();
   const deleteAppointmentMutation = useDeleteAppointment();

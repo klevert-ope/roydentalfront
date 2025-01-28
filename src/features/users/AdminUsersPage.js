@@ -1,21 +1,26 @@
 "use client";
 
-import AdminUsersTable from "@/features/users/UsersTable";
-import React, { useCallback, useState } from "react";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import CreateUserForm from "@/features/users/CreateUserForm";
-import { useCreateUser, useDeleteUser } from "@/hooks/useUserData";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
+import CreateUserForm from "@/features/users/CreateUserForm";
+import AdminUsersTable from "@/features/users/UsersTable";
+import {
+    useCreateUser,
+    useDeleteUser,
+    useManageUsers,
+} from "@/hooks/useUserData";
+import React, {useCallback, useState} from "react";
 import toast from "react-hot-toast";
 
-const AdminUsersPage = ({ users }) => {
+const AdminUsersPage = () => {
+    const {data: users = []} = useManageUsers();
   const createUserMutation = useCreateUser();
   const deleteUserMutation = useDeleteUser();
 

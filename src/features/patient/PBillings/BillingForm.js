@@ -1,16 +1,16 @@
-import { DoctorComboBox } from "@/components/DoctorComboBox";
-import { LoadingForm } from "@/components/LoadingPage";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useFetchDoctors } from "@/hooks/useDoctors";
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Controller, useForm } from "react-hook-form";
+"use client";
+import {DoctorComboBox} from "@/components/DoctorComboBox";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {useFetchDoctors} from "@/hooks/useDoctors";
+import React, {useCallback, useEffect, useMemo} from "react";
+import {Controller, useForm} from "react-hook-form";
 
 const BillingForm = (
-  { onSubmit, defaultValues, onClose, isLoading, patientId },
+    {onSubmit, defaultValues, onClose, patientId},
 ) => {
-  const { data: doctors, isLoading: isDoctorsLoading } = useFetchDoctors();
+  const {data: doctors = []} = useFetchDoctors();
 
   const memoizedDoctors = useMemo(() => doctors, [doctors]);
 
@@ -46,10 +46,6 @@ const BillingForm = (
     reset();
     onClose();
   }, [onSubmit, onClose, reset]);
-
-  if (isLoading || isDoctorsLoading) {
-    return <LoadingForm />;
-  }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>

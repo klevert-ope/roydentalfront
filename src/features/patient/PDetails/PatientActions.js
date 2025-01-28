@@ -1,14 +1,13 @@
 "use client";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import PatientUpForm from "@/features/patient/PDetails/PatientUpForm";
-import React, { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Ellipsis } from "lucide-react";
+import {Button} from "@/components/ui/button";
 import {
-  useDeleteAllPatientData,
-  useDeletePatient,
-  useUpdatePatient,
-} from "@/hooks/usePatients";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,17 +16,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import PatientUpForm from "@/features/patient/PDetails/PatientUpForm";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  useDeleteAllPatientData,
+  useDeletePatient,
+  useGetPatientByID,
+  useUpdatePatient,
+} from "@/hooks/usePatients";
+import {Ellipsis} from "lucide-react";
+import {useParams, useRouter} from "next/navigation";
+import React, {useCallback, useState} from "react";
 import toast from "react-hot-toast";
 
-const PatientsAction = ({ editingPatient }) => {
+const PatientsAction = () => {
+  const {patientId} = useParams();
+  const {data: editingPatient = []} = useGetPatientByID(patientId);
   const router = useRouter();
   const updatePatientMutation = useUpdatePatient();
   const deletePatientMutation = useDeletePatient();

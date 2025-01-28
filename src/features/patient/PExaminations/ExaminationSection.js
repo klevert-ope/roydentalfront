@@ -1,9 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import ExaminationForm from "@/features/patient/PExaminations/ExaminationForm";
-import { ExaminationsAccord } from "@/features/patient/PExaminations/ExaminationsAccord";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,15 +8,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import ExaminationForm from "@/features/patient/PExaminations/ExaminationForm";
+import {
+  ExaminationsAccord,
+} from "@/features/patient/PExaminations/ExaminationsAccord";
 import {
   useCreateExamination,
   useDeleteExamination,
+  useFetchExaminations,
   useGetExaminationByID,
   useUpdateExamination,
 } from "@/hooks/useExaminations";
+import {useParams} from "next/navigation";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
-const ExaminationSection = ({ examinations, patientId }) => {
+const ExaminationSection = () => {
+  const {patientId} = useParams();
+  const {data: examinations} = useFetchExaminations();
   const createExaminationMutation = useCreateExamination();
   const updateExaminationMutation = useUpdateExamination();
   const deleteExaminationMutation = useDeleteExamination();

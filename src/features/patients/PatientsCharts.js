@@ -1,5 +1,18 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import {useFetchPatients} from "@/hooks/usePatients";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {
   Bar,
   BarChart,
@@ -14,20 +27,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 
-const PatientCharts = ({ data }) => {
+const PatientCharts = () => {
+  const {data = []} = useFetchPatients();
   const [colors, setColors] = useState([]);
 
   useEffect(() => {

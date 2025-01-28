@@ -1,4 +1,5 @@
 "use client";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,17 +7,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import PatientForm from "@/features/patients/PatientForm";
-import React, { useCallback, useMemo, useState } from "react";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
 import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -26,23 +26,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import PatientForm from "@/features/patients/PatientForm";
+import {ActionsCell} from "@/features/patients/viewPatient";
+import {useCreatePatient, useFetchPatients} from "@/hooks/usePatients";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useCreatePatient } from "@/hooks/usePatients";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ActionsCell } from "@/features/patients/viewPatient";
-import { SquareArrowDown, SquareArrowUp } from "lucide-react";
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import {SquareArrowDown, SquareArrowUp} from "lucide-react";
+import React, {useCallback, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
-const PatientsTable = ({ data }) => {
+const PatientsTable = () => {
+  const {data = []} = useFetchPatients();
   const createPatientMutation = useCreatePatient();
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState("");

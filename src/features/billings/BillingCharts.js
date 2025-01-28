@@ -1,5 +1,18 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import {useFetchBillings} from "@/hooks/useBillings";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {
   Area,
   AreaChart,
@@ -19,20 +32,9 @@ import {
   YAxis,
   ZAxis,
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 
-const BillingCharts = ({ data }) => {
+const BillingCharts = () => {
+  const {data = []} = useFetchBillings();
   const [colors, setColors] = useState([]);
 
   useEffect(() => {

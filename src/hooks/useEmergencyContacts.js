@@ -5,16 +5,13 @@ import {
   getEmergencyContactByID,
   updateEmergencyContact,
 } from "@/api/emergencycontacts";
-import {useAuth} from "@/utility/AuthProvider";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch all emergency contacts
 export const useFetchEmergencyContacts = () => {
-  const {user} = useAuth();
   return useQuery({
     queryKey: ["emergencyContacts"],
     queryFn: () => fetchEmergencyContacts(),
-    enabled: !!user && !!user.role,
   });
 };
 
@@ -32,11 +29,10 @@ export const useCreateEmergencyContact = () => {
 
 // Get an emergency contact by patient ID and emergency contact ID
 export const useGetEmergencyContactByID = (patient_id, id) => {
-  const {user} = useAuth();
   return useQuery({
     queryKey: ["emergencyContact", patient_id, id],
     queryFn: () => getEmergencyContactByID(patient_id, id),
-    enabled: !!patient_id && !!id && !!user && !!user.role,
+    enabled: !!patient_id && !!id,
   });
 };
 

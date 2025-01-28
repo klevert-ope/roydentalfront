@@ -5,16 +5,13 @@ import {
   getAppointmentByID,
   updateAppointment,
 } from "@/api/appointments";
-import {useAuth} from '@/utility/AuthProvider';
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 // Fetch all appointments
 export const useFetchAppointments = () => {
-  const {user} = useAuth();
   return useQuery({
     queryKey: ["appointments"],
     queryFn: fetchAppointments,
-    enabled: !!user && !!user.role,
   });
 };
 
@@ -32,11 +29,10 @@ export const useCreateAppointment = () => {
 
 // Get an appointment by patient ID and appointment ID
 export const useGetAppointmentByID = (patient_id, id) => {
-  const {user} = useAuth();
   return useQuery({
     queryKey: ["appointment", patient_id, id],
     queryFn: () => getAppointmentByID(patient_id, id),
-    enabled: !!patient_id && !!id && !!user && !!user.role,
+    enabled: !!patient_id && !!id,
   });
 };
 

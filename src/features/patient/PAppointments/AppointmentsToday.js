@@ -1,9 +1,10 @@
 "use client";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import {Label} from "@/components/ui/label";
+import {ScrollArea} from "@/components/ui/scroll-area";
+import {Separator} from "@/components/ui/separator";
+import {useFetchAppointments} from "@/hooks/useAppointments";
 import Link from "next/link";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 
 const AppointmentCard = React.memo(({ appointment }) => {
   const dateTime = new Date(appointment.date_time);
@@ -46,7 +47,8 @@ const AppointmentCard = React.memo(({ appointment }) => {
   );
 });
 
-const AppointmentsToday = ({ data }) => {
+const AppointmentsToday = () => {
+  const {data = []} = useFetchAppointments();
   const [filteredAppointments, setFilteredAppointments] = useState([]);
 
   const filterAppointments = useCallback(() => {

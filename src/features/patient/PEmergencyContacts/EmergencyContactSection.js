@@ -1,15 +1,6 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  useCreateEmergencyContact,
-  useDeleteEmergencyContact,
-  useGetEmergencyContactByID,
-  useUpdateEmergencyContact,
-} from "@/hooks/useEmergencyContacts";
-import EmergencyContactForm from "@/features/patient/PEmergencyContacts/EmergencyContactForm";
-import EmergencyContactsTable from "@/features/patient/PEmergencyContacts/EmergencyContactsTable";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +8,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import EmergencyContactForm
+  from "@/features/patient/PEmergencyContacts/EmergencyContactForm";
+import EmergencyContactsTable
+  from "@/features/patient/PEmergencyContacts/EmergencyContactsTable";
+import {
+  useCreateEmergencyContact,
+  useDeleteEmergencyContact,
+  useFetchEmergencyContacts,
+  useGetEmergencyContactByID,
+  useUpdateEmergencyContact,
+} from "@/hooks/useEmergencyContacts";
+import {useParams} from "next/navigation";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
-const EmergencyContactsSection = ({ emergencyContacts, patientId }) => {
+const EmergencyContactsSection = () => {
+  const {patientId} = useParams();
+  const {data: emergencyContacts = []} = useFetchEmergencyContacts();
   const createEmergencyContactMutation = useCreateEmergencyContact();
   const updateEmergencyContactMutation = useUpdateEmergencyContact();
   const deleteEmergencyContactMutation = useDeleteEmergencyContact();
