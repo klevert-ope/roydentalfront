@@ -23,8 +23,8 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
 const AppointmentsSection = () => {
-  const {patientId} = useParams();
-  const {data: appointments = []} = useFetchAppointments();
+	const {patientId} = useParams();
+	const {data: appointments = []} = useFetchAppointments();
   const createAppointmentMutation = useCreateAppointment();
   const updateAppointmentMutation = useUpdateAppointment();
   const deleteAppointmentMutation = useDeleteAppointment();

@@ -2,31 +2,31 @@
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
 import {Button} from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
 import TreatmentPlanForm
-  from "@/features/patient/PTreatmentPlans/TreatmentPlanForm";
+    from "@/features/patient/PTreatmentPlans/TreatmentPlanForm";
 import {
-  TreatmentPlansAccord,
+    TreatmentPlansAccord,
 } from "@/features/patient/PTreatmentPlans/TreatmentPlansAccord";
 import {
-  useCreateTreatmentPlan,
-  useDeleteTreatmentPlan,
-  useFetchTreatmentPlans,
-  useGetTreatmentPlanByID,
-  useUpdateTreatmentPlan,
+    useCreateTreatmentPlan,
+    useDeleteTreatmentPlan,
+    useFetchTreatmentPlans,
+    useGetTreatmentPlanByID,
+    useUpdateTreatmentPlan,
 } from "@/hooks/useTreatmentPlans";
 import {useParams} from "next/navigation";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
 const TreatmentPlanSection = () => {
-  const {patientId} = useParams();
-  const {data: treatmentPlans = []} = useFetchTreatmentPlans();
+	const {patientId} = useParams();
+	const {data: treatmentPlans = []} = useFetchTreatmentPlans();
   const createTreatmentPlanMutation = useCreateTreatmentPlan();
   const updateTreatmentPlanMutation = useUpdateTreatmentPlan();
   const deleteTreatmentPlanMutation = useDeleteTreatmentPlan();

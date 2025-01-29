@@ -22,8 +22,8 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
 const BillingSection = () => {
-  const {patientId} = useParams();
-  const {data: billings = []} = useFetchBillings();
+	const {patientId} = useParams();
+	const {data: billings = []} = useFetchBillings();
   const createBillingMutation = useCreateBilling();
   const updateBillingMutation = useUpdateBilling();
   const deleteBillingMutation = useDeleteBilling();

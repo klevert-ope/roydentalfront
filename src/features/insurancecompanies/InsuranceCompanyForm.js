@@ -5,7 +5,7 @@ import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 
 const InsuranceCompanyForm = (
-    {onSubmit, defaultValues, onClose},
+	{onSubmit, defaultValues, onClose},
 ) => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } =
     useForm({

@@ -46,7 +46,7 @@ const processDataForLineChart = (data) => {
 				  date,
 				  billingAmount: 0,
 				  totalReceived: 0,
-				  balance: 0
+				  balance: 0,
 			  };
 		  }
 		  acc[date].billingAmount += item.billing_amount;

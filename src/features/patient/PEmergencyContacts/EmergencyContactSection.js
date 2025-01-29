@@ -24,8 +24,8 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
 const EmergencyContactsSection = () => {
-  const {patientId} = useParams();
-  const {data: emergencyContacts = []} = useFetchEmergencyContacts();
+	const {patientId} = useParams();
+	const {data: emergencyContacts = []} = useFetchEmergencyContacts();
   const createEmergencyContactMutation = useCreateEmergencyContact();
   const updateEmergencyContactMutation = useUpdateEmergencyContact();
   const deleteEmergencyContactMutation = useDeleteEmergencyContact();

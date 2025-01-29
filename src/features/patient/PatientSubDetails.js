@@ -23,8 +23,9 @@ export const PatientSubDetails = () => {
 							value="Appointments">Appointments</TabsTrigger>
 						<TabsTrigger
 							value="Examinations">Examinations</TabsTrigger>
-						<TabsTrigger value="TreatmentPlan">Treatment
-							Plans</TabsTrigger>
+						<TabsTrigger value="TreatmentPlan">
+							Treatment Plans
+						</TabsTrigger>
 						<TabsTrigger value="Billings">Billings</TabsTrigger>
 					</TabsList>
 				</div>

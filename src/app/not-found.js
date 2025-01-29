@@ -10,8 +10,9 @@ export default function NotFound() {
 		<SideBarComponent>
 			<div className="flex flex-col items-center justify-center h-svh">
 				<h2>Not Found</h2>
-				<p className="text-red-700">Could not find requested
-					resource</p>
+				<p className="text-red-700">
+					Could not find requested resource
+				</p>
 				<Link href="/">Return Home</Link>
 			</div>
 		</SideBarComponent>

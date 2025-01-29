@@ -7,7 +7,7 @@ import React from "react";
 
 const UserProfile = () => {
   const router = useRouter();
-  const {data: userProfile = []} = useUserData();
+	const {data: userProfile = []} = useUserData();
 
   const onLogoff = async () => {
     const result = await logoff();
@@ -21,20 +21,21 @@ const UserProfile = () => {
   const email = userProfile?.user?.email;
 
   return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-center">{roleName}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <p>{username}</p>
-            <p>{email}</p>
-          </div>
-          <Button variant="destructive" onClick={onLogoff} className="w-full">
-            Logoff
-          </Button>
-        </CardContent>
-      </Card>
+	  <Card>
+		  <CardHeader>
+			  <CardTitle className="text-center">{roleName}</CardTitle>
+		  </CardHeader>
+		  <CardContent>
+			  <div className="mb-4">
+				  <p>{username}</p>
+				  <p>{email}</p>
+			  </div>
+			  <Button variant="destructive" onClick={onLogoff}
+			          className="w-full">
+				  Logoff
+			  </Button>
+		  </CardContent>
+	  </Card>
   );
 };
 

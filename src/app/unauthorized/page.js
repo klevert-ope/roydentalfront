@@ -2,13 +2,13 @@ import SideBarComponent from "@/components/SideBarComponent";
 import Unauthorized from "@/features/Unauthorized/Unauthorized";
 
 export const metadata = {
-    title: "Unauthorized",
+	title: "Unauthorized",
 };
 
 export default function UnauthorizedPage() {
   return (
-      <SideBarComponent>
-          <Unauthorized/>
-      </SideBarComponent>
+	  <SideBarComponent>
+		  <Unauthorized/>
+	  </SideBarComponent>
   );
 }

@@ -1,15 +1,15 @@
 "use client";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	useSidebar,
 } from "@/components/ui/sidebar";
 import UserProfile from "@/features/userProfile/UserProfile";
 import {Hospital} from "lucide-react";
@@ -42,7 +42,7 @@ export function NavSidebar() {
           <SidebarGroupContent>
             <SidebarMenu
               className={"list-none prose-a:no-underline flex" +
-                  " flex-col justify-between"}
+	              " flex-col justify-between"}
             >
               <div>
                 {links.map((link) => (
@@ -70,7 +70,7 @@ export function NavSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <UserProfile/>
+	      <UserProfile/>
       </SidebarFooter>
     </Sidebar>
   );

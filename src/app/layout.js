@@ -24,7 +24,7 @@ export default async function RootLayout({ children }) {
       >
       <ReactQueryProvider>
           {children}
-          <Toaster/>
+	      <Toaster/>
       </ReactQueryProvider>
       </body>
     </html>
