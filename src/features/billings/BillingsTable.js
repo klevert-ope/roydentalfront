@@ -34,7 +34,7 @@ import {SquareArrowDown, SquareArrowUp} from "lucide-react";
 import React, {useMemo, useState} from "react";
 
 const BillingsTable = () => {
-  const {data = []} = useFetchBillings();
+	const {data = []} = useFetchBillings();
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState("");
   const [sorting, setSorting] = useState([]);

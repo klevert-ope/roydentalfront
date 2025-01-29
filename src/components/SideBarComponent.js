@@ -1,19 +1,15 @@
-"use client";
-import React from "react";
-import { NavSidebar } from "@/components/NavSidebar";
-import { useCookies } from "next-client-cookies";
+import {NavSidebar} from "@/components/NavSidebar";
 import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
 } from "@/components/ui/sidebar";
+import React from "react";
 
 const SideBarComponent = ({ children }) => {
-  const cookieStore = useCookies();
-  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   return (
     <SidebarProvider>
-      <NavSidebar defaultOpen={defaultOpen} />
+        <NavSidebar/>
       <SidebarInset className="overflow-auto">
         <SidebarTrigger />
         {children}

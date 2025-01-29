@@ -16,7 +16,7 @@ export const register = async (userData) => {
 export const login = async (userData) => {
   try {
     const response = await axiosInstance.post("/auth/login", userData);
-    const {accessToken, refreshToken, ...userInfo} = response.data;
+	  const {accessToken, refreshToken, ...userInfo} = response.data;
 
     const cookieStore = await cookies();
     cookieStore.set("user", JSON.stringify(userInfo), {
@@ -24,27 +24,27 @@ export const login = async (userData) => {
       secure: true,
       sameSite: "Strict",
       httpOnly: true,
-      priority: "high"
+	    priority: "high",
     });
     cookieStore.set("accessToken", accessToken, {
       maxAge: 86400,
       secure: true,
       sameSite: "Strict",
       httpOnly: true,
-      priority: "high"
+	    priority: "high",
     });
     cookieStore.set("refreshToken", refreshToken, {
       maxAge: 86400,
       secure: true,
       sameSite: "Strict",
       httpOnly: true,
-      priority: "medium"
+	    priority: "medium",
     });
 
-    return {success: true, redirectUrl: "/"};
+	  return {success: true, redirectUrl: "/"};
   } catch (error) {
     handleAxiosError(error);
-    return {success: false, error: error.message};
+	  return {success: false, error: error.message};
   }
 };
 
@@ -56,7 +56,7 @@ export const logoff = async () => {
     cookieStore.delete("user");
 
     // Redirect after deleting cookies
-    return {success: true, redirectUrl: "/login"};
+	  return {success: true, redirectUrl: "/login"};
   } catch (error) {
     handleAxiosError(error);
   }
@@ -114,7 +114,7 @@ export const adminManageUsers = async () => {
       : userAccess;
 
     const response = await axiosInstance.get("/auth/admin/manage-users", {
-      params: {accessToken: token},
+	    params: {accessToken: token},
     });
     return response.data;
   } catch (error) {
@@ -132,7 +132,7 @@ export const getUserProfile = async () => {
       : userAccess;
 
     const response = await axiosInstance.get("/auth/user/profile", {
-      params: {accessToken: token},
+	    params: {accessToken: token},
     });
     return response.data;
   } catch (error) {

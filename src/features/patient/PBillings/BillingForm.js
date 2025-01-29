@@ -8,9 +8,9 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {Controller, useForm} from "react-hook-form";
 
 const BillingForm = (
-    {onSubmit, defaultValues, onClose, patientId},
+	{onSubmit, defaultValues, onClose, patientId},
 ) => {
-  const {data: doctors = []} = useFetchDoctors();
+	const {data: doctors = []} = useFetchDoctors();
 
   const memoizedDoctors = useMemo(() => doctors, [doctors]);
 

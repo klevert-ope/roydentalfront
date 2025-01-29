@@ -43,7 +43,7 @@ import React, {useCallback, useMemo, useState} from "react";
 import toast from "react-hot-toast";
 
 const PatientsTable = () => {
-  const {data = []} = useFetchPatients();
+	const {data = []} = useFetchPatients();
   const createPatientMutation = useCreatePatient();
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState("");

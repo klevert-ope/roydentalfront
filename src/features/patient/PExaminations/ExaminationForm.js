@@ -7,7 +7,7 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {Controller, useForm} from "react-hook-form";
 
 const ExaminationForm = (
-    {onSubmit, defaultValues, onClose, patientId},
+	{onSubmit, defaultValues, onClose, patientId},
 ) => {
   const {
     register,

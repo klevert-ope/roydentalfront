@@ -47,7 +47,7 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose}) => {
     }), [defaultValues]),
   });
 
-  const {data: insuranceCompanies = []} = useFetchInsuranceCompanies();
+	const {data: insuranceCompanies = []} = useFetchInsuranceCompanies();
 
   const memoizedInsuranceCompanies = useMemo(() => insuranceCompanies, [
     insuranceCompanies,

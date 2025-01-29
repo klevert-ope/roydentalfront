@@ -21,7 +21,7 @@ import React, {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 
 const DoctorsPage = () => {
-  const {data: doctors = []} = useFetchDoctors();
+	const {data: doctors = []} = useFetchDoctors();
   const createDoctorMutation = useCreateDoctor();
   const updateDoctorMutation = useUpdateDoctor();
   const deleteDoctorMutation = useDeleteDoctor();

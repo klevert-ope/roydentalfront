@@ -3,9 +3,9 @@ import {
 	CardContent,
 	CardFooter,
 	CardHeader,
-	CardTitle
-} from '@/components/ui/card';
-import React from 'react';
+	CardTitle,
+} from "@/components/ui/card";
+import React from "react";
 
 export const BChartCard = React.memo(({title, children}) => (
 	<Card className="mb-8">

@@ -63,7 +63,7 @@ input {
 
 button:has(svg) {
   color: var(--primary);
-	}
+  }
 
 label {
   color: var(--primary);

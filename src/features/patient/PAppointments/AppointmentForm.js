@@ -3,22 +3,22 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import {useFetchDoctors} from "@/hooks/useDoctors";
 import React, {useCallback, useEffect, useMemo} from "react";
 import {Controller, useForm} from "react-hook-form";
 
 const AppointmentForm = (
-    {onSubmit, defaultValues, onClose, patientId},
+	{onSubmit, defaultValues, onClose, patientId},
 ) => {
-  const {data: doctors = []} = useFetchDoctors();
+	const {data: doctors = []} = useFetchDoctors();
 
   const memoizedDoctors = useMemo(() => doctors, [doctors]);
 

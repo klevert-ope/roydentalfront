@@ -2,6 +2,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,8 +12,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import UserProfile from "@/features/userProfile/UserProfile";
+import {Hospital} from "lucide-react";
 import Link from "next/link";
-import { Hospital } from "lucide-react";
 
 const links = [
   { href: "/", title: "Home", label: "Home" },
@@ -41,7 +42,7 @@ export function NavSidebar() {
           <SidebarGroupContent>
             <SidebarMenu
               className={"list-none prose-a:no-underline flex" +
-                " flex-col justify-between min-h-[40svh]"}
+                  " flex-col justify-between"}
             >
               <div>
                 {links.map((link) => (
@@ -65,10 +66,12 @@ export function NavSidebar() {
                 ))}
               </div>
             </SidebarMenu>
-            <UserProfile />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <UserProfile/>
+      </SidebarFooter>
     </Sidebar>
   );
 }

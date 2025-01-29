@@ -1,5 +1,4 @@
 import ReactQueryProvider from "@/utility/QueryProvider";
-import {CookiesProvider} from "next-client-cookies/server";
 import "./globals.css";
 import {Inter} from "next/font/google";
 import React from "react";
@@ -23,12 +22,10 @@ export default async function RootLayout({ children }) {
       <body
         className={`${inter.variable} antialiased prose underline-offset-8`}
       >
-        <CookiesProvider>
-            <ReactQueryProvider>
-                {children}
-                <Toaster/>
-            </ReactQueryProvider>
-        </CookiesProvider>
+      <ReactQueryProvider>
+          {children}
+          <Toaster/>
+      </ReactQueryProvider>
       </body>
     </html>
   );

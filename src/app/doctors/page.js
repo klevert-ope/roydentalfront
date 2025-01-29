@@ -1,4 +1,3 @@
-import ErrorBoundary from "@/components/ErrorComponent";
 import SideBarComponent from "@/components/SideBarComponent";
 import DoctorsPage from "@/features/doctors/doctorsPage";
 import React from "react";
@@ -9,12 +8,10 @@ export const metadata = {
 
 export default function Doctors() {
   return (
-    <ErrorBoundary>
-        <SideBarComponent>
-            <div className="container mx-auto px-2 w-full my-14">
-                <DoctorsPage/>
-            </div>
-        </SideBarComponent>
-    </ErrorBoundary>
+      <SideBarComponent>
+          <div className="container mx-auto px-2 w-full my-14">
+              <DoctorsPage/>
+          </div>
+      </SideBarComponent>
   );
 }

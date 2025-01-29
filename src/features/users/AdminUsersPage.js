@@ -20,7 +20,7 @@ import React, {useCallback, useState} from "react";
 import toast from "react-hot-toast";
 
 const AdminUsersPage = () => {
-    const {data: users = []} = useManageUsers();
+	const {data: users = []} = useManageUsers();
   const createUserMutation = useCreateUser();
   const deleteUserMutation = useDeleteUser();
 

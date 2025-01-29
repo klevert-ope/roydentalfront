@@ -120,7 +120,7 @@ const BillingSection = () => {
 
   return (
     <div className={"my-16"}>
-      <h1 className="text-center mb-8">BILLINGS</h1>
+      <h2 className="text-center mb-8">BILLINGS</h2>
       <Button
         onClick={() =>
           setState((prev) => ({ ...prev, isCreateDialogOpen: true }))}

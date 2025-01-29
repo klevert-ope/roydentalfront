@@ -29,8 +29,8 @@ import React, {useCallback, useState} from "react";
 import toast from "react-hot-toast";
 
 const PatientsAction = () => {
-  const {patientId} = useParams();
-  const {data: editingPatient = []} = useGetPatientByID(patientId);
+	const {patientId} = useParams();
+	const {data: editingPatient = []} = useGetPatientByID(patientId);
   const router = useRouter();
   const updatePatientMutation = useUpdatePatient();
   const deletePatientMutation = useDeletePatient();

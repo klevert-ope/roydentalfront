@@ -1,6 +1,7 @@
 "use client";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent} from "@/components/ui/card";
 import {Label} from "@/components/ui/label";
+import {Separator} from "@/components/ui/separator";
 import {useGetPatientByID} from "@/hooks/usePatients";
 import {useParams} from "next/navigation";
 import React from "react";
@@ -10,11 +11,15 @@ export default function PatientDetails() {
     const {data = []} = useGetPatientByID(patientId);
 
   return (
-    <div>
-      <Bio patient={data} />
-      <InsuranceInfo patient={data} />
-      <ContactInfo patient={data} />
-    </div>
+      <Card>
+          <CardContent>
+              <Bio patient={data}/>
+              <Separator/>
+              <InsuranceInfo patient={data}/>
+              <Separator/>
+              <ContactInfo patient={data}/>
+          </CardContent>
+      </Card>
   );
 }
 
@@ -27,12 +32,23 @@ const InfoField = ({ label, value }) => (
 
 // Bio Component
 const Bio = ({ patient }) => (
-  <Card className="w-full py-4">
-    <CardHeader>
-      <CardTitle>Bio</CardTitle>
-    </CardHeader>
-    <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <InfoField label="ID" value={patient.id} />
+    <div className="w-full py-4">
+        <div className="flex flex-row justify-between">
+            <h4 className="underline">ID {patient.id}</h4>
+            <h4 className="underline">
+                Created
+                On {new Date(patient.created_at).toLocaleString("en-KE", {
+                timeZone: "Africa/Nairobi",
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+            })}
+            </h4>
+        </div>
+        <h3>BIO DATA</h3>
+        <div className="flex flex-row flex-wrap justify-between">
       <InfoField
         label="Name"
         value={`${patient.first_name} ${
@@ -41,35 +57,22 @@ const Bio = ({ patient }) => (
       />
       <InfoField label="Sex" value={patient.sex} />
       <InfoField
-        label="Date of Birth"
+          label="DOB"
         value={new Date(patient.date_of_birth).toLocaleDateString("en-KE", {
           day: "numeric",
           month: "short",
           year: "numeric",
         })}
       />
-      <InfoField
-        label="Created At"
-        value={new Date(patient.created_at).toLocaleString("en-KE", {
-          timeZone: "Africa/Nairobi",
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        })}
-      />
-    </CardContent>
-  </Card>
+        </div>
+    </div>
 );
 
 // InsuranceInfo Component
 const InsuranceInfo = ({ patient }) => (
-  <Card className="w-full py-4 mt-4">
-    <CardHeader>
-      <CardTitle>Billing Info</CardTitle>
-    </CardHeader>
-    <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="w-full py-4 mt-4">
+        <h3>BILLING INFO</h3>
+        <div className="flex flex-row flex-wrap justify-between">
       <InfoField label="Insured" value={patient.insured ? "Yes" : "No"} />
       <InfoField label="Cash" value={patient.cash ? "Yes" : "No"} />
       {patient.insurance_company && (
@@ -78,7 +81,8 @@ const InsuranceInfo = ({ patient }) => (
           value={patient.insurance_company}
         />
       )}
-      {patient.scheme && <InfoField label="Scheme" value={patient.scheme} />}
+            {patient.scheme &&
+                <InfoField label="Scheme" value={patient.scheme}/>}
       {patient.cover_limit !== undefined && (
         <InfoField label="Cover Limit" value={`KES ${patient.cover_limit}`} />
       )}
@@ -88,20 +92,20 @@ const InsuranceInfo = ({ patient }) => (
       {patient.place_of_work && (
         <InfoField label="Place of Work" value={patient.place_of_work} />
       )}
-    </CardContent>
-  </Card>
+        </div>
+    </div>
 );
 
 // ContactInfo Component
 const ContactInfo = ({ patient }) => (
-  <Card className="w-full py-4 mt-4">
-    <CardHeader>
-      <CardTitle>Contact Info</CardTitle>
-    </CardHeader>
-    <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="w-full py-4 mt-4">
+        <h3>CONTACT INFO</h3>
+        <div className="flex flex-row flex-wrap justify-between">
       <InfoField label="Phone" value={patient.phone} />
-      {patient.email && <InfoField label="Email" value={patient.email} />}
-      {patient.address && <InfoField label="Address" value={patient.address} />}
-    </CardContent>
-  </Card>
+            {patient.email &&
+                <InfoField label="Email" value={patient.email}/>}
+            {patient.address &&
+                <InfoField label="Address" value={patient.address}/>}
+        </div>
+    </div>
 );

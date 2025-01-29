@@ -6,7 +6,7 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {useForm} from "react-hook-form";
 
 const EmergencyContactForm = (
-    {onSubmit, defaultValues, onClose, patientId},
+	{onSubmit, defaultValues, onClose, patientId},
 ) => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } =
     useForm({

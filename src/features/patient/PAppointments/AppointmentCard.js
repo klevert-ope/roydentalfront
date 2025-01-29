@@ -1,7 +1,7 @@
-import {Label} from '@/components/ui/label';
-import {Separator} from '@/components/ui/separator';
-import Link from 'next/link';
-import React from 'react';
+import {Label} from "@/components/ui/label";
+import {Separator} from "@/components/ui/separator";
+import Link from "next/link";
+import React from "react";
 
 export const AppointmentCard = React.memo(({appointment}) => {
 	const dateTime = new Date(appointment.date_time);

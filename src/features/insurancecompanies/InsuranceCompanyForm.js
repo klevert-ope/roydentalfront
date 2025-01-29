@@ -1,12 +1,11 @@
 "use client";
-import { LoadingForm } from "@/components/LoadingPage";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import React, {useEffect} from "react";
+import {useForm} from "react-hook-form";
 
 const InsuranceCompanyForm = (
-  { onSubmit, defaultValues, onClose, isLoading },
+    {onSubmit, defaultValues, onClose},
 ) => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } =
     useForm({
@@ -33,10 +32,6 @@ const InsuranceCompanyForm = (
     reset();
     onClose();
   };
-
-  if (isLoading) {
-    return <LoadingForm />;
-  }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
