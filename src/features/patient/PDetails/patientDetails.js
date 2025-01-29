@@ -33,7 +33,7 @@ const InfoField = ({ label, value }) => (
 // Bio Component
 const Bio = ({ patient }) => (
     <div className="w-full py-4">
-        <div className="flex flex-row justify-between">
+        <div className="mb-4">
             <h4 className="underline">ID {patient.id}</h4>
             <h4 className="underline">
                 Created
