@@ -16,16 +16,9 @@ export const register = async (userData) => {
 export const login = async (userData) => {
   try {
     const response = await axiosInstance.post("/auth/login", userData);
-	  const {accessToken, refreshToken, ...userInfo} = response.data;
+    const {accessToken, refreshToken} = response.data;
 
     const cookieStore = await cookies();
-    cookieStore.set("user", JSON.stringify(userInfo), {
-      maxAge: 86400,
-      secure: true,
-      sameSite: "Strict",
-      httpOnly: true,
-	    priority: "high",
-    });
     cookieStore.set("accessToken", accessToken, {
       maxAge: 86400,
       secure: true,
@@ -53,7 +46,6 @@ export const logoff = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("accessToken");
     cookieStore.delete("refreshToken");
-    cookieStore.delete("user");
 
     // Redirect after deleting cookies
 	  return {success: true, redirectUrl: "/login"};
@@ -134,7 +126,7 @@ export const getUserProfile = async () => {
     const response = await axiosInstance.get("/auth/user/profile", {
 	    params: {accessToken: token},
     });
-    return response.data;
+    return response.data || {};
   } catch (error) {
     handleAxiosError(error);
   }

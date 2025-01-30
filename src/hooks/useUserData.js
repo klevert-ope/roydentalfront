@@ -2,7 +2,7 @@ import {
   adminManageUsers,
   deleteAccount,
   getUserProfile,
-  register,
+  register
 } from "@/api/auth";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
@@ -43,3 +43,4 @@ export const useDeleteUser = () => {
     },
   });
 };
+
