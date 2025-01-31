@@ -1,4 +1,5 @@
 "use client";
+import {LoadingForm} from '@/components/LoadingForm';
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -6,7 +7,7 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {useForm} from "react-hook-form";
 
 const EmergencyContactForm = (
-	{onSubmit, defaultValues, onClose, patientId},
+    {onSubmit, defaultValues, onClose, patientId, isLoading},
 ) => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } =
     useForm({
@@ -32,6 +33,10 @@ const EmergencyContactForm = (
     reset();
     onClose();
   }, [onSubmit, onClose, reset]);
+
+    if (isLoading) {
+        return <LoadingForm/>
+    }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>

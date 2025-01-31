@@ -29,11 +29,11 @@ import {
 
 // Constants for reusable values
 const CHART_COLORS = [
-  "var(--chart-1)",
-  "var(--chart-2)",
-  "var(--chart-3)",
-  "var(--chart-4)",
-  "var(--chart-5)",
+	'hsl(var(--chart-1))',
+	'hsl(var(--chart-2))',
+	'hsl(var(--chart-3))',
+	'hsl(var(--chart-4))',
+	'hsl(var(--chart-5))'
 ];
 
 // Data processing functions
@@ -172,7 +172,7 @@ const BillingCharts = () => {
 
   return (
 	  <div>
-		  <h1 className="text-center mb-4">Billing Stats</h1>
+		  <h1 className="text-center mb-14">Billing Stats</h1>
 		  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 			  <BChartCard title="Total Billing Amount Over Time">
 				  <ChartContainer config={chartConfig}>

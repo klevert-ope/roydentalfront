@@ -19,7 +19,7 @@ import {
 } from "@/hooks/useBillings";
 import {useParams} from "next/navigation";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const BillingSection = () => {
 	const {patientId} = useParams();

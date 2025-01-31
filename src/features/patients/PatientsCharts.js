@@ -24,11 +24,11 @@ import {
 
 // Define a constant color palette
 const COLORS = [
-	"var(--chart-1)",
-	"var(--chart-2)",
-	"var(--chart-3)",
-	"var(--chart-4)",
-	"var(--chart-5)",
+	'hsl(var(--chart-1))',
+	'hsl(var(--chart-2))',
+	'hsl(var(--chart-3))',
+	'hsl(var(--chart-4))',
+	'hsl(var(--chart-5))'
 ];
 
 const processDataForGenderDistribution = (data) => {
@@ -116,7 +116,7 @@ const PatientCharts = () => {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<ChartCard title="Gender Distribution">
 					<ChartContainer config={chartConfig}>
-						<ResponsiveContainer width="100%" height={300}>
+						<ResponsiveContainer width="100%" height={400}>
 							<PieChart>
 								<Pie
 									data={genderDistributionData}
@@ -151,7 +151,7 @@ const PatientCharts = () => {
 
 				<ChartCard title="Insurance Distribution">
 					<ChartContainer config={chartConfig}>
-						<ResponsiveContainer width="100%" height={300}>
+						<ResponsiveContainer width="100%" height={400}>
 							<PieChart>
 								<Pie
 									data={insuranceDistributionData}
@@ -186,7 +186,7 @@ const PatientCharts = () => {
 
 				<ChartCard title="Age Distribution">
 					<ChartContainer config={chartConfig}>
-						<ResponsiveContainer width="100%" height={300}>
+						<ResponsiveContainer width="100%" height={400}>
 							<BarChart data={ageDistributionData}>
 								<CartesianGrid strokeDasharray="3 3"/>
 								<XAxis dataKey="ageGroup"/>
@@ -209,7 +209,7 @@ const PatientCharts = () => {
 
 				<ChartCard title="Patient Growth Over Time">
 					<ChartContainer config={chartConfig}>
-						<ResponsiveContainer width="100%" height={300}>
+						<ResponsiveContainer width="100%" height={400}>
 							<LineChart
 								data={patientGrowthData}
 								margin={{left: 10, right: 10}}

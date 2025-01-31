@@ -1,5 +1,6 @@
 "use client";
 import {InsuranceComboBox} from "@/components/InsuranceComboBox";
+import {LoadingForm} from '@/components/LoadingForm';
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -16,7 +17,7 @@ import {useFetchInsuranceCompanies} from "@/hooks/useInsuranceCompanies";
 import React, {useCallback, useEffect, useMemo} from "react";
 import {Controller, useForm} from "react-hook-form";
 
-const PatientUpForm = ({onSubmit, defaultValues, onClose}) => {
+const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
   const {
     register,
     handleSubmit,
@@ -90,6 +91,10 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose}) => {
     reset(defaultValues);
     onClose();
   }, [capitalizeFirstLetter, onSubmit, defaultValues, onClose, reset]);
+
+  if (isLoading) {
+    return <LoadingForm/>
+  }
 
   return (
     <form

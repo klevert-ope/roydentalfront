@@ -17,7 +17,7 @@ import {
     useManageUsers,
 } from "@/hooks/useUserData";
 import React, {useCallback, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const AdminUsersPage = () => {
 	const {data: users = []} = useManageUsers();

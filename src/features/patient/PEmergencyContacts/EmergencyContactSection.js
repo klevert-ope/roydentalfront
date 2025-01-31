@@ -21,7 +21,7 @@ import {
 } from "@/hooks/useEmergencyContacts";
 import {useParams} from "next/navigation";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const EmergencyContactsSection = () => {
 	const {patientId} = useParams();

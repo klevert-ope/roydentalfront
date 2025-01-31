@@ -40,7 +40,7 @@ import {
 } from "@tanstack/react-table";
 import {SquareArrowDown, SquareArrowUp} from "lucide-react";
 import React, {useCallback, useMemo, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const PatientsTable = () => {
 	const {data = []} = useFetchPatients();
@@ -208,7 +208,6 @@ const PatientsTable = () => {
   return (
     <div className={"my-16"}>
       <h1 className={"text-center mb-8"}>PATIENTS</h1>
-      {/* Create Patient */}
       <Button
         className={"my-5"}
         onClick={() => setIsCreateDialogOpen(true)}
@@ -233,8 +232,6 @@ const PatientsTable = () => {
           />
         </DialogContent>
       </Dialog>
-
-      {/* Table Controls */}
       <div className={"flex flex-row justify-between"}>
         <div className={"max-w-52 mr-2"}>
           <Input
@@ -280,10 +277,6 @@ const PatientsTable = () => {
           </SelectContent>
         </Select>
       </div>
-
-      {
-        /* Table */
-      }
       <div className={"my-4"}>
         <Table>
           <TableCaption>A list of patients.</TableCaption>
@@ -331,8 +324,6 @@ const PatientsTable = () => {
           </TableBody>
         </Table>
       </div>
-
-      {/* Pagination */}
       <div>
         <div
           className={"flex flex-row justify-between" +

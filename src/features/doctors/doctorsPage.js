@@ -18,7 +18,7 @@ import {
   useUpdateDoctor,
 } from "@/hooks/useDoctors";
 import React, {useEffect, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const DoctorsPage = () => {
 	const {data: doctors = []} = useFetchDoctors();

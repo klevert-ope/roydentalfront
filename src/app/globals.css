@@ -10,39 +10,39 @@ body {
 
 @layer base {
   :root {
-    --background: oklch(0.266 0.078 263.725);
-    --foreground: oklch(0.678 0.142 76.85);
-    --card: oklch(0.141 0.004 285.823 / 0.2);
-    --card-foreground: oklch(0.678 0.142 76.85);
-    --popover: oklch(0.266 0.078 263.725);
-    --popover-foreground: oklch(0.678 0.142 76.85);
-    --primary: oklch(0.678 0.142 76.85);
-    --primary-foreground: oklch(0.266 0.078 263.725);
-    --secondary: oklch(0.678 0.142 76.85);
-    --secondary-foreground: oklch(0.141 0.004 285.823);
-    --muted: oklch(0.141 0.004 285.823);
-    --muted-foreground: oklch(0.678 0.142 76.85);
-    --accent: oklch(0.678 0.142 76.85);
-    --accent-foreground: oklch(0.141 0.004 285.823);
-    --destructive: oklch(0.551 0.211 27.817);
-    --destructive-foreground: oklch(0.141 0.004 285.823);
-    --border: oklch(0.678 0.142 76.85);
-    --input: oklch(0.678 0.142 76.85);
-    --ring: oklch(0.678 0.142 76.85);
-    --chart-1: oklch(0.619 0.203 312.742);
-    --chart-2: oklch(0.53 0.193 262.049);
-    --chart-3: oklch(0.624 0.159 47.609);
-    --chart-4: oklch(0.745 0.196 149.549);
-    --chart-5: oklch(0.612 0.209 6.139);
-    --radius: 0.5rem;
-    --sidebar-background: oklch(0.266 0.078 263.725);
-    --sidebar-foreground: oklch(0.678 0.142 76.85);
-    --sidebar-primary: oklch(0.716 0.112 326.664);
-    --sidebar-primary-foreground: oklch(0.266 0.078 263.725);
-    --sidebar-accent: oklch(0.678 0.142 76.85);
-    --sidebar-accent-foreground: oklch(0.141 0.004 285.823);
-    --sidebar-border: oklch(0.678 0.142 76.85);
-    --sidebar-ring: oklch(0.678 0.142 76.85);
+    --background: 240 5.9% 10%;
+    --foreground: 210 20% 98%;
+    --card: 240 5.9% 10%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 221.2 83.2% 53.3%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --radius: 0.4rem;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 221.2 83.2% 53.3%;
+    --sidebar-primary-foreground: 210 20% 98%;
+    --sidebar-accent: 215 27.9% 16.9%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 215 27.9% 16.9%;
+    --sidebar-ring: 221.2 83.2% 53.3%;
   }
 }
 @layer base {
@@ -55,47 +55,10 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-input {
-  color: white;
-}
-
-button:has(svg) {
-  color: var(--primary);
-	}
-
-label {
-  color: var(--primary);
-}
-
-/* Remove native appearance for better customization */
-input[type="date"],
-input[type="datetime-local"] {
-  -webkit-appearance: none;
-  appearance: none;
-  padding: 5px;
-  font-size: 16px; /* Adjust for readability */
-}
-
-/* Style for the calendar picker for date input */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  content: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c88ac8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-calendar-days'%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M16 2v4'/%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18'/%3E%3Cpath d='M8 14h.01'/%3E%3Cpath d='M12 14h.01'/%3E%3Cpath d='M16 14h.01'/%3E%3Cpath d='M8 18h.01'/%3E%3Cpath d='M12 18h.01'/%3E%3Cpath d='M16 18h.01'/%3E%3C/svg%3E");
-  background-size: contain;
-  cursor: pointer;
-}
-
-/* Style for the clock picker for datetime-local input */
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  content: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23c88ac8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-calendar-clock'%3E%3Cpath d='M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5'/%3E%3Cpath d='M16 2v4'/%3E%3Cpath d='M8 2v4'/%3E%3Cpath d='M3 10h5'/%3E%3Cpath d='M17.5 17.5 16 16.3V14'/%3E%3Ccircle cx='16' cy='16' r='6'/%3E%3C/svg%3E");
-  background-size: contain;
-  cursor: pointer;
-}
-
-/* Add padding for better input field visibility */
-input[type="date"],
-input[type="time"] {
-  padding-right: calc(2rem + 0.5rem); /* Dynamic padding for custom icons */
+  
+  form {
+    @apply text-foreground;
+    }
 }
 
 /* Custom Utility Classes */
@@ -105,6 +68,10 @@ input[type="time"] {
     max-height: var(--radix-popover-content-available-height);
   }
 }
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  }
 
 /* ProseMirror Styling */
 .ProseMirror {

@@ -1,8 +1,8 @@
+import {Toaster} from "@/components/ui/sonner"
 import ReactQueryProvider from "@/utility/QueryProvider";
 import "./globals.css";
 import {Inter} from "next/font/google";
 import React from "react";
-import {Toaster} from "react-hot-toast";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -24,7 +24,10 @@ export default async function RootLayout({ children }) {
       >
       <ReactQueryProvider>
           {children}
-	      <Toaster/>
+          <Toaster position="top-center" pauseWhenPageIsHidden={true} richColors
+                   toastOptions={{
+                       style: {textAlign: "center", padding: "10px",},
+                   }}/>
       </ReactQueryProvider>
       </body>
     </html>

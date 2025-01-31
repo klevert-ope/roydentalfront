@@ -1,4 +1,3 @@
-import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import React from "react";
 
 const DeleteAlertDialog = React.memo(
   ({ isOpen, onConfirm, onClose, description }) => {
@@ -23,14 +23,12 @@ const DeleteAlertDialog = React.memo(
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel
-              className={"mt-3 bg-[var(--primary)]" +
-                " border-[var(--primary)] text-black"}
+                className={"mt-3"}
             >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={onConfirm}
-              className={"bg-[var(--destructive)] border-[var(--destructive)]"}
             >
               Continue
             </AlertDialogAction>

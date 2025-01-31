@@ -1,4 +1,3 @@
-import SideBarComponent from "@/components/SideBarComponent";
 import Link from "next/link";
 
 export const metadata = {
@@ -7,7 +6,6 @@ export const metadata = {
 
 export default function NotFound() {
 	return (
-		<SideBarComponent>
 			<div className="flex flex-col items-center justify-center h-svh">
 				<h2>Not Found</h2>
 				<p className="text-red-700">
@@ -15,6 +13,5 @@ export default function NotFound() {
 				</p>
 				<Link href="/">Return Home</Link>
 			</div>
-		</SideBarComponent>
 	);
 }

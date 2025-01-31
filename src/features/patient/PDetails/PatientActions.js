@@ -26,7 +26,7 @@ import {
 import {Ellipsis} from "lucide-react";
 import {useParams, useRouter} from "next/navigation";
 import React, {useCallback, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const PatientsAction = () => {
 	const {patientId} = useParams();
@@ -133,7 +133,7 @@ const PatientsAction = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">
-              <Ellipsis color={"var(--primary)"} />
+              <Ellipsis/>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className={"w-56 mr-2"}>

@@ -1,3 +1,4 @@
+import {LoadingPage} from '@/components/LoadingPage';
 import SideBarComponent from "@/components/SideBarComponent";
 import {PatientSubDetails} from "@/features/patient/PatientSubDetails";
 import PatientsAction from "@/features/patient/PDetails/PatientActions";
@@ -11,13 +12,12 @@ export const metadata = {
 export default function Patient() {
   return (
 	  <SideBarComponent>
-		  <div
-			  className="container mx-auto px-2 w-full my-14 transition-all fade-in-60 animate-in -translate-y-3">
+		  <LoadingPage>
 			  <h1 className="text-center mb-8">PATIENT INFORMATION</h1>
 			  <PatientsAction/>
 			  <PatientDetails/>
 			  <PatientSubDetails/>
-		  </div>
+		  </LoadingPage>
 	  </SideBarComponent>
   );
 }

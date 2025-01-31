@@ -1,5 +1,6 @@
 "use client";
 import {DoctorComboBox} from "@/components/DoctorComboBox";
+import {LoadingForm} from '@/components/LoadingForm';
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -8,7 +9,7 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {Controller, useForm} from "react-hook-form";
 
 const BillingForm = (
-	{onSubmit, defaultValues, onClose, patientId},
+    {onSubmit, defaultValues, onClose, patientId, isLoading},
 ) => {
 	const {data: doctors = []} = useFetchDoctors();
 
@@ -46,6 +47,10 @@ const BillingForm = (
     reset();
     onClose();
   }, [onSubmit, onClose, reset]);
+
+  if (isLoading) {
+    return <LoadingForm/>
+  }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>

@@ -1,7 +1,7 @@
-import React from "react";
+import {Button} from "@/components/ui/button";
+import {Ellipsis} from "lucide-react";
 import Link from "next/link";
-import { Ellipsis } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React from "react";
 
 const ViewPatient = ({ patientId }) => {
   return (
@@ -11,7 +11,7 @@ const ViewPatient = ({ patientId }) => {
       prefetch={true}
     >
       <Button variant="ghost" size="icon">
-        <Ellipsis color={"var(--primary)"} />
+        <Ellipsis/>
       </Button>
     </Link>
   );

@@ -1,4 +1,11 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {Button} from "@/components/ui/button";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -6,15 +13,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
+import {Ellipsis} from "lucide-react";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 export const TreatmentPlansAccord = ({ plans, onEdit, onDelete }) => (
   <div className="mt-6">
@@ -40,7 +40,7 @@ export const TreatmentPlansAccord = ({ plans, onEdit, onDelete }) => (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <Ellipsis color={"var(--primary"} />
+                  <Ellipsis/>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 mx-2">

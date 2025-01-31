@@ -1,6 +1,6 @@
 "use server";
 import {axiosInstance} from "@/config/axiosInstance";
-import {handleAxiosError} from '@/utility/handleError';
+import {handleAxiosError} from "@/utility/handleError";
 import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 import {match} from "path-to-regexp";
@@ -18,9 +18,9 @@ export const ROLES = {
 };
 
 const roleHierarchy = {
-	[ROLES.ADMIN]: [ROLES.DOCTOR, ROLES.RECEPTIONIST],
-	[ROLES.DOCTOR]: [ROLES.RECEPTIONIST],
-	[ROLES.RECEPTIONIST]: [],
+	[ROLES.ADMIN]: new Set([ROLES.DOCTOR, ROLES.RECEPTIONIST]),
+	[ROLES.DOCTOR]: new Set([ROLES.RECEPTIONIST]),
+	[ROLES.RECEPTIONIST]: new Set(),
 };
 
 // Define protected routes and allowed roles
@@ -35,23 +35,25 @@ const protectedRoutes = {
 };
 
 // Precompute route matchers for efficient matching
-const routeMatchers = Object.keys(protectedRoutes).map((route) => ({
+const routeMatchers = Object.entries(protectedRoutes).map(([route, roles]) => ({
 	route,
+	roles,
 	matcher: match(route, {decode: decodeURIComponent}),
 }));
 
 // Check if a user has access based on their role
 function hasAccess(userRole, allowedRoles) {
 	if (!userRole) return false;
-	return allowedRoles.includes(userRole) || (roleHierarchy[userRole] || []).some(role => allowedRoles.includes(role));
+	return (
+		allowedRoles.includes(userRole) ||
+		(roleHierarchy[userRole] && [...roleHierarchy[userRole]].some((role) => allowedRoles.includes(role)))
+	);
 }
 
 // Match the requested pathname to a protected route
 function matchRoute(pathname) {
-	for (const {route, matcher} of routeMatchers) {
-		if (matcher(pathname)) return route;
-	}
-	return null;
+	const matched = routeMatchers.find(({matcher}) => matcher(pathname));
+	return matched ? matched.route : null;
 }
 
 // Verify the access token with the backend
@@ -61,7 +63,14 @@ async function verifyToken(token) {
 		return response.data;
 	} catch (error) {
 		handleAxiosError(error);
+		return null;
 	}
+}
+
+// Helper function to handle unauthorized access
+function redirectTo(url, cookieStore) {
+	cookieStore.delete("accessToken");
+	return NextResponse.redirect(new URL(url, process.env.NEXT_PUBLIC_BASE_URL));
 }
 
 // Middleware function to handle authentication and authorization
@@ -74,58 +83,41 @@ export async function middleware(req) {
 	}
 
 	const cookieStore = await cookies();
-	const accessToken = cookieStore.get("accessToken", {
-		httpOnly: true,
-		secure: true,
-		sameSite: "strict",
-	})?.value;
+	const accessToken = cookieStore.get("accessToken")?.value;
 
 	try {
-		// Redirect unauthenticated users to the login page
 		if (!accessToken) {
 			console.warn(`Redirecting unauthenticated user from ${pathname} to ${LOGIN_PAGE}`);
-			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
+			return redirectTo(LOGIN_PAGE, cookieStore);
 		}
 
-		// Verify the access token
 		const decodedToken = await verifyToken(accessToken);
 		if (!decodedToken) {
 			console.warn(`Invalid token detected. Clearing cookie and redirecting to ${LOGIN_PAGE}`);
-			cookieStore.delete("accessToken");
-			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
+			return redirectTo(LOGIN_PAGE, cookieStore);
 		}
 
 		const userRole = decodedToken.role;
 		if (!userRole) {
 			console.warn(`Missing role in token for access to ${pathname}`);
+			return redirectTo(LOGIN_PAGE, cookieStore);
 		}
 
-		// Check if the route is protected and if the user has access
 		const matchedRoute = matchRoute(pathname);
-		if (matchedRoute) {
-			const allowedRoles = protectedRoutes[matchedRoute];
-
-			if (!hasAccess(userRole, allowedRoles)) {
-				console.warn(`Unauthorized access attempt to ${pathname} by role ${userRole}`);
-				return NextResponse.redirect(new URL(UNAUTHORIZED_PAGE, req.url));
-			}
+		if (matchedRoute && !hasAccess(userRole, protectedRoutes[matchedRoute])) {
+			console.warn(`Unauthorized access attempt to ${pathname} by role ${userRole}`);
+			return redirectTo(UNAUTHORIZED_PAGE, cookieStore);
 		}
 
-		// Allow access to the requested route
 		return NextResponse.next();
 	} catch (error) {
 		console.error("Middleware error:", error.message);
-
-		// Handle specific error cases
-		if (error.response?.status === 401) {
-			console.warn("Token is invalid or expired");
-			cookieStore.delete("accessToken");
-			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
-		}
+		return redirectTo(LOGIN_PAGE, cookieStore);
 	}
 }
 
 // Middleware configuration
+const IGNORED_PATHS = ["/_next/static", "/_next/image", "/favicon.ico"];
 export const config = {
-	matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+	matcher: [`/((?!${IGNORED_PATHS.join("|")}).*)`],
 };

@@ -1,3 +1,4 @@
+import {Button} from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,8 +7,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
-import React from "react";
 import {
   Table,
   TableBody,
@@ -17,7 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import {Ellipsis} from "lucide-react";
+import React from "react";
 
 const EmergencyContactsTable = ({ emergencyContacts, onEdit, onDelete }) => {
   return (
@@ -38,7 +38,7 @@ const EmergencyContactsTable = ({ emergencyContacts, onEdit, onDelete }) => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <Ellipsis color={"var(--primary)"} />
+                    <Ellipsis/>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className={"w-56 mx-2"}>

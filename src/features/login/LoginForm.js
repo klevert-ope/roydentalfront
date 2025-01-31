@@ -8,7 +8,7 @@ import {Label} from "@/components/ui/label";
 import {useRouter} from "next/navigation";
 import React from "react";
 import {useForm} from "react-hook-form";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 export default function LoginForm() {
   const router = useRouter();

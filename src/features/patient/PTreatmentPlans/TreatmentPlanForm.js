@@ -1,4 +1,5 @@
 "use client";
+import {LoadingForm} from '@/components/LoadingForm';
 import RichTextEditor from "@/components/RichTextEditor";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -7,7 +8,7 @@ import React, {useCallback, useEffect, useMemo} from "react";
 import {Controller, useForm} from "react-hook-form";
 
 const TreatmentPlanForm = (
-	{onSubmit, defaultValues, onClose, patientId},
+    {onSubmit, defaultValues, onClose, patientId, isLoading},
 ) => {
   const {
     register,
@@ -37,6 +38,10 @@ const TreatmentPlanForm = (
     reset();
     onClose();
   }, [onSubmit, onClose, reset]);
+
+  if (isLoading) {
+    return <LoadingForm/>
+  }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">

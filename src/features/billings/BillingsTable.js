@@ -166,7 +166,6 @@ const BillingsTable = () => {
   return (
     <div className={"my-16"}>
       <h1 className={"text-center mb-8"}>BILLINGS</h1>
-      {/* Table Controls */}
       <div className={"flex flex-row justify-between"}>
         <div className={"max-w-52 mr-2"}>
           <Input
@@ -210,10 +209,6 @@ const BillingsTable = () => {
           </SelectContent>
         </Select>
       </div>
-
-      {
-        /* Table */
-      }
       <div className={"my-4 w-full overflow-auto"}>
         <Table>
           <TableCaption>A list of billings.</TableCaption>
@@ -260,7 +255,7 @@ const BillingsTable = () => {
             ))}
           </TableBody>
           <TableFooter>
-            <TableRow className="bg-[var(--foreground)] text-black font-bold">
+            <TableRow className="font-bold">
               {table.getFooterGroups()[0].headers.map((header) => (
                 <TableCell key={header.id} className={"whitespace-nowrap"}>
                   {flexRender(
@@ -273,8 +268,6 @@ const BillingsTable = () => {
           </TableFooter>
         </Table>
       </div>
-
-      {/* Pagination */}
       <div>
         <div
           className={"flex flex-row justify-between" +

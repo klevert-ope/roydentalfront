@@ -37,7 +37,7 @@ const InsuranceCompaniesTable = ({ insuranceCompanies, onEdit, onDelete }) => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
-                    <Ellipsis color={"var(--primary)"} />
+	                  <Ellipsis/>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className={"w-56 mx-2"}>

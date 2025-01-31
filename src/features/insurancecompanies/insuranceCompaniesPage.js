@@ -20,7 +20,7 @@ import {
   useUpdateInsuranceCompany,
 } from "@/hooks/useInsuranceCompanies";
 import React, {useCallback, useEffect, useState} from "react";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const InsuranceCompaniesPage = () => {
 	const {data: insuranceCompanies = []} = useFetchInsuranceCompanies();
