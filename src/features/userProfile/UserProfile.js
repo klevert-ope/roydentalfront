@@ -1,5 +1,6 @@
 "use client"
 import {logoff} from "@/api/auth";
+import {LoadingForm} from '@/components/LoadingForm';
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {useUserData} from "@/hooks/useUserData";
@@ -8,7 +9,7 @@ import React, {useEffect} from "react";
 
 const UserProfile = () => {
 	const router = useRouter();
-	const {data: userProfile = {}, refetch} = useUserData();
+	const {data: userProfile, refetch, isLoading} = useUserData();
 
 	useEffect(() => {
 		refetch();
@@ -24,6 +25,10 @@ const UserProfile = () => {
 	const roleName = userProfile?.user?.role?.name;
 	const username = userProfile?.user?.username;
 	const email = userProfile?.user?.email;
+
+	if (isLoading) {
+		return <LoadingForm/>
+	}
 
 	return (
 		<Card>

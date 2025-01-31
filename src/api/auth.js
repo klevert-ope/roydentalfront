@@ -37,7 +37,6 @@ export const login = async (userData) => {
 	  return {success: true, redirectUrl: "/"};
   } catch (error) {
     handleAxiosError(error);
-	  return {success: false, error: error.message};
   }
 };
 
@@ -101,9 +100,11 @@ export const adminManageUsers = async () => {
   try {
     const cookieStore = await cookies();
     const userAccess = cookieStore.get("accessToken");
-    const token = typeof userAccess === "object" && userAccess !== null
-      ? userAccess.value
-      : userAccess;
+    if (!userAccess || typeof userAccess !== "object" || !userAccess.value) {
+      console.log("Unauthorized: No valid access token found");
+    }
+
+    const token = userAccess.value;
 
     const response = await axiosInstance.get("/auth/admin/manage-users", {
 	    params: {accessToken: token},
@@ -119,14 +120,16 @@ export const getUserProfile = async () => {
   try {
     const cookieStore = await cookies();
     const userAccess = cookieStore.get("accessToken");
-    const token = typeof userAccess === "object" && userAccess !== null
-      ? userAccess.value
-      : userAccess;
+    if (!userAccess || typeof userAccess !== "object" || !userAccess.value) {
+      console.log("Unauthorized: No valid access token found");
+    }
+
+    const token = userAccess.value;
 
     const response = await axiosInstance.get("/auth/user/profile", {
 	    params: {accessToken: token},
     });
-    return response.data || {};
+    return response.data;
   } catch (error) {
     handleAxiosError(error);
   }

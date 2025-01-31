@@ -11,5 +11,6 @@ export const handleAxiosError = (error) => {
     console.error("No response received:", error.request);
   } else {
     console.error("Error:", error.message);
+    return null
   }
 };

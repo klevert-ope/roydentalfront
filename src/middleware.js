@@ -72,6 +72,7 @@ function hasAccess(userRole, allowedRoles) {
 	return allowedRoles.has(userRole) || Array.from(appConfig.roleHierarchy[userRole] || new Set()).some(role => allowedRoles.has(role));
 }
 
+
 // Match the requested pathname to a protected route
 function matchRoute(pathname) {
 	const matchedRoute = routeMatchers.find(({matcher}) => matcher(pathname));
@@ -132,10 +133,7 @@ export async function middleware(req) {
 			await rateLimiter.consume(ip); // Consume 1 point per request
 		} catch (rateLimiterRes) {
 			logger.warn(`Rate limit exceeded for IP: ${ip}`);
-			return NextResponse.json(
-				{error: "Too many requests. Please try again later."},
-				{status: 429}
-			);
+			console.error("Too many requests. Please try again later.");
 		}
 
 		const cookieStore = await cookies();

@@ -9,7 +9,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 // Fetch user
 export const useUserData = () => {
   return useQuery({
-    queryKey: ["user"],
+    queryKey: ["users"],
     queryFn: getUserProfile,
   });
 };

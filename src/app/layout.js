@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/components/ErrorBoundary';
 import {Toaster} from "@/components/ui/sonner"
 import ReactQueryProvider from "@/utility/QueryProvider";
 import "./globals.css";
@@ -23,7 +24,9 @@ export default async function RootLayout({ children }) {
         className={`${inter.variable} antialiased prose underline-offset-8`}
       >
       <ReactQueryProvider>
+          <ErrorBoundary>
           {children}
+          </ErrorBoundary>
           <Toaster position="top-center" pauseWhenPageIsHidden={true} richColors
                    toastOptions={{
                        style: {textAlign: "center", padding: "10px",},
