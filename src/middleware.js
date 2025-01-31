@@ -1,130 +1,182 @@
 "use server";
 import {axiosInstance} from "@/config/axiosInstance";
-import {handleAxiosError} from '@/utility/handleError';
 import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 import {match} from "path-to-regexp";
+import {RateLimiterMemory} from "rate-limiter-flexible";
 
-// Constants for configuration
-const AUTH_DECRYPT_ENDPOINT = "/auth/decrypt";
-const LOGIN_PAGE = "/login";
-const UNAUTHORIZED_PAGE = "/unauthorized";
-
-// Define roles and their hierarchy
-export const ROLES = {
-	ADMIN: "Admin",
-	DOCTOR: "Doctor",
-	RECEPTIONIST: "Receptionist",
+// Centralized Configuration
+const appConfig = {
+	endpoints: {
+		authDecrypt: process.env.AUTH_DECRYPT_ENDPOINT || "/auth/decrypt",
+	},
+	pages: {
+		login: process.env.LOGIN_PAGE || "/login",
+		unauthorized: process.env.UNAUTHORIZED_PAGE || "/unauthorized",
+	},
+	roles: {
+		ADMIN: "Admin",
+		DOCTOR: "Doctor",
+		RECEPTIONIST: "Receptionist",
+	},
+	roleHierarchy: {
+		Admin: new Set(["Doctor", "Receptionist"]),
+		Doctor: new Set(["Receptionist"]),
+		Receptionist: new Set(),
+	},
+	protectedRoutes: {
+		"/": new Set(["Admin", "Doctor", "Receptionist"]),
+		"/doctors": new Set(["Admin", "Doctor", "Receptionist"]),
+		"/patients": new Set(["Admin", "Doctor", "Receptionist"]),
+		"/patients/:id": new Set(["Admin", "Doctor", "Receptionist"]),
+		"/insurance-companies": new Set(["Admin", "Doctor", "Receptionist"]),
+		"/users": new Set(["Admin"]),
+		"/billings": new Set(["Admin"]),
+	},
+	rateLimit: {
+		points: 30, // Number of requests
+		duration: 60, // Per 60 seconds
+	},
 };
 
-const roleHierarchy = {
-	[ROLES.ADMIN]: new Set([ROLES.DOCTOR, ROLES.RECEPTIONIST]),
-	[ROLES.DOCTOR]: new Set([ROLES.RECEPTIONIST]),
-	[ROLES.RECEPTIONIST]: new Set(),
+// Logger Utility
+const logger = {
+	warn: (message) => console.warn(`[WARN] ${message}`),
+	error: (message) => console.error(`[ERROR] ${message}`),
 };
 
-// Define protected routes and allowed roles
-const protectedRoutes = {
-	"/": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
-	"/doctors": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
-	"/patients": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
-	"/patients/:id": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
-	"/insurance-companies": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
-	"/users": new Set([ROLES.ADMIN]),
-	"/billings": new Set([ROLES.ADMIN]),
-};
+// Rate Limiter Configuration
+const rateLimiter = new RateLimiterMemory({
+	points: appConfig.rateLimit.points, // Number of requests
+	duration: appConfig.rateLimit.duration, // Per duration in seconds
+});
 
-// Precompute route matchers for efficient matching
-const routeMatchers = Object.entries(protectedRoutes).map(([route, allowedRoles]) => ({
+// Route Matchers Cache
+const routeMatchersCache = new Map();
+
+function getRouteMatcher(route) {
+	if (!routeMatchersCache.has(route)) {
+		routeMatchersCache.set(route, match(route, {decode: decodeURIComponent}));
+	}
+	return routeMatchersCache.get(route);
+}
+
+const routeMatchers = Object.keys(appConfig.protectedRoutes).map((route) => ({
 	route,
-	allowedRoles,
-	matcher: match(route, {decode: decodeURIComponent}),
+	matcher: getRouteMatcher(route),
 }));
 
 // Check if a user has access based on their role
 function hasAccess(userRole, allowedRoles) {
 	if (!userRole) return false;
-	return allowedRoles.has(userRole) || (roleHierarchy[userRole] || new Set()).has(userRole);
+	return allowedRoles.has(userRole) || Array.from(appConfig.roleHierarchy[userRole] || new Set()).some(role => allowedRoles.has(role));
 }
 
 // Match the requested pathname to a protected route
 function matchRoute(pathname) {
 	const matchedRoute = routeMatchers.find(({matcher}) => matcher(pathname));
-	return matchedRoute ? matchedRoute.route : null;
+	return matchedRoute ? appConfig.protectedRoutes[matchedRoute.route] : null;
 }
 
 // Verify the access token with the backend
 async function verifyToken(token) {
 	try {
-		const response = await axiosInstance.post(AUTH_DECRYPT_ENDPOINT, {token});
+		const response = await axiosInstance.post(appConfig.endpoints.authDecrypt, {token});
 		return response.data;
 	} catch (error) {
-		handleAxiosError(error);
+		logger.error(`Token verification failed: ${error.message}`);
+		return null;
 	}
 }
 
-// Middleware function to handle authentication and authorization
-export async function middleware(req) {
-	const {pathname} = req.nextUrl;
-
-	// Allow unauthenticated users to access the login page
-	if (pathname === LOGIN_PAGE) {
-		return NextResponse.next();
-	}
-
-	const cookieStore = cookies();
-	const accessToken = cookieStore.get("accessToken", {
-		httpOnly: true,
-		secure: true,
-		sameSite: "strict",
-	})?.value;
-
+// Error Handling Middleware
+async function withErrorHandling(fn, req) {
+	const CookieStore = await cookies();
 	try {
+		return await fn(req);
+	} catch (error) {
+		logger.error(`Middleware error: ${error.message}`);
+
+		if (error.response?.status === 401) {
+			logger.warn("Token is invalid or expired");
+			CookieStore.delete("accessToken");
+			return NextResponse.redirect(new URL(appConfig.pages.login, req.url));
+		}
+
+		return NextResponse.redirect(new URL(appConfig.pages.unauthorized, req.url));
+	}
+}
+
+// Security Headers
+function setSecurityHeaders(response) {
+	response.headers.set("X-Content-Type-Options", "nosniff");
+	response.headers.set("X-Frame-Options", "DENY");
+	response.headers.set("X-XSS-Protection", "1; mode=block");
+	response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+	return response;
+}
+
+// Middleware Function
+export async function middleware(req) {
+	return withErrorHandling(async (req) => {
+		const {pathname} = req.nextUrl;
+
+		// Allow unauthenticated users to access the login page
+		if (pathname === appConfig.pages.login) {
+			return NextResponse.next();
+		}
+
+		// Rate Limiting
+		const ip = req.headers.get("x-forwarded-for") || req.ip || "unknown";
+		try {
+			await rateLimiter.consume(ip); // Consume 1 point per request
+		} catch (rateLimiterRes) {
+			logger.warn(`Rate limit exceeded for IP: ${ip}`);
+			return NextResponse.json(
+				{error: "Too many requests. Please try again later."},
+				{status: 429}
+			);
+		}
+
+		const cookieStore = await cookies();
+		const accessToken = cookieStore.get("accessToken")?.value;
+
 		// Redirect unauthenticated users to the login page
 		if (!accessToken) {
-			console.warn(`Redirecting unauthenticated user from ${pathname} to ${LOGIN_PAGE}`);
-			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
+			logger.warn(`Redirecting unauthenticated user from ${pathname} to ${appConfig.pages.login}`);
+			return NextResponse.redirect(new URL(appConfig.pages.login, req.url));
 		}
 
 		// Verify the access token
 		const decodedToken = await verifyToken(accessToken);
 		if (!decodedToken) {
-			console.warn(`Invalid token detected. Clearing cookie and redirecting to ${LOGIN_PAGE}`);
+			logger.warn(`Invalid token detected. Clearing cookie and redirecting to ${appConfig.pages.login}`);
 			cookieStore.delete("accessToken");
-			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
+			return NextResponse.redirect(new URL(appConfig.pages.login, req.url));
 		}
 
 		const userRole = decodedToken.role;
 		if (!userRole) {
-			console.warn(`Missing role in token for access to ${pathname}`);
+			logger.warn(`Missing role in token for access to ${pathname}`);
+			return NextResponse.redirect(new URL(appConfig.pages.unauthorized, req.url));
 		}
 
 		// Check if the route is protected and if the user has access
-		const matchedRoute = matchRoute(pathname);
-		if (matchedRoute) {
-			const allowedRoles = protectedRoutes[matchedRoute];
-
+		const allowedRoles = matchRoute(pathname);
+		if (allowedRoles) {
 			if (!hasAccess(userRole, allowedRoles)) {
-				console.warn(`Unauthorized access attempt to ${pathname} by role ${userRole}`);
-				return NextResponse.redirect(new URL(UNAUTHORIZED_PAGE, req.url));
+				logger.warn(`Unauthorized access attempt to ${pathname} by role ${userRole}`);
+				return NextResponse.redirect(new URL(appConfig.pages.unauthorized, req.url));
 			}
 		}
 
 		// Allow access to the requested route
-		return NextResponse.next();
-	} catch (error) {
-		console.error("Middleware error:", error.message);
-
-		// Handle specific error cases
-		if (error.response?.status === 401) {
-			console.warn("Token is invalid or expired");
-			cookieStore.delete("accessToken");
-			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
-		}
-	}
+		const response = NextResponse.next();
+		return setSecurityHeaders(response);
+	}, req);
 }
 
-// Middleware configuration
+// Middleware Configuration
 export const config = {
 	matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
