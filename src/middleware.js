@@ -1,6 +1,6 @@
 "use server";
 import {axiosInstance} from "@/config/axiosInstance";
-import {handleAxiosError} from "@/utility/handleError";
+import {handleAxiosError} from '@/utility/handleError';
 import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 import {match} from "path-to-regexp";
@@ -25,35 +25,32 @@ const roleHierarchy = {
 
 // Define protected routes and allowed roles
 const protectedRoutes = {
-	"/": [ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST],
-	"/doctors": [ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST],
-	"/patients": [ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST],
-	"/patients/:id": [ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST],
-	"/insurance-companies": [ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST],
-	"/users": [ROLES.ADMIN],
-	"/billings": [ROLES.ADMIN],
+	"/": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
+	"/doctors": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
+	"/patients": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
+	"/patients/:id": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
+	"/insurance-companies": new Set([ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]),
+	"/users": new Set([ROLES.ADMIN]),
+	"/billings": new Set([ROLES.ADMIN]),
 };
 
 // Precompute route matchers for efficient matching
-const routeMatchers = Object.entries(protectedRoutes).map(([route, roles]) => ({
+const routeMatchers = Object.entries(protectedRoutes).map(([route, allowedRoles]) => ({
 	route,
-	roles,
+	allowedRoles,
 	matcher: match(route, {decode: decodeURIComponent}),
 }));
 
 // Check if a user has access based on their role
 function hasAccess(userRole, allowedRoles) {
 	if (!userRole) return false;
-	return (
-		allowedRoles.includes(userRole) ||
-		(roleHierarchy[userRole] && [...roleHierarchy[userRole]].some((role) => allowedRoles.includes(role)))
-	);
+	return allowedRoles.has(userRole) || (roleHierarchy[userRole] || new Set()).has(userRole);
 }
 
 // Match the requested pathname to a protected route
 function matchRoute(pathname) {
-	const matched = routeMatchers.find(({matcher}) => matcher(pathname));
-	return matched ? matched.route : null;
+	const matchedRoute = routeMatchers.find(({matcher}) => matcher(pathname));
+	return matchedRoute ? matchedRoute.route : null;
 }
 
 // Verify the access token with the backend
@@ -63,14 +60,7 @@ async function verifyToken(token) {
 		return response.data;
 	} catch (error) {
 		handleAxiosError(error);
-		return null;
 	}
-}
-
-// Helper function to handle unauthorized access
-function redirectTo(url, cookieStore) {
-	cookieStore.delete("accessToken");
-	return NextResponse.redirect(new URL(url, process.env.NEXT_PUBLIC_BASE_URL));
 }
 
 // Middleware function to handle authentication and authorization
@@ -82,42 +72,59 @@ export async function middleware(req) {
 		return NextResponse.next();
 	}
 
-	const cookieStore = await cookies();
-	const accessToken = cookieStore.get("accessToken")?.value;
+	const cookieStore = cookies();
+	const accessToken = cookieStore.get("accessToken", {
+		httpOnly: true,
+		secure: true,
+		sameSite: "strict",
+	})?.value;
 
 	try {
+		// Redirect unauthenticated users to the login page
 		if (!accessToken) {
 			console.warn(`Redirecting unauthenticated user from ${pathname} to ${LOGIN_PAGE}`);
-			return redirectTo(LOGIN_PAGE, cookieStore);
+			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
 		}
 
+		// Verify the access token
 		const decodedToken = await verifyToken(accessToken);
 		if (!decodedToken) {
 			console.warn(`Invalid token detected. Clearing cookie and redirecting to ${LOGIN_PAGE}`);
-			return redirectTo(LOGIN_PAGE, cookieStore);
+			cookieStore.delete("accessToken");
+			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
 		}
 
 		const userRole = decodedToken.role;
 		if (!userRole) {
 			console.warn(`Missing role in token for access to ${pathname}`);
-			return redirectTo(LOGIN_PAGE, cookieStore);
 		}
 
+		// Check if the route is protected and if the user has access
 		const matchedRoute = matchRoute(pathname);
-		if (matchedRoute && !hasAccess(userRole, protectedRoutes[matchedRoute])) {
-			console.warn(`Unauthorized access attempt to ${pathname} by role ${userRole}`);
-			return redirectTo(UNAUTHORIZED_PAGE, cookieStore);
+		if (matchedRoute) {
+			const allowedRoles = protectedRoutes[matchedRoute];
+
+			if (!hasAccess(userRole, allowedRoles)) {
+				console.warn(`Unauthorized access attempt to ${pathname} by role ${userRole}`);
+				return NextResponse.redirect(new URL(UNAUTHORIZED_PAGE, req.url));
+			}
 		}
 
+		// Allow access to the requested route
 		return NextResponse.next();
 	} catch (error) {
 		console.error("Middleware error:", error.message);
-		return redirectTo(LOGIN_PAGE, cookieStore);
+
+		// Handle specific error cases
+		if (error.response?.status === 401) {
+			console.warn("Token is invalid or expired");
+			cookieStore.delete("accessToken");
+			return NextResponse.redirect(new URL(LOGIN_PAGE, req.url));
+		}
 	}
 }
 
 // Middleware configuration
-const IGNORED_PATHS = ["/_next/static", "/_next/image", "/favicon.ico"];
 export const config = {
-	matcher: [`/((?!${IGNORED_PATHS.join("|")}).*)`],
+	matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
