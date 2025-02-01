@@ -1,10 +1,11 @@
 "use client";
+import {LoadingForm} from '@/components/LoadingForm';
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 
-const DoctorForm = ({onSubmit, defaultValues, onClose}) => {
+const DoctorForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } =
     useForm({
       defaultValues: {
@@ -37,6 +38,10 @@ const DoctorForm = ({onSubmit, defaultValues, onClose}) => {
     reset();
     onClose();
   };
+
+  if (isLoading) {
+    return <LoadingForm/>
+  }
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
