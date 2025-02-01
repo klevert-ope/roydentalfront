@@ -37,9 +37,8 @@ export default function LoginForm() {
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <Label htmlFor="email">Email</Label>
+            <Label>Email
             <Input
-              id="email"
               type="email"
               {...register("email", {
                 required: "Email is required",
@@ -49,6 +48,7 @@ export default function LoginForm() {
                 },
               })}
             />
+            </Label>
             {errors.email && (
               <span className="text-red-700 text-sm">
                 {errors.email.message}
@@ -56,12 +56,12 @@ export default function LoginForm() {
             )}
           </div>
           <div className="mb-6">
-            <Label htmlFor="password">Password</Label>
+            <Label>Password
             <Input
-              id="password"
               type="password"
               {...register("password", { required: "Password is required" })}
             />
+            </Label>
             {errors.password && (
               <span className="text-red-700 text-sm">
                 {errors.password.message}

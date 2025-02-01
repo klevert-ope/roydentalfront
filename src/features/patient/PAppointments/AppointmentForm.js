@@ -61,21 +61,20 @@ const AppointmentForm = (
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       <div className="mb-4">
-        <Label htmlFor="patient_id">Patient ID</Label>
+          <Label>Patient ID
         <Input
-          id="patient_id"
           type="text"
           {...register("patient_id", { required: "This field is required" })}
           readOnly
         />
+          </Label>
         {errors.patient_id && (
           <span className="text-red-700">{errors.patient_id.message}</span>
         )}
       </div>
       <div className="mb-4">
-        <Label htmlFor="doctor_id">Doctor ID</Label>
+          <Label>Doctor ID
         <Controller
-          id="doctor_id"
           name="doctor_id"
           control={control}
           rules={{ required: "This field is required" }}
@@ -89,25 +88,25 @@ const AppointmentForm = (
             />
           )}
         />
+          </Label>
         {errors.doctor_id && (
           <span className="text-red-700">{errors.doctor_id.message}</span>
         )}
       </div>
       <div className="mb-4">
-        <Label htmlFor="date_time">Date and Time</Label>
+          <Label>Date and Time
         <Input
-          id="date_time"
           type="datetime-local"
           {...register("date_time", { required: "This field is required" })}
         />
+          </Label>
         {errors.date_time && (
           <span className="text-red-700">{errors.date_time.message}</span>
         )}
       </div>
       <div className="mb-4">
-        <Label htmlFor="status">Status</Label>
+          <Label>Status
         <Controller
-          id="status"
           name="status"
           control={control}
           rules={{ required: "This field is required" }}
@@ -127,6 +126,7 @@ const AppointmentForm = (
             </Select>
           )}
         />
+          </Label>
         {errors.status && (
           <span className="text-red-700">{errors.status.message}</span>
         )}
