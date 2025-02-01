@@ -48,7 +48,10 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
     }), [defaultValues]),
   });
 
-	const {data: insuranceCompanies = []} = useFetchInsuranceCompanies();
+  const {
+    data: insuranceCompanies = [],
+    isLoading: isLoadingInsuranceCompanies
+  } = useFetchInsuranceCompanies();
 
   const memoizedInsuranceCompanies = useMemo(() => insuranceCompanies, [
     insuranceCompanies,
@@ -92,7 +95,7 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
     onClose();
   }, [capitalizeFirstLetter, onSubmit, defaultValues, onClose, reset]);
 
-  if (isLoading) {
+  if (isLoading || isLoadingInsuranceCompanies) {
     return <LoadingForm/>
   }
 

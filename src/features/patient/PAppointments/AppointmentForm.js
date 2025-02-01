@@ -19,7 +19,7 @@ import {Controller, useForm} from "react-hook-form";
 const AppointmentForm = (
     {onSubmit, defaultValues, onClose, patientId, isLoading},
 ) => {
-	const {data: doctors = []} = useFetchDoctors();
+    const {data: doctors = [], isLoading: isLoadingDoctors} = useFetchDoctors();
 
   const memoizedDoctors = useMemo(() => doctors, [doctors]);
 
@@ -54,7 +54,7 @@ const AppointmentForm = (
     onClose();
   }, [onSubmit, onClose, reset]);
 
-    if (isLoading) {
+    if (isLoading || isLoadingDoctors) {
         return <LoadingForm/>
     }
 
