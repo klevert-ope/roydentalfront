@@ -6,6 +6,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {useUserData} from "@/hooks/useUserData";
 import {useRouter} from "next/navigation";
 import React, {useEffect} from "react";
+import {toast} from 'sonner';
 
 const UserProfile = () => {
 	const router = useRouter();
@@ -17,8 +18,10 @@ const UserProfile = () => {
 
 	const onLogoff = async () => {
 		const result = await logoff();
-		if (result.success) {
+		if (result.success === true) {
 			router.push(result.redirectUrl);
+		} else {
+			toast.error("Failed to logoff.");
 		}
 	};
 

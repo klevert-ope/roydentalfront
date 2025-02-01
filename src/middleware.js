@@ -3,7 +3,6 @@ import {axiosInstance} from "@/config/axiosInstance";
 import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 import {match} from "path-to-regexp";
-import {RateLimiterMemory} from "rate-limiter-flexible";
 
 // Centralized Configuration
 const appConfig = {
@@ -33,10 +32,6 @@ const appConfig = {
 		"/users": new Set(["Admin"]),
 		"/billings": new Set(["Admin"]),
 	},
-	rateLimit: {
-		points: 30, // Number of requests
-		duration: 60, // Per 60 seconds
-	},
 };
 
 // Logger Utility
@@ -44,12 +39,6 @@ const logger = {
 	warn: (message) => console.warn(`[WARN] ${message}`),
 	error: (message) => console.error(`[ERROR] ${message}`),
 };
-
-// Rate Limiter Configuration
-const rateLimiter = new RateLimiterMemory({
-	points: appConfig.rateLimit.points, // Number of requests
-	duration: appConfig.rateLimit.duration, // Per duration in seconds
-});
 
 // Route Matchers Cache
 const routeMatchersCache = new Map();
@@ -125,15 +114,6 @@ export async function middleware(req) {
 		// Allow unauthenticated users to access the login page
 		if (pathname === appConfig.pages.login) {
 			return NextResponse.next();
-		}
-
-		// Rate Limiting
-		const ip = req.headers.get("x-forwarded-for") || req.ip || "unknown";
-		try {
-			await rateLimiter.consume(ip); // Consume 1 point per request
-		} catch (rateLimiterRes) {
-			logger.warn(`Rate limit exceeded for IP: ${ip}`);
-			console.error("Too many requests. Please try again later.");
 		}
 
 		const cookieStore = await cookies();

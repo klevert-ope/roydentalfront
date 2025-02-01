@@ -22,7 +22,7 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     const result = await login(data);
     reset();
-    if (result.success) {
+    if (result.success === true) {
       router.push(result.redirectUrl);
     } else {
       toast.error("Login failed. Please check your credentials");

@@ -26,11 +26,11 @@ export default async function RootLayout({ children }) {
       <ReactQueryProvider>
           <ErrorBoundary>
           {children}
-          </ErrorBoundary>
           <Toaster position="top-center" pauseWhenPageIsHidden={true} richColors
                    toastOptions={{
                        style: {textAlign: "center", padding: "10px",},
                    }}/>
+          </ErrorBoundary>
       </ReactQueryProvider>
       </body>
     </html>

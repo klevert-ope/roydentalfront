@@ -37,6 +37,7 @@ export const login = async (userData) => {
 	  return {success: true, redirectUrl: "/"};
   } catch (error) {
     handleAxiosError(error);
+    return {success: false, redirectUrl: "/login"};
   }
 };
 
@@ -109,6 +110,7 @@ export const adminManageUsers = async () => {
     const response = await axiosInstance.get("/auth/admin/manage-users", {
 	    params: {accessToken: token},
     });
+
     return response.data;
   } catch (error) {
     handleAxiosError(error);
