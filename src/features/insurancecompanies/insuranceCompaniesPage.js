@@ -54,10 +54,12 @@ const InsuranceCompaniesPage = () => {
     createInsuranceCompanyMutation.mutate({ insuranceCompany: data }, {
       onSuccess: () => {
         toast.success("Company created successfully!");
-        setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
       },
       onError: () => {
         toast.error("Failed to create the company");
+      },
+      onSettled: () => {
+        setState((prev) => ({...prev, isCreateDialogOpen: false}));
       },
     });
   }, [createInsuranceCompanyMutation]);
@@ -69,14 +71,16 @@ const InsuranceCompaniesPage = () => {
     }, {
       onSuccess: () => {
         toast.success("Company updated successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to update the company");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           editingInsuranceCompanyId: null,
           isUpdateDialogOpen: false,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to update the company");
       },
     });
   }, [updateInsuranceCompanyMutation, state.editingInsuranceCompanyId]);
@@ -103,14 +107,16 @@ const InsuranceCompaniesPage = () => {
     }, {
       onSuccess: () => {
         toast.success("Company deleted successfully");
+      },
+      onError: () => {
+        toast.error("Failed to delete the company");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           isDeleteDialogOpen: false,
           insuranceCompanyToDelete: null,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to delete the company");
       },
     });
   }, [deleteInsuranceCompanyMutation, state.insuranceCompanyToDelete]);

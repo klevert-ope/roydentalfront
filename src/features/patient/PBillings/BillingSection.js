@@ -59,10 +59,12 @@ const BillingSection = () => {
     createBillingMutation.mutate({ billing: data, patient_id: patientId }, {
       onSuccess: () => {
         toast.success("Bill created successfully!");
-        setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
       },
       onError: () => {
         toast.error("Failed to create the bill");
+      },
+      onSettled: () => {
+        setState((prev) => ({...prev, isCreateDialogOpen: false}));
       },
     });
   }, [createBillingMutation, patientId]);
@@ -74,14 +76,16 @@ const BillingSection = () => {
     }, {
       onSuccess: () => {
         toast.success("Bill updated successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to update the bill");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           editingBillingId: null,
           isUpdateDialogOpen: false,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to update the bill");
       },
     });
   }, [updateBillingMutation, state.editingBillingId]);
@@ -106,14 +110,16 @@ const BillingSection = () => {
     deleteBillingMutation.mutate({ id: state.billingToDelete }, {
       onSuccess: () => {
         toast.success("Bill deleted successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to delete the bill");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           isDeleteDialogOpen: false,
           billingToDelete: null,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to delete the bill");
       },
     });
   }, [deleteBillingMutation, state.billingToDelete]);

@@ -67,10 +67,12 @@ const AppointmentsSection = () => {
     }, {
       onSuccess: () => {
         toast.success("Appointment created successfully!");
-        setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
       },
       onError: () => {
         toast.error("Failed to create appointment");
+      },
+      onSettled: () => {
+        setState((prev) => ({...prev, isCreateDialogOpen: false}));
       },
     });
   }, [createAppointmentMutation, patientId]);
@@ -83,14 +85,16 @@ const AppointmentsSection = () => {
     }, {
       onSuccess: () => {
         toast.success("Appointment updated successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to update appointment");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           editingAppointmentId: null,
           isUpdateDialogOpen: false,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to update appointment");
       },
     });
   }, [updateAppointmentMutation, patientId, state.editingAppointmentId]);
@@ -118,14 +122,16 @@ const AppointmentsSection = () => {
     }, {
       onSuccess: () => {
         toast.success("Appointment deleted successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to delete appointment");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           isDeleteDialogOpen: false,
           appointmentToDelete: null,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to delete appointment");
       },
     });
   }, [deleteAppointmentMutation, patientId, state.appointmentToDelete]);

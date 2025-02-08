@@ -16,14 +16,14 @@ export default function LoginForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors, isSubmitting},
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onLogin = async (data) => {
     const result = await login(data);
-    reset();
     if (result.success === true) {
       router.push(result.redirectUrl);
+      reset();
     } else {
       toast.error("Login failed. Please check your credentials");
     }
@@ -35,42 +35,45 @@ export default function LoginForm() {
         <CardHeader className="mb-6 text-center">
           <CardTitle className="text-xl font-semibold">Login Form</CardTitle>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <Label>Email
-            <Input
-              type="email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
-            />
-            </Label>
-            {errors.email && (
-              <span className="text-red-700 text-sm">
+        <form onSubmit={handleSubmit(onLogin)}>
+          <fieldset disabled={isSubmitting}>
+            <div className="mb-4">
+              <Label>Email
+                <Input
+                    type="email"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address",
+                      },
+                    })}
+                />
+              </Label>
+              {errors.email && (
+                  <span className="text-red-700 text-sm">
                 {errors.email.message}
               </span>
-            )}
-          </div>
-          <div className="mb-6">
-            <Label>Password
-            <Input
-              type="password"
-              {...register("password", { required: "Password is required" })}
-            />
-            </Label>
-            {errors.password && (
-              <span className="text-red-700 text-sm">
+              )}
+            </div>
+            <div className="mb-6">
+              <Label>Password
+                <Input
+                    type="password"
+                    {...register("password", {required: "Password is required"})}
+                />
+              </Label>
+              {errors.password && (
+                  <span className="text-red-700 text-sm">
                 {errors.password.message}
               </span>
-            )}
-          </div>
-          <Button type="submit" className="w-full mt-4">
-            Login
-          </Button>
+              )}
+            </div>
+            <Button type="submit" className="w-full mt-4"
+                    disabled={isSubmitting}>
+              {isSubmitting ? "Logging in..." : "Login"}
+            </Button>
+          </fieldset>
         </form>
       </Card>
     </div>

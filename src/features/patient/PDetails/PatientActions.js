@@ -45,6 +45,17 @@ const PatientsAction = () => {
     patientToDeleteAllData: null,
   });
 
+  const resetState = useCallback(() => {
+    setState({
+      editingPatientId: null,
+      isUpdateDialogOpen: false,
+      isDeleteDialogOpen: false,
+      patientToDelete: null,
+      isDeleteAllDataDialogOpen: false,
+      patientToDeleteAllData: null,
+    });
+  }, []);
+  
   const handleUpdate = useCallback((data) => {
     updatePatientMutation.mutate({
       patient_id: state.editingPatientId,
@@ -52,10 +63,12 @@ const PatientsAction = () => {
     }, {
       onSuccess: () => {
         toast.success("Patient details updated successfully!");
-        resetState();
       },
       onError: () => {
         toast.error("Failed to update the patient details");
+      },
+      onSettled: () => {
+        resetState();
       },
     });
   }, [updatePatientMutation, state.editingPatientId]);
@@ -89,10 +102,12 @@ const PatientsAction = () => {
       onSuccess: () => {
         toast.success("Patient details deleted successfully!");
         router.push("/patients");
-        resetState();
       },
       onError: () => {
         toast.error("Failed to delete patient details");
+      },
+      onSettled: () => {
+        resetState();
       },
     });
   }, [deletePatientMutation, state.patientToDelete]);
@@ -106,26 +121,17 @@ const PatientsAction = () => {
           "Patient details and all related data deleted successfully!",
         );
         router.push("/patients");
-        resetState();
       },
       onError: () => {
         toast.error(
           "Failed to delete patient details and related data",
         );
       },
+      onSettled: () => {
+        resetState();
+      },
     });
   }, [deleteAllPatientDataMutation, state.patientToDeleteAllData]);
-
-  const resetState = useCallback(() => {
-    setState({
-      editingPatientId: null,
-      isUpdateDialogOpen: false,
-      isDeleteDialogOpen: false,
-      patientToDelete: null,
-      isDeleteAllDataDialogOpen: false,
-      patientToDeleteAllData: null,
-    });
-  }, []);
 
   return (
     <div>

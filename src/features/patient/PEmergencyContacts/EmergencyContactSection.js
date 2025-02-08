@@ -66,10 +66,12 @@ const EmergencyContactsSection = () => {
       {
         onSuccess: () => {
           toast.success("Emergency contact created successfully!");
-          setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
         },
         onError: () => {
           toast.error("Failed to create the emergency contact");
+        },
+        onSettled: () => {
+          setState((prev) => ({...prev, isCreateDialogOpen: false}));
         },
       },
     );
@@ -85,14 +87,16 @@ const EmergencyContactsSection = () => {
       {
         onSuccess: () => {
           toast.success("Emergency contact updated successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to update the emergency contact");
+        },
+        onSettled: () => {
           setState((prev) => ({
             ...prev,
             editingEmergencyContactId: null,
             isUpdateDialogOpen: false,
           }));
-        },
-        onError: () => {
-          toast.error("Failed to update the emergency contact");
         },
       },
     );
@@ -124,14 +128,16 @@ const EmergencyContactsSection = () => {
       {
         onSuccess: () => {
           toast.success("Emergency Contact deleted successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to delete the emergency contact");
+        },
+        onSettled: () => {
           setState((prev) => ({
             ...prev,
             isDeleteDialogOpen: false,
             emergencyContactToDelete: null,
           }));
-        },
-        onError: () => {
-          toast.error("Failed to delete the emergency contact");
         },
       },
     );

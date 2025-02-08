@@ -25,7 +25,6 @@ class ErrorBoundary extends Component {
 
 	render() {
 		if (this.state.hasError) {
-			// You can render any custom fallback UI
 			return <GlobalError error={this.state.error}
 			                    reset={this.resetErrorBoundary}/>;
 		}
@@ -42,7 +41,7 @@ const GlobalError = ({error, reset}) => {
 			<h2 className="mb-4">
 				Oops! Something went wrong.
 			</h2>
-			<p className="text-red-700 mb-4 max-w-lg">{error.message}</p>
+			<p className="text-red-700 mb-4 max-w-lg whitespace-pre">{error.message}</p>
 			<Button onClick={reset}>Try again</Button>
 		</div>
 	);

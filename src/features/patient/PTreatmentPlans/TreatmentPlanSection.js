@@ -64,11 +64,13 @@ const TreatmentPlanSection = () => {
       {
         onSuccess: () => {
           toast.success("Treatment plan created successfully!");
-          setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
         },
         onError: () => {
           toast.error("Failed to create the treatment plan");
         },
+          onSettled: () => {
+              setState((prev) => ({...prev, isCreateDialogOpen: false}));
+          },
       },
     );
   }, [createTreatmentPlanMutation, patientId]);
@@ -83,15 +85,17 @@ const TreatmentPlanSection = () => {
       {
         onSuccess: () => {
           toast.success("Treatment plan updated successfully!");
-          setState((prev) => ({
-            ...prev,
-            editingTreatmentPlanId: null,
-            isUpdateDialogOpen: false,
-          }));
         },
-        onError: () => {
-          toast.error("Failed to update treatment plan");
-        },
+          onError: () => {
+              toast.error("Failed to update treatment plan");
+          },
+          onSettled: () => {
+              setState((prev) => ({
+                  ...prev,
+                  editingTreatmentPlanId: null,
+                  isUpdateDialogOpen: false,
+              }));
+          },
       },
     );
   }, [updateTreatmentPlanMutation, patientId, state.editingTreatmentPlanId]);
@@ -118,15 +122,17 @@ const TreatmentPlanSection = () => {
       {
         onSuccess: () => {
           toast.success("Treatment plan deleted successfully!");
-          setState((prev) => ({
-            ...prev,
-            isDeleteDialogOpen: false,
-            treatmentPlanToDelete: null,
-          }));
         },
-        onError: () => {
-          toast.error("Failed to delete the treatment plan");
-        },
+          onError: () => {
+              toast.error("Failed to delete the treatment plan");
+          },
+          onSettled: () => {
+              setState((prev) => ({
+                  ...prev,
+                  isDeleteDialogOpen: false,
+                  treatmentPlanToDelete: null,
+              }));
+          },
       },
     );
   }, [deleteTreatmentPlanMutation, patientId, state.treatmentPlanToDelete]);
@@ -147,7 +153,6 @@ const TreatmentPlanSection = () => {
         onDelete={handleDelete}
       />
 
-      {/* Create Dialog */}
       <Dialog
         open={state.isCreateDialogOpen}
         onOpenChange={() =>
@@ -169,7 +174,6 @@ const TreatmentPlanSection = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Update Dialog */}
       <Dialog
         open={state.isUpdateDialogOpen}
         onOpenChange={() =>
@@ -193,8 +197,7 @@ const TreatmentPlanSection = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Alert Dialog */}
-      <DeleteAlertDialog
+        <DeleteAlertDialog
         isOpen={state.isDeleteDialogOpen}
         onConfirm={handleDeleteConfirm}
         description="This action cannot be undone. This will permanently delete the treatment plan."

@@ -33,7 +33,8 @@ export const getAppointmentByID = async (patient_id, appointment_id) => {
     const response = await axiosInstance.get(
       `/patients/${patient_id}/appointments/${appointment_id}`,
     );
-    return response.data;
+
+	  return response.data;
   } catch (error) {
     handleAxiosError(error);
   }

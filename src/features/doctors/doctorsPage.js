@@ -36,7 +36,7 @@ const DoctorsPage = () => {
 
   const { data: editingDoctor, isPending: isEditingDoctorLoading, refetch } =
     useGetDoctorByID(state.editingDoctorId, {
-      enabled: !!state.editingDoctorId, // Only fetch data when editingDoctorId is set
+      enabled: !!state.editingDoctorId,
     });
 
   useEffect(() => {
@@ -49,10 +49,12 @@ const DoctorsPage = () => {
     createDoctorMutation.mutate({ doctor: data }, {
       onSuccess: () => {
         toast.success("Doctor created successfully!");
-        setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
       },
       onError: () => {
         toast.error("Failed to create the Doctor");
+      },
+      onSettled: () => {
+        setState((prev) => ({...prev, isCreateDialogOpen: false}));
       },
     });
   };
@@ -61,14 +63,16 @@ const DoctorsPage = () => {
     updateDoctorMutation.mutate({ id: state.editingDoctorId, doctor: data }, {
       onSuccess: () => {
         toast.success("Doctor updated successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to update the Doctor");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           editingDoctorId: null,
           isUpdateDialogOpen: false,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to update the Doctor");
       },
     });
   };
@@ -93,14 +97,16 @@ const DoctorsPage = () => {
     deleteDoctorMutation.mutate({ id: state.doctorToDelete }, {
       onSuccess: () => {
         toast.success("Doctor deleted successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to delete the Doctor");
+      },
+      onSettled: () => {
         setState((prev) => ({
           ...prev,
           isDeleteDialogOpen: false,
           doctorToDelete: null,
         }));
-      },
-      onError: () => {
-        toast.error("Failed to delete the Doctor");
       },
     });
   };

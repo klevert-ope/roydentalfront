@@ -21,19 +21,17 @@ const LoadingSpinner = () => (
 );
 
 const pageAnimation = {
-	initial: {opacity: 0, y: 50},
+	initial: {opacity: 0, y: 30},
 	animate: {opacity: 1, y: 0},
-	transition: {duration: 0.5, delay: 0.2},
+	transition: {duration: 0.5},
 };
 
 export const LoadingPage = ({children}) => {
 	const {patientId} = useParams();
 
-	// Always call the hook, but let the hook handle its internal logic
-	const {isLoading: isLoadingPatient} = useGetPatientByID(patientId || null);
+	const patientQuery = useGetPatientByID(patientId);
 
-	// Fetch all other required data
-	const fetchHooks = [
+	const queries = [
 		useManageUsers(),
 		useFetchPatients(),
 		useFetchInsuranceCompanies(),
@@ -45,10 +43,9 @@ export const LoadingPage = ({children}) => {
 		useFetchAppointments(),
 	];
 
-	// Check if any data is still loading
-	const isFetching = fetchHooks.some((hook) => hook.isLoading) || isLoadingPatient;
+	const isLoading = patientQuery.isLoading || queries.some(q => q.isLoading);
 
-	if (isFetching) {
+	if (isLoading) {
 		return <LoadingSpinner/>;
 	}
 

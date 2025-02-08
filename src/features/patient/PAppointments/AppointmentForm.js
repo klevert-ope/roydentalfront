@@ -94,7 +94,7 @@ const AppointmentForm = (
         )}
       </div>
       <div className="mb-4">
-          <Label>Date and Time
+	      <Label>Date and Time
         <Input
           type="datetime-local"
           {...register("date_time", { required: "This field is required" })}
@@ -105,7 +105,7 @@ const AppointmentForm = (
         )}
       </div>
       <div className="mb-4">
-          <Label>Status
+	      <Label>Status
         <Controller
           name="status"
           control={control}

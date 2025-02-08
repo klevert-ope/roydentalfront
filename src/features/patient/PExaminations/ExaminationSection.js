@@ -66,11 +66,13 @@ const ExaminationSection = () => {
       {
         onSuccess: () => {
           toast.success("Examination created successfully!");
-          setState((prev) => ({ ...prev, isCreateDialogOpen: false }));
         },
         onError: () => {
           toast.error("Failed to create examination");
         },
+          onSettled: () => {
+              setState((prev) => ({...prev, isCreateDialogOpen: false}));
+          },
       },
     );
   }, [createExaminationMutation, patientId]);
@@ -85,15 +87,17 @@ const ExaminationSection = () => {
       {
         onSuccess: () => {
           toast.success("Examination updated successfully!");
-          setState((prev) => ({
-            ...prev,
-            editingExaminationId: null,
-            isUpdateDialogOpen: false,
-          }));
         },
-        onError: () => {
-          toast.error("Failed to update the examination");
-        },
+          onError: () => {
+              toast.error("Failed to update the examination");
+          },
+          onSettled: () => {
+              setState((prev) => ({
+                  ...prev,
+                  editingExaminationId: null,
+                  isUpdateDialogOpen: false,
+              }));
+          },
       },
     );
   }, [updateExaminationMutation, patientId, state.editingExaminationId]);
@@ -120,15 +124,17 @@ const ExaminationSection = () => {
       {
         onSuccess: () => {
           toast.success("Examination deleted successfully!");
-          setState((prev) => ({
-            ...prev,
-            isDeleteDialogOpen: false,
-            examinationToDelete: null,
-          }));
         },
-        onError: () => {
-          toast.error("Failed to delete the examination");
-        },
+          onError: () => {
+              toast.error("Failed to delete the examination");
+          },
+          onSettled: () => {
+              setState((prev) => ({
+                  ...prev,
+                  isDeleteDialogOpen: false,
+                  examinationToDelete: null,
+              }));
+          },
       },
     );
   }, [deleteExaminationMutation, patientId, state.examinationToDelete]);

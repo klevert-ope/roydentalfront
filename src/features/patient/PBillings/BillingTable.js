@@ -24,7 +24,7 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
     <Table>
       <TableCaption>A list of your billings.</TableCaption>
       <TableHeader>
-        <TableRow>
+	      <TableRow className="whitespace-nowrap">
           <TableHead className="w-[50px]"></TableHead>
           <TableHead className="w-[100px]">Doctor ID</TableHead>
           <TableHead className="w-[150px]">Procedure</TableHead>
@@ -81,9 +81,7 @@ const BillingsTable = ({ billings, onEdit, onDelete }) => {
             <TableCell>{billing.paid_insurance_amount}</TableCell>
             <TableCell>{billing.balance}</TableCell>
             <TableCell>{billing.total_received}</TableCell>
-            <TableCell
-              className={"whitespace-nowrap"}
-            >
+		        <TableCell>
               {new Date(billing.created_at).toLocaleString("en-KE", {
                 timeZone: "Africa/Nairobi",
                 day: "numeric",

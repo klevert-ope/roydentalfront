@@ -58,8 +58,10 @@ const PatientsTable = () => {
       onError: () => {
         toast.error("Failed to create patient");
       },
+      onSettled: () => {
+        setIsCreateDialogOpen(false);
+      },
     });
-    setIsCreateDialogOpen(false);
   }, [createPatientMutation]);
 
   const customFirstNameSort = useMemo(

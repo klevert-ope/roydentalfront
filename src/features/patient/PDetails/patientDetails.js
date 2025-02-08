@@ -1,10 +1,12 @@
 "use client";
+import {Badge} from "@/components/ui/badge"
 import {Card, CardContent} from "@/components/ui/card";
 import {Label} from "@/components/ui/label";
 import {Separator} from "@/components/ui/separator";
 import {useGetPatientByID} from "@/hooks/usePatients";
 import {useParams} from "next/navigation";
 import React from "react";
+
 
 export default function PatientDetails() {
 	const {patientId} = useParams();
@@ -34,30 +36,32 @@ const InfoField = ({ label, value }) => (
 const Bio = ({ patient }) => (
 	<div className="w-full py-4">
 		<div className="mb-4">
-			<h4 className="underline">ID {patient.id}</h4>
-			<h4 className="underline">
-				Created
-				On {new Date(patient.created_at).toLocaleString("en-KE", {
-				timeZone: "Africa/Nairobi",
-				day: "numeric",
-				month: "short",
-				year: "numeric",
-				hour: "numeric",
-				minute: "numeric",
-			})}
-			</h4>
+			<div className="w-full flex justify-end mb-4">
+				<p className="underline text-sm font-semibold">
+					Created
+					On {new Date(patient.created_at).toLocaleString("en-KE", {
+					timeZone: "Africa/Nairobi",
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+					hour: "numeric",
+					minute: "numeric",
+				})}
+				</p>
+			</div>
+			<Badge>ID {patient.id}</Badge>
 		</div>
 		<h3>BIO DATA</h3>
 		<div className="flex flex-row flex-wrap justify-between">
-      <InfoField
-        label="Name"
-        value={`${patient.first_name} ${
-          patient.middle_name || ""
-        } ${patient.last_name}`}
-      />
-      <InfoField label="Sex" value={patient.sex} />
-      <InfoField
-	      label="DOB"
+			<InfoField
+				label="Name"
+				value={`${patient.first_name} ${
+					patient.middle_name || ""
+				} ${patient.last_name}`}
+			/>
+			<InfoField label="Sex" value={patient.sex}/>
+			<InfoField
+				label="DOB"
         value={new Date(patient.date_of_birth).toLocaleDateString("en-KE", {
           day: "numeric",
           month: "short",
