@@ -10,7 +10,6 @@ import ExaminationSection
 import TreatmentPlanSection
 	from "@/features/patient/PTreatmentPlans/TreatmentPlanSection";
 import React, {useMemo, useState} from "react";
-import {useSwipeable} from "react-swipeable";
 
 export const PatientSubDetails = () => {
 	const [activeTab, setActiveTab] = useState("EmergencyContacts");
@@ -46,26 +45,6 @@ export const PatientSubDetails = () => {
 		[]
 	);
 
-	const handleSwipe = (direction) => {
-		const currentIndex = tabSections.findIndex((tab) => tab.value === activeTab);
-		let newIndex;
-
-		if (direction === "left") {
-			newIndex = (currentIndex + 1) % tabSections.length;
-		} else if (direction === "right") {
-			newIndex = (currentIndex - 1 + tabSections.length) % tabSections.length;
-		}
-
-		setActiveTab(tabSections[newIndex].value);
-	};
-
-	const swipeHandlers = useSwipeable({
-		onSwipedLeft: () => handleSwipe("left"),
-		onSwipedRight: () => handleSwipe("right"),
-		preventDefaultTouchmoveEvent: true,
-		trackMouse: true,
-	});
-
 	return (
 		<Tabs value={activeTab} onValueChange={setActiveTab}
 		      className="my-16 w-full">
@@ -82,7 +61,7 @@ export const PatientSubDetails = () => {
 					</TabsList>
 				</div>
 			</div>
-			<div {...swipeHandlers}>
+			<div>
 				{tabSections.map((tab) => (
 					<TabsContent key={tab.value} value={tab.value}
 					             className="min-h-[50svh]">
