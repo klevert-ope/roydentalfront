@@ -27,7 +27,7 @@ export const login = async (userData) => {
 	    priority: "high",
     });
     cookieStore.set("refreshToken", refreshToken, {
-      maxAge: 86400,
+      maxAge: 604_800,
       secure: true,
       sameSite: "Strict",
       httpOnly: true,
@@ -148,3 +148,33 @@ export const updateUserProfile = async (profileData) => {
     handleAxiosError(error);
   }
 };
+
+export const refreshToken = async () => {
+  try {
+    const cookieStore = await cookies();
+    const userAccess = cookieStore.get("accessToken");
+    if (!userAccess || typeof userAccess !== "object" || !userAccess.value) {
+      console.log("Unauthorized: No valid access token found");
+    }
+
+    const token = userAccess.value;
+
+    const response = await axiosInstance.get("/refresh-token", {
+      params: {accessToken: token},
+    });
+    // a new access token
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error);
+  }
+};
+
+// Verify the access token with the backend
+export const verifyToken = async (token) => {
+  try {
+    const response = await axiosInstance.post("/auth/decrypt", {token});
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error);
+  }
+}
