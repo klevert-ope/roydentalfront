@@ -20,15 +20,18 @@ export const login = async (userData) => {
 
     const cookieStore = await cookies();
     cookieStore.set("accessToken", accessToken, {
-      maxAge: 86400,
-      secure: true,
+      maxAge: 86400, // 1 day
+      expires: new Date(Date.now() + 86400 * 1000),
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       httpOnly: true,
 	    priority: "high",
     });
+    const refreshMax = 86400 * 7; // 7 days
     cookieStore.set("refreshToken", refreshToken, {
-      maxAge: 604_800,
-      secure: true,
+      maxAge: refreshMax,
+      expires: new Date(Date.now() + 86400 * 1000 * 7),
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
       httpOnly: true,
 	    priority: "medium",

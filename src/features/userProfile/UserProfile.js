@@ -10,7 +10,7 @@ import {toast} from 'sonner';
 
 const UserProfile = () => {
 	const router = useRouter();
-	const {data: userProfile, refetch, isLoading} = useUserData();
+	const {data: userProfile = [], refetch, isLoading} = useUserData();
 
 	useEffect(() => {
 		refetch();
