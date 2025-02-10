@@ -22,6 +22,7 @@ export default function LoginForm() {
   const onLogin = async (data) => {
     const result = await login(data);
     if (result.success === true) {
+      toast.success("Logged in successfully");
       router.push(result.redirectUrl);
       reset();
     } else {
