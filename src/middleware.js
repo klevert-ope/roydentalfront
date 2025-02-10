@@ -144,7 +144,13 @@ export async function middleware(req) {
 	if (!decodedToken) {
 		try {
 			const newAccessToken = await refreshTokenWithCache();
-			cookieStore.set("accessToken", newAccessToken);
+			cookieStore.set("accessToken", newAccessToken, {
+				maxAge: 86400,
+				secure: true,
+				sameSite: "Strict",
+				httpOnly: true,
+				priority: "high",
+			});
 			decodedToken = await verifyTokenWithCache(newAccessToken);
 		} catch (error) {
 			logger.warn(`Token refresh failed: ${error.message}`);
