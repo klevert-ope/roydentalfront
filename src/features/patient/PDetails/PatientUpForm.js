@@ -371,9 +371,7 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
             Occupation
             <Input
               type="text"
-              {...register("occupation", {
-                required: "This field is required",
-              })}
+              {...register("occupation")}
             />
           </Label>
           {errors.occupation && (
@@ -385,9 +383,7 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
             Place of Work
             <Input
               type="text"
-              {...register("place_of_work", {
-                required: "This field is required",
-              })}
+              {...register("place_of_work")}
             />
           </Label>
           {errors.place_of_work && (
@@ -399,7 +395,7 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
             Phone
             <Input
               type="text"
-              {...register("phone", { required: "This field is required" })}
+              {...register("phone")}
             />
           </Label>
           {errors.phone && (
@@ -423,7 +419,7 @@ const PatientUpForm = ({onSubmit, defaultValues, onClose, isLoading}) => {
             Address
             <Input
               type="text"
-              {...register("address", { required: "This field is required" })}
+              {...register("address")}
             />
           </Label>
           {errors.address && (
