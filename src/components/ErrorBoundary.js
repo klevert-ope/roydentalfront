@@ -36,13 +36,16 @@ class ErrorBoundary extends Component {
 export default ErrorBoundary;
 
 const GlobalError = ({error, reset}) => {
-	return (
-		<div className="px-2 flex flex-col items-center justify-center h-svh">
-			<h2 className="mb-4">
-				Oops! Something went wrong.
-			</h2>
-			<p className="text-red-700 mb-4 max-w-lg whitespace-pre">{error.message}</p>
+	return (<div
+		className="flex flex-col items-center justify-center min-h-screen px-2">
+		<h2 className="mb-4 text-center">
+			Oops! Something went wrong.
+		</h2>
+		<p className="mb-4 max-w-lg text-center text-red-700 whitespace-pre-wrap">
+			{error.message}
+		</p>
+		<div className="flex justify-center">
 			<Button onClick={reset}>Try again</Button>
 		</div>
-	);
+	</div>);
 };

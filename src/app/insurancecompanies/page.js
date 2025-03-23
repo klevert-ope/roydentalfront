@@ -1,4 +1,4 @@
-import {LoadingPage} from '@/components/LoadingPage';
+import {AnimatePage} from '@/components/AnimatePage';
 import SideBarComponent from "@/components/SideBarComponent";
 import InsuranceCompaniesPage
 	from "@/features/insurancecompanies/insuranceCompaniesPage";
@@ -11,9 +11,9 @@ export const metadata = {
 export default function InsuranceCompanies() {
   return (
 	  <SideBarComponent>
-		  <LoadingPage>
+		  <AnimatePage>
 			  <InsuranceCompaniesPage/>
-		  </LoadingPage>
+		  </AnimatePage>
 	  </SideBarComponent>
   );
 }

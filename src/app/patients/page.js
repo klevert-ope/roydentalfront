@@ -1,4 +1,4 @@
-import {LoadingPage} from '@/components/LoadingPage';
+import {AnimatePage} from '@/components/AnimatePage';
 import SideBarComponent from "@/components/SideBarComponent";
 import PatientsTable from "@/features/patients/patientsTable";
 import React from "react";
@@ -10,9 +10,9 @@ export const metadata = {
 export default function Patients() {
   return (
 	  <SideBarComponent>
-		  <LoadingPage>
+		  <AnimatePage>
 			  <PatientsTable/>
-		  </LoadingPage>
+		  </AnimatePage>
 	  </SideBarComponent>
   );
 }

@@ -1,4 +1,4 @@
-import {LoadingPage} from '@/components/LoadingPage';
+import {AnimatePage} from '@/components/AnimatePage';
 import SideBarComponent from "@/components/SideBarComponent";
 import AppointmentsToday
 	from "@/features/patient/PAppointments/AppointmentsToday";
@@ -13,7 +13,7 @@ export const metadata = {
 export default function Home() {
   return (
 	  <SideBarComponent>
-		  <LoadingPage>
+		  <AnimatePage>
 		  <div
 			  className="container mx-auto px-2 w-full my-16">
 			  <h1 className="text-center mb-8">
@@ -22,7 +22,7 @@ export default function Home() {
 			  <AppointmentsToday/>
 			  <PatientsCharts/>
 		  </div>
-		  </LoadingPage>
+		  </AnimatePage>
 	  </SideBarComponent>
   );
 }

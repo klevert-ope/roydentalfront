@@ -4,7 +4,7 @@ FROM node:23-alpine3.20 AS base
 
 LABEL maintainer="Klevert Opee"
 LABEL description="Frontend"
-LABEL version="1.0"
+LABEL version="2.0"
 
 # Install dependencies only when needed
 FROM base AS deps

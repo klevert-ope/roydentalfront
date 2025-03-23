@@ -1,4 +1,4 @@
-import {LoadingPage} from '@/components/LoadingPage';
+import {AnimatePage} from '@/components/AnimatePage';
 import SideBarComponent from "@/components/SideBarComponent";
 import AdminUsersPage from "@/features/users/AdminUsersPage";
 
@@ -9,10 +9,10 @@ export const metadata = {
 export default function UsersPage() {
   return (
 	  <SideBarComponent>
-		  <LoadingPage>
+		  <AnimatePage>
 			  <h1 className="text-center mb-8">USERS</h1>
 			  <AdminUsersPage/>
-		  </LoadingPage>
+		  </AnimatePage>
 	  </SideBarComponent>
   );
 }

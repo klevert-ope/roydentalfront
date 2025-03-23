@@ -21,7 +21,7 @@ export const useCreatePatient = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ patientData }) => createPatient(patientData),
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries(["patients"]);
     },
   });
@@ -41,8 +41,7 @@ export const useUpdatePatient = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ patient_id, patientData }) =>
-      updatePatient(patient_id, patientData),
-    onSuccess: () => {
+      updatePatient(patient_id, patientData), onSettled: () => {
       queryClient.invalidateQueries(["patients"]);
     },
   });
@@ -53,7 +52,7 @@ export const useDeletePatient = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ patient_id }) => deletePatient(patient_id),
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries(["patients"]);
     },
   });
@@ -64,7 +63,7 @@ export const useDeleteAllPatientData = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ patient_id }) => deleteAllPatientData(patient_id),
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries(["patients"]);
     },
   });
