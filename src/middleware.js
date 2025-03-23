@@ -27,8 +27,8 @@ const appConfig = {
 		"/patients": new Set(["Admin", "Doctor", "Receptionist"]),
 		"/patients/:id": new Set(["Admin", "Doctor", "Receptionist"]),
 		"/insurance-companies": new Set(["Admin", "Doctor", "Receptionist"]),
-		"/users": new Set(["Admin"]),
-		"/billings": new Set(["Admin"]),
+		"/users": new Set(["Admin", "Doctor"]),
+		"/billings": new Set(["Admin", "Doctor"]),
 	},
 };
 
