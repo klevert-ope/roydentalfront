@@ -1,29 +1,21 @@
 import {Label} from "@/components/ui/label";
 import {Separator} from "@/components/ui/separator";
+import {format, toZonedTime} from 'date-fns-tz';
 import Link from "next/link";
 import React from "react";
 
 export const AppointmentCard = React.memo(({appointment}) => {
-	const dateTime = new Date(appointment.date_time);
-	const options = {
-		timeZone: "Africa/Nairobi",
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-		hour: "2-digit",
-		minute: "2-digit",
-		hour12: false,
-	};
-	const formatter = new Intl.DateTimeFormat("en-US", options);
-	const scheduledTime = formatter.format(dateTime);
 
-	return (
-		<div id={"appointment-card"} className="max-w-[600px] mb-4">
+	const dateTime = new Date(appointment.date_time);
+	const zonedDate = toZonedTime(dateTime, 'Africa/Nairobi');
+	const scheduledTime = format(zonedDate, 'yyyy-MM-dd HH:mm', {timeZone: 'Africa/Nairobi'});
+
+	return (<div id="appointment-card" className="max-w-[600px] mb-4">
 			<h3>Appointment Details</h3>
-			<div className={"flex flex-row justify-between mb-4"}>
-				<Label className={"mr-2"}>
-					Doctor ID
-					<p>{appointment.doctor_id}</p>
+			<div className="flex flex-row justify-between mb-4">
+				<Label className="mr-2">
+					Doctor
+					<p>DR. {appointment.doctor.first_name} {appointment.doctor.last_name}</p>
 				</Label>
 				<Label>
 					Patient
@@ -38,7 +30,7 @@ export const AppointmentCard = React.memo(({appointment}) => {
 					</p>
 				</Label>
 			</div>
-			<p className={"underline"}>Scheduled Time: {scheduledTime}</p>
+			<p className="underline">Scheduled Time: {scheduledTime}</p>
 			<Separator className="my-8 w-full"/>
 		</div>
 	);

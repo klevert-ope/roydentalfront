@@ -1,16 +1,16 @@
-"use client"
+"use client";
 import {logoff} from "@/api/auth";
-import {LoadingForm} from '@/components/LoadingForm';
+import {LoadingForm} from "@/components/LoadingForm";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {useUserData} from "@/hooks/useUserData";
 import {useRouter} from "next/navigation";
 import React, {useEffect} from "react";
-import {toast} from 'sonner';
+import {toast} from "sonner";
 
 const UserProfile = () => {
 	const router = useRouter();
-	const {data: userProfile = [], refetch, isLoading} = useUserData();
+	const {data: userProfile, refetch, isLoading} = useUserData();
 
 	useEffect(() => {
 		refetch();
@@ -18,19 +18,19 @@ const UserProfile = () => {
 
 	const onLogoff = async () => {
 		const result = await logoff();
-		if (result.success === true) {
+		if (result?.success) {
 			router.push(result.redirectUrl);
 		} else {
-			toast.error("Failed to logoff.");
+			toast.error("Failed to log off.");
 		}
 	};
 
-	const roleName = userProfile?.user?.role?.name;
-	const username = userProfile?.user?.username;
-	const email = userProfile?.user?.email;
+	const roleName = userProfile?.user?.role?.name || "Guest";
+	const username = userProfile?.user?.username || "Unknown User";
+	const email = userProfile?.user?.email || "No Email Provided";
 
 	if (isLoading) {
-		return <LoadingForm/>
+		return <LoadingForm/>;
 	}
 
 	return (

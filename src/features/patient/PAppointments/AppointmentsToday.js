@@ -1,9 +1,10 @@
 "use client";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {
-	AppointmentCard,
+	AppointmentCard
 } from "@/features/patient/PAppointments/AppointmentCard";
 import {useFetchAppointments} from "@/hooks/useAppointments";
+import {format, toZonedTime} from 'date-fns-tz';
 import React, {useEffect, useMemo, useState} from "react";
 
 const AppointmentsToday = () => {
@@ -13,9 +14,7 @@ const AppointmentsToday = () => {
 	// Memoize today's start time in Nairobi timezone
 	const todayStartInNairobi = useMemo(() => {
 		const now = new Date();
-		const todayNairobi = new Date(now.setUTCHours(0, 0, 0, 0)); // Midnight UTC
-		const timezoneOffsetMinutes = -(new Date().getTimezoneOffset() + 180); // Nairobi is UTC+3
-		return new Date(todayNairobi.getTime() + timezoneOffsetMinutes * 60000);
+		return toZonedTime(now, 'Africa/Nairobi');
 	}, []);
 
 	// Filter appointments for today
@@ -23,19 +22,10 @@ const AppointmentsToday = () => {
 		if (Array.isArray(data)) {
 			const filtered = data.filter((appointment) => {
 				const appointmentDateTime = new Date(appointment.date_time);
-				const appointmentNairobiTime = new Date(
-					appointmentDateTime.getTime() +
-					(todayStartInNairobi.getTimezoneOffset() * 60000),
-				);
+				const appointmentNairobiTime = toZonedTime(appointmentDateTime, 'Africa/Nairobi');
 
 				return (
-					appointment.status === "scheduled" &&
-					appointmentNairobiTime.getUTCFullYear() ===
-					todayStartInNairobi.getUTCFullYear() &&
-					appointmentNairobiTime.getUTCMonth() ===
-					todayStartInNairobi.getUTCMonth() &&
-					appointmentNairobiTime.getUTCDate() ===
-					todayStartInNairobi.getUTCDate()
+					appointment.status === "scheduled" && format(appointmentNairobiTime, 'yyyy-MM-dd') === format(todayStartInNairobi, 'yyyy-MM-dd')
 				);
 			});
 
@@ -53,12 +43,11 @@ const AppointmentsToday = () => {
 			<h2 className="mb-5">Scheduled Appointments for Today</h2>
 			{filteredAppointments.length === 0
 				? <p>No scheduled appointments for today.</p>
-				: (
-					<ScrollArea
+				: (<ScrollArea
 						className="max-h-[500px] max-w-[600px] p-4 bg-[var(--card)] rounded-md border">
 						{filteredAppointments.map((appointment) => (
 							<AppointmentCard
-								key={appointment.patient_id}
+								key={appointment.id}
 								appointment={appointment}
 							/>
 						))}
